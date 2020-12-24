@@ -22,8 +22,15 @@
     * Liste de tous les commentaires _(validation de commentaires)_
     
 ## Installation
-  ### Composer
   ### Base de données
+    Importer le fichier database.sql pour installer la structure de la base de données sur votre serveur
+  ### Installation des fichiers du site
+    Faire un git clone du repository puis éditer le fichier config.php en renseignant les données corespondant à votre base de données
+  ### Composer
+    Après installation des fichiers :
+     composer init
+    
+  
  
   
 
