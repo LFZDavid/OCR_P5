@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Blog{% endblock %}</title>
+    </head>
+    <body>
+    <div id="main">
+        {% include "/includes/header.html.twig" %}
+        <div id="content">
+        {% block body %}{% endblock %}
+        </div>
+        {% include "/includes/footer.html.twig" %}
+    </div>
+    </body>
+</html>
