@@ -35,9 +35,9 @@
       1. Créer une base de donnée vierge 
       * Attention: le nom de la base de données doit correspondre à celui indiqué dans le fichier config.php
       * Selectionner l'encodage "utf-8"
-      2. Executer la commande : php install_db.php
+      2. Executer la commande : php app/cmd/install_db.php
   * Insérer des données de démonstration
-    * lancer la commande : php insert_datas.php
+    * lancer la commande : php app/cmd/insert_datas.php
     
   ### Composer
     Après installation des fichiers, lancer la commande : composer init
