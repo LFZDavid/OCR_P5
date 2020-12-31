@@ -3,7 +3,6 @@
 namespace App\Model\Repository;
 
 use App\Model\Repository\Repository;
-use PDO;
 
 class PostRepository extends Repository
 {
