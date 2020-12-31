@@ -41,4 +41,13 @@ abstract class Repository
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 		return $q->fetch();
 	}
+
+	public function delete($id)
+	{
+		$request = 'DELETE FROM ' . $this->table . ' WHERE id =:id';
+		$q = $this->pdo->prepare($request);
+		$q->bindValue(':id', $id, PDO::PARAM_INT);
+		$q->execute();
+		return true;
+	}
 }

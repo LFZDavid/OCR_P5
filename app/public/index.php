@@ -36,6 +36,11 @@ try {
         if ($_GET['admin-post'] <= 0) {
             $adminPostController->index();
         } else {
+            if (isset($_POST['_method'])) {
+                if ($_POST['_method'] == "DELETE") {
+                    $adminPostController->delete($_GET['admin-post']);
+                }
+            }
             // $adminPostController->form($_GET['admin-post']);
         }
     } else {
