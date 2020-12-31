@@ -2,10 +2,7 @@
 
 namespace App\Controller\Front;
 
-use Twig\Environment;
 use App\Controller\Front\Controller;
-use App\Model\Entity\Post;
-use App\Model\Repository\PostRepository;
 
 class PostController extends Controller
 {

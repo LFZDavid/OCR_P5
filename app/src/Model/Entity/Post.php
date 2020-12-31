@@ -9,6 +9,7 @@ class Post extends Entity
     protected $title;
     protected $chapo;
 	protected $content;
+	protected $id_author;
 	protected $active;
 	protected $created_at;
     protected $updated_at;
@@ -29,6 +30,10 @@ class Post extends Entity
 	public function active()
 	{
 		return $this->active;
+	}
+	public function id_author()
+	{
+		return $this->id_author;
 	}
 	public function created_at()
 	{
@@ -54,6 +59,13 @@ class Post extends Entity
 	{
 		if(!empty($content)){
 			$this->content = $content;
+        }
+        return $this;
+	}
+	public function setId_author($id_author)
+	{
+		if(!empty($id_author)){
+			$this->content = $id_author;
         }
         return $this;
 	}
