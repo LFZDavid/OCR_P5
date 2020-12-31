@@ -2,17 +2,16 @@
 
 namespace App\Controller\Front;
 
+use Twig\Environment;
+
 abstract class Controller
 {
-    protected $loader;
-    protected $twig;
+    protected Environment $twig;
 
-    public function __construct()
+    public function __construct(Environment $twig)
     {
-        $this->loader = new \Twig\Loader\FilesystemLoader('../views/templates/');
-        $this->twig = new \Twig\Environment($this->loader, [
-            'cache' => false, // 'cache' => __DIR__.'/app/tmp',
-        ]);
+        $this->twig = $twig;
+        
     }
     
 }
