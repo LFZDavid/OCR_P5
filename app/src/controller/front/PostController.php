@@ -2,7 +2,7 @@
 
 namespace App\Controller\Front;
 
-use App\Controller\Front\Controller;
+use App\Controller\Controller;
 
 class PostController extends Controller
 {

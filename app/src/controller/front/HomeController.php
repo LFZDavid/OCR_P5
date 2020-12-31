@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller\Front;
-use App\Controller\Front\Controller;
+
+use App\Controller\Controller;
 
 class HomeController extends Controller
 {
@@ -10,6 +11,5 @@ class HomeController extends Controller
         echo $this->twig->render('front/home.html.twig', [
             "title" => "Accueil"
         ]);
-
     }
 }
