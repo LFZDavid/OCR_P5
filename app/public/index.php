@@ -38,17 +38,16 @@ try {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
         if ($_GET['admin-post'] == 'list') {
             $adminPostController->index();
-        } elseif ($_GET['admin-post'] == 'form') {
-            $id_post = $_GET['id_post'] ?? null;
-            $adminPostController->getForm($id_post);
-        } elseif ($_GET['admin-post'] == 'postprocess' && !empty($_POST)) {
-            $adminPostController->postProcess($_POST);
         }
+    } elseif (isset($_GET['admin-post-form'])) {
+        $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
+        $adminPostController->getForm($_GET['admin-post-form']);
     } elseif (
         isset($_GET['admin-post-delete'])
         && (isset($_POST['_method']))
         && ($_POST['_method'] == "DELETE")
     ) {
+        $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
         $adminPostController->delete($_GET['admin-post-delete']);
     } else {
         $homeController = new HomeController($twig);

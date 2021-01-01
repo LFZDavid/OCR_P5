@@ -34,7 +34,7 @@ class PostManager extends Manager
 
     protected function update(Post $post)
     {
-        $request = 'UPDATE' . $this->table . 'SET `title` = :title, `chapo` = :chapo, `content` = :content, `id_author` = :id_author, `updated_at` = NOW() WHERE `id` = :id';
+        $request = 'UPDATE ' . $this->table . ' SET `title` = :title, `chapo` = :chapo, `content` = :content, `id_author` = :id_author, `updated_at` = NOW() WHERE `id` = :id';
         $q = $this->pdo->prepare($request);
         $q->bindValue(':title', (string) $post->title());
         $q->bindValue(':chapo', (string) $post->chapo());

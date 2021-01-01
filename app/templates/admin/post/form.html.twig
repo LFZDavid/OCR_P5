@@ -14,22 +14,25 @@
 		</div>
 	{% endif %}
 	<div class="container">
-		<form action="index.php?admin-post=postprocess" method="POST">
-			<div class="mb-3 form-group">
-				<label for="title" class="form-label">Title</label>
-				<input type="text" class="form-control" name="title" id="title" value="{{post_data.title}}" required>
-			</div>
-			<div class="mb-3 form-group">
-				<label for="chapo" class="form-label">Chapo</label>
-				<input type="text" class="form-control" name="chapo" id="chapo" value="{{post_data.chapo}}" required>
-			</div>
-			<div class="mb-3 form-group">
-				<label for="content" class="form-label">content</label>
-				<textarea type="text" class="form-control" name="content" id="content" required>{{post_data.content}}</textarea>
-				<input type="text" hidden value="1" id="id_author" name="id_author">
-				<input type="submit" class="btn btn-success">
-			</div>
+		<form action="index.php?admin-post-form={{id_post}}" method="POST">
+			{% for input in inputs %}
+				<div class="mb-3 form-group">
+					{% if input.hidden == false %}
+						<label for="{{input.field}}" class="form-label">{{input.label}}</label>
+					{% endif %}
+					{% if input.type == 'text' %}
+						<input type="text" class="form-control" name="{{input.field}}" id="{{input.field}}" value="{{input.value}}" {% if input.hidden %} hidden {% endif %}>
+					{% elseif input.type == 'textarea'%}
+						<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30" rows="10">{{input.value}}</textarea>
+					{% endif %}
+				</div>
+			{% endfor %}
+			<input type="hidden" id="post-form-submit" value="true">
+			<input type="submit" class="btn btn-success">
 		</form>
+		<a href="index.php?admin-post=list">
+			<button class="btn btn-info">Retour à la liste</button>
+		</a>
 	</div>
 
 {% endblock %}
