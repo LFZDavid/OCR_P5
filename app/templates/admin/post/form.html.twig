@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{parent()}}
+	-
+	{{title}}
+{% endblock %}
+
+{% block body %}
+	<h1 class="posts-title jumbotron">{{title}}</h1>
+	{% if message !=[] %}
+		<div class="alert alert-{{message.success?'success':'alert'}}" role="alert">
+			{{message.content}}
+		</div>
+	{% endif %}
+	<div class="container">
+		<form action="index.php?admin-post=postprocess" method="POST">
+			<div class="mb-3 form-group">
+				<label for="title" class="form-label">Title</label>
+				<input type="text" class="form-control" name="title" id="title" value="{{post_data.title}}" required>
+			</div>
+			<div class="mb-3 form-group">
+				<label for="chapo" class="form-label">Chapo</label>
+				<input type="text" class="form-control" name="chapo" id="chapo" value="{{post_data.chapo}}" required>
+			</div>
+			<div class="mb-3 form-group">
+				<label for="content" class="form-label">content</label>
+				<textarea type="text" class="form-control" name="content" id="content" required>{{post_data.content}}</textarea>
+				<input type="text" hidden value="1" id="id_author" name="id_author">
+				<input type="submit" class="btn btn-success">
+			</div>
+		</form>
+	</div>
+
+{% endblock %}

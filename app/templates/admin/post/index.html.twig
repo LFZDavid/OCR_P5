@@ -40,7 +40,7 @@
 						<td width="300">
 							<a href="index.php?post={{post.id}}" class="btn btn-info">Voir</a>
 							<a href="" class="btn btn-success">Modifier</a>
-							<form action="index.php?admin-post={{post.id}}" method="POST" onclick="return confirm('Êtes-vous sûre ?')">
+							<form action="index.php?admin-post-delete={{post.id}}" method="POST" onclick="return confirm('Êtes-vous sûre ?')">
 								<input type="hidden" name="_method" value="DELETE">
 								<button class="btn btn-danger">
 									<span class="glyphicon glyphicon-remove">supprimer</span>

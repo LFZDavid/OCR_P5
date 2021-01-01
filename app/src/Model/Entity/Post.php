@@ -6,15 +6,15 @@ use \App\Model\Entity\Entity;
 
 class Post extends Entity
 {
-    protected string $title;
-    protected string $chapo;
-	protected string $content;
-	protected int $id_author;
-	protected bool $active;
-	protected $created_at;
-    protected $updated_at;
-    
-    //GETTERS
+	protected string $title = "";
+	protected string $chapo = "";
+	protected string $content = "";
+	protected int $id_author = 0;
+	protected bool $active = false;
+	protected $created_at = "";
+	protected $updated_at = "";
+
+	//GETTERS
 	public function title()
 	{
 		return $this->title;
@@ -47,48 +47,47 @@ class Post extends Entity
 	//SETTERS
 	public function setTitle($title)
 	{
-        $this->title = (string) $title;
-        return $this;
+		$this->title = (string) $title;
+		return $this;
 	}
 	public function setChapo($chapo)
 	{
-        $this->chapo = (string) $chapo;
-        return $this;
+		$this->chapo = (string) $chapo;
+		return $this;
 	}
 	public function setContent($content)
 	{
-		if(!empty($content)){
+		if (!empty($content)) {
 			$this->content = (string) $content;
-        }
-        return $this;
+		}
+		return $this;
 	}
 	public function setId_author($id_author)
 	{
-		if(!empty($id_author)){
+		if (!empty($id_author)) {
 			$this->content = (int) $id_author;
-        }
-        return $this;
+		}
+		return $this;
 	}
 	public function setActive($active)
 	{
-		if(!empty($active)){
+		if (!empty($active)) {
 			$this->active = (bool) $active;
-        }
-        return $this;
+		}
+		return $this;
 	}
 	public function setCreated_at($created_at)
 	{
-		if(!empty($created_at)){
+		if (!empty($created_at)) {
 			$this->created_at = $created_at;
-        }
-        return $this;
+		}
+		return $this;
 	}
 	public function setUpdated_at($updated_at)
 	{
-		if(!empty($updated_at)){
+		if (!empty($updated_at)) {
 			$this->updated_at = $updated_at;
-        }
-        return $this;
+		}
+		return $this;
 	}
-
 }
