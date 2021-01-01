@@ -102,12 +102,12 @@ class AdminPostController extends Controller
             }
             $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active);
 
-            var_dump($this->manager->save($post));
-            //if ($this->manager->save($post)) {
-            if (true) {
+            $persisted_id = $this->manager->save($post);
+            if ($persisted_id > 0) {
                 $message = [
                     "success" => true,
-                    "content" => "Post sauvegardé !"
+                    "content" => "Post n° $persisted_id sauvegardé !",
+                    "id_post" => $persisted_id
                 ];
             } else {
                 $message = [
