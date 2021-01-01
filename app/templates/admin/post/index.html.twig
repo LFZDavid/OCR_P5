@@ -19,9 +19,10 @@
 			<thead>
 				<tr>
 					<th>Titre</th>
-					<th>Publié</th>
+					<th>Visible</th>
 					<th>Création</th>
 					<th>Mis à jour</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -37,15 +38,17 @@
 						</td>
 						<td>{{post.created_at}}</td>
 						<td>{{post.updated_at}}</td>
-						<td width="300">
-							<a href="index.php?post={{post.id}}" class="btn btn-info">Voir</a>
-							<a href="index.php?admin-post-form={{post.id}}" class="btn btn-success">Modifier</a>
-							<form action="index.php?admin-post-delete={{post.id}}" method="POST" onclick="return confirm('Êtes-vous sûre ?')">
-								<input type="hidden" name="_method" value="DELETE">
-								<button class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove">supprimer</span>
-								</button>
-							</form>
+						<td width="250">
+							<div class="row">
+								<a href="index.php?post={{post.id}}" class="btn btn-info">Voir</a>
+								<a href="index.php?admin-post-form={{post.id}}" class="btn btn-success">Modifier</a>
+								<form action="index.php?admin-post-delete={{post.id}}" method="POST" onclick="return confirm('Êtes-vous sûre ?')">
+									<input type="hidden" name="_method" value="DELETE">
+									<button class="btn btn-danger">
+										<span class="glyphicon glyphicon-remove">supprimer</span>
+									</button>
+								</form>
+							</div>
 						</td>
 					</tr>
 				{% endfor %}

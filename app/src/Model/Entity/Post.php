@@ -10,7 +10,7 @@ class Post extends Entity
 	protected string $chapo = "";
 	protected string $content = "";
 	protected int $id_author = 0;
-	protected bool $active = false;
+	protected int $active = 0;
 	protected $created_at = "";
 	protected $updated_at = "";
 
@@ -71,9 +71,7 @@ class Post extends Entity
 	}
 	public function setActive($active)
 	{
-		if (!empty($active)) {
-			$this->active = (bool) $active;
-		}
+		$this->active = (int) $active;
 		return $this;
 	}
 	public function setCreated_at($created_at)

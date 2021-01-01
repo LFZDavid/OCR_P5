@@ -24,6 +24,10 @@
 						<input type="text" class="form-control" name="{{input.field}}" id="{{input.field}}" value="{{input.value}}" {% if input.hidden %} hidden {% endif %}>
 					{% elseif input.type == 'textarea'%}
 						<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30" rows="10">{{input.value}}</textarea>
+					{% elseif input.type == 'checkbox' %}
+						<div class="form-check form">
+							<input class="form-check-input" type="checkbox" id="{{input.field}}" name="{{input.field}}" {% if input.value > 0 %} checked {% endif %}>
+						</div>
 					{% endif %}
 				</div>
 			{% endfor %}

@@ -64,8 +64,14 @@ class AdminPostController extends Controller
                 "hidden" => false,
                 "value" => $post->content() ?? "",
             ],
+            [
+                "label" => 'Visible',
+                "field" => 'active',
+                "type" => 'checkbox',
+                "hidden" => false,
+                "value" => $post->active(),
+            ],
         ];
-
 
         echo $this->twig->render('/admin/post/form.html.twig', [
             "title" => $title . " d'un post",
@@ -78,17 +84,23 @@ class AdminPostController extends Controller
     public function postProcess(array $data)
     {
         if ($data != []) {
+
             $id = $this->checkInput($data['id']);
             $title = $this->checkInput($data['title']);
             $chapo = $this->checkInput($data['chapo']);
             $content = $this->checkInput($data['content']);
+            if (isset($data['active'])) {
+                $active = 1;
+            } else {
+                $active = 0;
+            }
 
             if ($id > 0) {
                 $post = $this->repository->getUniqueById((int) $id);
             } else {
                 $post = new Post();
             }
-            $post->setTitle($title)->setChapo($chapo)->setContent($content);
+            $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active);
 
             if ($this->manager->save($post)) {
                 $message = [
