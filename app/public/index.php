@@ -8,6 +8,7 @@ use App\Controller\Front\HomeController;
 use App\Controller\Front\PostController;
 use App\Model\Repository\PostRepository;
 use App\Model\Manager\PostManager;
+use App\Model\Repository\CategoryRepository;
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates/');
 $twig = new \Twig\Environment($loader, [

@@ -11,6 +11,7 @@ class Post extends Entity
 	protected string $content = "";
 	protected int $id_author = 1;
 	protected int $active = 0;
+	protected array $categories = [];
 	protected $created_at = "";
 	protected $updated_at = "";
 
@@ -30,6 +31,10 @@ class Post extends Entity
 	public function active()
 	{
 		return $this->active;
+	}
+	public function categories()
+	{
+		return $this->categories;
 	}
 	public function id_author()
 	{
@@ -72,6 +77,11 @@ class Post extends Entity
 	public function setActive($active)
 	{
 		$this->active = (int) $active;
+		return $this;
+	}
+	public function setCategories($categories)
+	{
+		$this->categories = $categories;
 		return $this;
 	}
 	public function setCreated_at($created_at)

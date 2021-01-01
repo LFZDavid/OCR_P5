@@ -48,29 +48,30 @@ CREATE TABLE `blog_p5`.`comments` (
     `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` timestamp
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
--- --------------------------------------------------------
---
--- Structure de la table `categories`
---
-CREATE TABLE `blog_p5`.`categories` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (`id`),
-    `name` varchar(50) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
--- --------------------------------------------------------
---
--- Structure de la table `category_post`
---
-CREATE TABLE `blog_p5`.`category_post` (
-    `id_category_post` int(11) NOT NULL AUTO_INCREMENT,
-    PRIMARY KEY (`id_category_post`),
-    `id_post` int(11) NOT NULL,
-    `id_category` int(11) NOT NULL
-) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
--- --------------------------------------------------------
+
 
 ";
 // --
+// -- --------------------------------------------------------
+// --
+// -- Structure de la table `categories`
+// --
+// CREATE TABLE `blog_p5`.`categories` (
+//     `id` int(11) NOT NULL AUTO_INCREMENT,
+//     PRIMARY KEY (`id`),
+//     `name` varchar(50) NOT NULL
+// ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+// -- --------------------------------------------------------
+// --
+// -- Structure de la table `category_post`
+// --
+// CREATE TABLE `blog_p5`.`category_post` (
+//     `id_category_post` int(11) NOT NULL AUTO_INCREMENT,
+//     PRIMARY KEY (`id_category_post`),
+//     `id_post` int(11) NOT NULL,
+//     `id_category` int(11) NOT NULL
+// ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+// -- --------------------------------------------------------
 // -- Contraintes pour la table `posts`
 // --
 // ALTER TABLE `blog_p5`.`posts`

@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Controller;
 use App\Model\Entity\Post;
+use App\Model\Repository\CategoryRepository;
 
 class AdminPostController extends Controller
 {
@@ -67,7 +68,7 @@ class AdminPostController extends Controller
             [
                 "label" => 'Visible',
                 "field" => 'active',
-                "type" => 'checkbox',
+                "type" => 'switch',
                 "hidden" => false,
                 "value" => $post->active(),
             ],
