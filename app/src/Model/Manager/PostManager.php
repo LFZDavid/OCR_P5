@@ -29,8 +29,9 @@ class PostManager extends Manager
         $q->bindValue(':chapo', (string) $post->chapo());
         $q->bindValue(':content', (string) $post->content());
         $q->bindValue(':id_author', (int) $post->id_author(), PDO::PARAM_INT);
-        $q->bindValue(':active', (int) $post->id_author(), PDO::PARAM_INT);
-        return $q->execute();
+        $q->bindValue(':active', (int) $post->active(), PDO::PARAM_INT);
+        $q->execute();
+        return $this->pdo->lastInsertId();
     }
 
     protected function update(Post $post)
@@ -43,6 +44,7 @@ class PostManager extends Manager
         $q->bindValue(':id_author', (int) $post->id_author(), PDO::PARAM_INT);
         $q->bindValue(':active', (int) $post->active(), PDO::PARAM_INT);
         $q->bindValue(':id', (int) $post->id(), PDO::PARAM_INT);
-        return $q->execute();
+        $q->execute();
+        return $post->id();
     }
 }

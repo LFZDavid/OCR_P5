@@ -9,7 +9,7 @@ class Post extends Entity
 	protected string $title = "";
 	protected string $chapo = "";
 	protected string $content = "";
-	protected int $id_author = 0;
+	protected int $id_author = 1;
 	protected int $active = 0;
 	protected $created_at = "";
 	protected $updated_at = "";
