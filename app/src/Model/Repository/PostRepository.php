@@ -15,7 +15,11 @@ class PostRepository extends Repository
 	protected $CategoryRepository;
 
 
-
+	/**
+	 * overrided herited method for post
+	 * Get list of Post adding categories (Collection)
+	 * @return array $post_list
+	 */
 	public function getList()
 	{
 		$q = $this->pdo->query('SELECT * FROM ' . $this->table);
@@ -31,6 +35,11 @@ class PostRepository extends Repository
 		return $post_list;
 	}
 
+	/**
+	 * overrided herited method for post
+	 * Get Post adding categories (Collection)
+	 * @return Post $post
+	 */
 	public function getUniqueById($id)
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';

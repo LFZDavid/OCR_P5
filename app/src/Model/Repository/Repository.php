@@ -23,6 +23,9 @@ abstract class Repository
 		return $q->fetchAll();
 	}
 
+	/**
+	 * Get List of entity with active attribute set to 1
+	 */
 	public function getListOfActives()
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE active = 1';

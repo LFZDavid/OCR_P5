@@ -12,7 +12,10 @@ class PostManager extends Manager
     protected $table = 'posts';
     protected $classManaged = '\App\Model\Entity\Post';
 
-
+    /**
+     * add/update entity
+     * @param Post $post
+     */
     public function save(Post $post)
     {
         if ($post->id() == null) {
@@ -21,6 +24,11 @@ class PostManager extends Manager
         return $this->update($post);
     }
 
+    /**
+     * 
+     * @param Post $post
+     * @return int $id //Return auto-incremented id for form treatment
+     */
     protected function add(Post $post)
     {
         $request = 'INSERT INTO ' . $this->table . '(`title`, `chapo`, `content`, `id_author`,`active`) VALUES(:title, :chapo, :content, :id_author, :active)';
@@ -34,6 +42,11 @@ class PostManager extends Manager
         return $this->pdo->lastInsertId();
     }
 
+    /**
+     * 
+     * @param Post $post
+     * @return int $id //Return auto-incremented id for form treatment
+     */
     protected function update(Post $post)
     {
         $request = 'UPDATE ' . $this->table . ' SET `title` = :title, `chapo` = :chapo, `content` = :content, `id_author` = :id_author, `active` = :active, `updated_at` = NOW() WHERE `id` = :id';
@@ -48,6 +61,10 @@ class PostManager extends Manager
         return $post->id();
     }
 
+    /**
+     * @param int $id_post
+     * @param int $id_category
+     */
     public function linkCategory($id_post, $id_category)
     {
         $request = 'INSERT INTO `category_post` (`id_post`, `id_category`) VALUES(:id_post, :id_category)';
@@ -57,6 +74,10 @@ class PostManager extends Manager
         $q->execute();
     }
 
+    /**
+     * @param int $id_post
+     * @param int $id_category
+     */
     public function unlinkCategory($id_post, $id_category)
     {
         $request = 'DELETE FROM `category_post` WHERE id_post = :id_post AND id_category = :id_category';

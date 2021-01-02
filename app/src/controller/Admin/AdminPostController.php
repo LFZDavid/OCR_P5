@@ -8,6 +8,10 @@ use App\Model\Repository\CategoryRepository;
 
 class AdminPostController extends Controller
 {
+    /**
+     * 
+     * Build and display post BO
+     */
     public function index($message = null)
     {
         $message ?? "";
@@ -20,6 +24,13 @@ class AdminPostController extends Controller
         ]);
     }
 
+    /**
+     * 
+     * Build and display form
+     * 
+     * @param int $id_post
+     * @param CategoryRepository $CategoryRepository
+     */
     public function getForm(int $id_post, CategoryRepository $CategoryRepository)
     {
         if (isset($_POST)) {
@@ -95,15 +106,22 @@ class AdminPostController extends Controller
         ]);
     }
 
+    /**
+     * @param array $data
+     * @param CategoryRepository $CategoryRepository
+     * @return array $message
+     */
     public function postProcess(array $data, CategoryRepository $CategoryRepository)
     {
         if ($data != []) {
 
+            /**Check post values */
             $id = $this->checkInput($data['id']);
             $title = $this->checkInput($data['title']);
             $chapo = $this->checkInput($data['chapo']);
             $content = $this->checkInput($data['content']);
             $categories = $data['categories'] ?? [];
+
             /**active */
             if (isset($data['active'])) {
                 $active = 1;
@@ -111,37 +129,38 @@ class AdminPostController extends Controller
                 $active = 0;
             }
 
-
-
             if ($id > 0) {
+                /** Edit */
                 $post = $this->repository->getUniqueById((int) $id);
             } else {
+                /** Create */
                 $post = new Post();
             }
+
+            /** Set post values for saving */
             $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active);
 
+            /** Get id_post from database (auto-incremented) */
             $persisted_id = $this->manager->save($post);
 
             $old_post_categories = $CategoryRepository->getListByPost($persisted_id);
             $new_post_categories = $categories;
 
-            /**Update post_categories */
+            /** Compare old linked  categories */
             foreach ($old_post_categories as $old_post_category) {
                 if (isset($new_post_categories[$old_post_category->name()])) {
                     # Category's already linked
-                    echo $old_post_category->name() . ' est déjà liée <br>';
                     unset($new_post_categories[$old_post_category->name()]);
                 } else {
                     # Category isn't linked anymore
-                    echo $old_post_category->name() . ' doit être supprimé <br>';
                     $this->manager->unlinkCategory($persisted_id, $old_post_category->id());
                 }
             }
             foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {
                 # Category has to be linked
-                echo $new_post_category_name . ' doit être ajouté <br>';
                 $this->manager->linkCategory($persisted_id, $new_post_category_id);
             }
+            /**--- */
 
             if ($persisted_id > 0) {
                 $message = [
@@ -159,6 +178,9 @@ class AdminPostController extends Controller
         }
     }
 
+    /**
+     * @param int $id_post
+     */
     public function delete($id_post)
     {
         if ($this->repository->getUniqueById((int)$id_post)) {
