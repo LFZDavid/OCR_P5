@@ -103,11 +103,15 @@ class AdminPostController extends Controller
             $title = $this->checkInput($data['title']);
             $chapo = $this->checkInput($data['chapo']);
             $content = $this->checkInput($data['content']);
+            $categories = $data['categories'];
+            /**active */
             if (isset($data['active'])) {
                 $active = 1;
             } else {
                 $active = 0;
             }
+
+
 
             if ($id > 0) {
                 $post = $this->repository->getUniqueById((int) $id);
@@ -117,6 +121,7 @@ class AdminPostController extends Controller
             $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active);
 
             $persisted_id = $this->manager->save($post);
+
             if ($persisted_id > 0) {
                 $message = [
                     "success" => true,
