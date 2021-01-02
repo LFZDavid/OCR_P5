@@ -23,7 +23,7 @@ class AdminPostController extends Controller
     public function getForm(int $id_post, CategoryRepository $CategoryRepository)
     {
         if (isset($_POST)) {
-            $message = $this->postProcess($_POST);
+            $message = $this->postProcess($_POST, $CategoryRepository);
         }
 
         if ($id_post == 0) {
@@ -69,7 +69,7 @@ class AdminPostController extends Controller
                 "type" => 'checkbox',
                 "hidden" => false,
                 "value" => $categories,
-                "checked_categories" => $checked_categories
+                "checked_categories" => $checked_categories ?? []
             ],
             [
                 "label" => 'Contenu',
@@ -95,7 +95,7 @@ class AdminPostController extends Controller
         ]);
     }
 
-    public function postProcess(array $data)
+    public function postProcess(array $data, CategoryRepository $CategoryRepository)
     {
         if ($data != []) {
 
@@ -103,7 +103,7 @@ class AdminPostController extends Controller
             $title = $this->checkInput($data['title']);
             $chapo = $this->checkInput($data['chapo']);
             $content = $this->checkInput($data['content']);
-            $categories = $data['categories'];
+            $categories = $data['categories'] ?? [];
             /**active */
             if (isset($data['active'])) {
                 $active = 1;
@@ -121,6 +121,25 @@ class AdminPostController extends Controller
             $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active);
 
             $persisted_id = $this->manager->save($post);
+
+            $old_post_categories = $CategoryRepository->getListByPost($persisted_id);
+            $new_post_categories = $categories;
+
+            /**Update post_categories */
+            foreach ($old_post_categories as $old_post_category) {
+                if (isset($new_post_categories[$old_post_category->name()])) {
+                    # Category's already linked
+                    echo $old_post_category->name() . ' est déjà liée <br>';
+                    unset($new_post_categories[$old_post_category->name()]);
+                } else {
+                    # Category isn't linked anymore
+                    echo $old_post_category->name() . ' doit être supprimé <br>';
+                }
+            }
+            foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {
+                # Category has to be linked
+                echo $new_post_category_name . ' doit être ajouté <br>';
+            }
 
             if ($persisted_id > 0) {
                 $message = [

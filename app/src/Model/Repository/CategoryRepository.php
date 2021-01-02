@@ -13,7 +13,7 @@ class CategoryRepository extends Repository
 
     public function getListByPost($id_post)
     {
-        $request = 'SELECT `id_category`, categories.name as name 
+        $request = 'SELECT `id_category` as id, categories.name as name 
         FROM `category_post`
         INNER JOIN `categories` ON categories.id = `id_category` 
         WHERE `id_post` = :id_post ';
