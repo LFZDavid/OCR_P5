@@ -47,4 +47,22 @@ class PostManager extends Manager
         $q->execute();
         return $post->id();
     }
+
+    public function linkCategory($id_post, $id_category)
+    {
+        $request = 'INSERT INTO `category_post` (`id_post`, `id_category`) VALUES(:id_post, :id_category)';
+        $q = $this->pdo->prepare($request);
+        $q->bindValue(':id_post', $id_post, PDO::PARAM_INT);
+        $q->bindValue(':id_category', $id_category, PDO::PARAM_INT);
+        $q->execute();
+    }
+
+    public function unlinkCategory($id_post, $id_category)
+    {
+        $request = 'DELETE FROM `category_post` WHERE id_post = :id_post AND id_category = :id_category';
+        $q = $this->pdo->prepare($request);
+        $q->bindValue(':id_post', $id_post, PDO::PARAM_INT);
+        $q->bindValue(':id_category', $id_category, PDO::PARAM_INT);
+        $q->execute();
+    }
 }

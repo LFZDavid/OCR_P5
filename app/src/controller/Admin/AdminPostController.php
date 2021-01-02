@@ -134,11 +134,13 @@ class AdminPostController extends Controller
                 } else {
                     # Category isn't linked anymore
                     echo $old_post_category->name() . ' doit être supprimé <br>';
+                    $this->manager->unlinkCategory($persisted_id, $old_post_category->id());
                 }
             }
             foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {
                 # Category has to be linked
                 echo $new_post_category_name . ' doit être ajouté <br>';
+                $this->manager->linkCategory($persisted_id, $new_post_category_id);
             }
 
             if ($persisted_id > 0) {
