@@ -20,9 +20,8 @@ class AdminPostController extends Controller
         ]);
     }
 
-    public function getForm(int $id_post)
+    public function getForm(int $id_post, CategoryRepository $CategoryRepository)
     {
-
         if (isset($_POST)) {
             $message = $this->postProcess($_POST);
         }
@@ -33,6 +32,12 @@ class AdminPostController extends Controller
         } else {
             $post = $this->repository->getUniqueById((int)$id_post);
             $title = "Modification";
+        }
+
+        $categories = $CategoryRepository->getList();
+
+        foreach ($post->categories() as $post_category) {
+            $checked_categories[$post_category->name()] = true;
         }
 
         $inputs = [
@@ -57,6 +62,14 @@ class AdminPostController extends Controller
                 "type" => 'text',
                 "hidden" => false,
                 "value" => $post->chapo() ?? "",
+            ],
+            [
+                "label" => 'Categories',
+                "field" => 'categories',
+                "type" => 'checkbox',
+                "hidden" => false,
+                "value" => $categories,
+                "checked_categories" => $checked_categories
             ],
             [
                 "label" => 'Contenu',

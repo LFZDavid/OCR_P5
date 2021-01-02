@@ -28,20 +28,19 @@
 					{% if input.type == 'text' %}
 						<input type="text" class="form-control" name="{{input.field}}" id="{{input.field}}" value="{{input.value}}" {% if input.hidden %} hidden {% endif %}>
 					{% elseif input.type == 'checkbox'%}
-
-						<fieldset class="mb-3 form-group">
-							<legend>{{input.label}}</legend>
+						<div class="mb-3 form-group">
 							<div class="form-check">
 								{% for category in input.value %}
 									<label class="form-check-label">
-										<input class="form-check-input" type="checkbox" value="{{category.id}}">
+										<input class="form-check-input" type="checkbox" value="{{category.id}}" {% if input.checked_categories[category.name] %} checked="checked" {% endif %}>
 										{{category.name}}
 									</label>
 								{% endfor %}
 							</div>
-						</fieldset>
-
-
+						</div>
+						<pre>
+							
+						</pre>
 					{% elseif input.type == 'textarea'%}
 						<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30" rows="10">{{input.value}}</textarea>
 					{% elseif input.type == 'switch' %}

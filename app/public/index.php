@@ -22,6 +22,7 @@ try {
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $postRepository = new PostRepository($pdo);
     $postManager = new PostManager($pdo);
+    $CategoryRepository = new CategoryRepository($pdo);
 
 
     // Front
@@ -41,7 +42,7 @@ try {
         }
     } elseif (isset($_GET['admin-post-form'])) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
-        $adminPostController->getForm($_GET['admin-post-form']);
+        $adminPostController->getForm($_GET['admin-post-form'], $CategoryRepository);
     } elseif (
         isset($_GET['admin-post-delete'])
         && (isset($_POST['_method']))

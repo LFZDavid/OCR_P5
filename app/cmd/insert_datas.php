@@ -45,16 +45,14 @@ try {
     // Insert categories
     // $db->exec("INSERT INTO `blog_p5`.`categories`(
     //     `name`
-    // ) VALUES('new'),('Lorem'),('Ipsum'),('Letraset'),('passages'),('sheets')
+    // ) VALUES('News'),('Tips'),('Languages'),('Framework'),('Divers')
     // ");
-    // // Link categories to post
-    // $db->exec("INSERT INTO `blog_p5`.`category_post`(
-    //     `id_post`,
-    //     `id_category`
-    // ) VALUES(1,1),(1,2),(2,1),(3,2),(4,3),(4,5),(4,6)
-    // ");
-
-
+    // Link categories to post
+    $db->exec("INSERT INTO `blog_p5`.`category_post`(
+        `id_post`,
+        `id_category`
+    ) VALUES(1,1),(1,2),(2,1),(3,2),(4,3),(4,5),(4,6)
+    ");
 } catch (\PDOException $e) {
     echo 'La connexion à échoué.<br/>';
     echo 'Information : [', $e->getCode(), '] ', $e->getMessage();

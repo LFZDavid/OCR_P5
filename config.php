@@ -9,3 +9,10 @@ $config = [
     "env" => "dev" // dev / prod
 
 ];
+
+$links = [
+    "cv" => "#",
+    "linkedin" => "#",
+    "github" => "#"
+
+];
