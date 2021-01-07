@@ -4,10 +4,14 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 require '../../config.php';
 
 use App\Controller\Admin\AdminPostController;
+use App\Controller\Admin\AdminUserController;
 use App\Controller\Front\HomeController;
 use App\Controller\Front\PostController;
+use App\Controller\Front\UserController;
 use App\Model\Repository\PostRepository;
+use App\Model\Repository\UserRepository;
 use App\Model\Manager\PostManager;
+use App\Model\Manager\UserManager;
 use App\Model\Repository\CategoryRepository;
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates/');
@@ -22,6 +26,8 @@ try {
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $postRepository = new PostRepository($pdo);
     $postManager = new PostManager($pdo);
+    $userRepository = new UserRepository($pdo);
+    $userManager = new UserManager($pdo);
     $CategoryRepository = new CategoryRepository($pdo);
 
 
@@ -34,7 +40,8 @@ try {
             $postController->show($_GET['post']);
         }
 
-        // Back
+    // Back
+        // Post
     } elseif (isset($_GET['admin-post'])) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
         if ($_GET['admin-post'] == 'list') {
@@ -50,10 +57,20 @@ try {
     ) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
         $adminPostController->delete($_GET['admin-post-delete']);
+    
+        // User
+    } elseif (isset($_GET['admin-user'])){
+        $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
+        if ($_GET['admin-user'] == 'list') {
+            $adminUserController->index();
+        }
+        
+    // Home (default)
     } else {
         $homeController = new HomeController($twig);
         $homeController->homePage();
     }
+
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
 }

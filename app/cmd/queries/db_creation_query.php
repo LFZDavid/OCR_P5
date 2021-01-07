@@ -31,8 +31,8 @@ CREATE TABLE `blog_p5`.`users` (
     `name` varchar(50) NOT NULL,
     `email` varchar(50) NOT NULL,
     `pwd` varchar(255) NOT NULL,
-    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` timestamp
+    `role` varchar(50) NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 -- --------------------------------------------------------
 --

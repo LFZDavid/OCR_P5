@@ -10,9 +10,10 @@ try {
     $db->exec("INSERT INTO `blog_p5`.`users` (
         `name`,
         `email`,
-        `pwd`
+        `pwd`,
+        `role`
         )
-        VALUES('admin','admin@admin.com','test')");
+        VALUES('admin','admin@admin.com','','admin')");
     // Insert posts
     $db->exec("INSERT INTO `blog_p5`.`posts`(
         `title`,
