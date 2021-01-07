@@ -32,6 +32,7 @@ try {
 
 
     // Front
+        //Post
     if (isset($_GET['post'])) {
         $postController = new PostController($twig, $postRepository);
         if ($_GET['post'] <= 0) {
@@ -39,7 +40,13 @@ try {
         } else {
             $postController->show($_GET['post']);
         }
-
+        //User
+    }elseif(isset($_GET['user-form'])){
+        $userController = new UserController($twig, $userRepository);
+        if($_GET['user-form']==0){
+            // TODO (get id_user in session/cookie for edit profile root)
+            $userController->getForm(0);
+        }
     // Back
         // Post
     } elseif (isset($_GET['admin-post'])) {
