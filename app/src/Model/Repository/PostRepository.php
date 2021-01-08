@@ -28,7 +28,7 @@ class PostRepository extends Repository
 		$this->CategoryRepository = new CategoryRepository($this->pdo);
 		$list = $q->fetchAll();
 		foreach ($list as $post) {
-			$post_categories = $this->CategoryRepository->getListByPost($post->id());
+			$post_categories = $this->CategoryRepository->getListByPost($post->getId());
 			$post->setCategories($post_categories);
 			$post_list[] = $post;
 		}
@@ -49,7 +49,7 @@ class PostRepository extends Repository
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 		$post = $q->fetch();
 		$this->CategoryRepository = new CategoryRepository($this->pdo);
-		$post_categories = $this->CategoryRepository->getListByPost($post->id());
+		$post_categories = $this->CategoryRepository->getListByPost($post->getId());
 		$post->setCategories($post_categories);
 		return $post;
 	}

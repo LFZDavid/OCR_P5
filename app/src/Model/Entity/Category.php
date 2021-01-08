@@ -9,7 +9,7 @@ class Category extends Entity
     protected string $name;
 
     //GETTERS
-    public function name()
+    public function getName()
     {
         return $this->name;
     }

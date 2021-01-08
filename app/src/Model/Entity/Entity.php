@@ -23,7 +23,7 @@ abstract class Entity
 		}
 	}
 	//GETTERS
-	public function id()
+	public function getId()
 	{
 		return $this->id;
 	}

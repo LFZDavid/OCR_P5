@@ -47,8 +47,8 @@ class AdminPostController extends Controller
 
         $categories = $CategoryRepository->getList();
 
-        foreach ($post->categories() as $post_category) {
-            $checked_categories[$post_category->name()] = true;
+        foreach ($post->getCategories() as $post_category) {
+            $checked_categories[$post_category->getName()] = true;
         }
 
         $inputs = [
@@ -57,7 +57,7 @@ class AdminPostController extends Controller
                 "field" => 'id',
                 "type" => 'text',
                 "hidden" => true,
-                "value" => $post->id() ?? 0,
+                "value" => $post->getId() ?? 0,
 
             ],
             [
@@ -65,14 +65,14 @@ class AdminPostController extends Controller
                 "field" => 'title',
                 "type" => 'text',
                 "hidden" => false,
-                "value" => $post->title() ?? "",
+                "value" => $post->getTitle() ?? "",
             ],
             [
                 "label" => 'Chapô',
                 "field" => 'chapo',
                 "type" => 'text',
                 "hidden" => false,
-                "value" => $post->chapo() ?? "",
+                "value" => $post->getChapo() ?? "",
             ],
             [
                 "label" => 'Categories',
@@ -87,21 +87,21 @@ class AdminPostController extends Controller
                 "field" => 'content',
                 "type" => 'textarea',
                 "hidden" => false,
-                "value" => $post->content() ?? "",
+                "value" => $post->getContent() ?? "",
             ],
             [
                 "label" => 'Visible',
                 "field" => 'active',
                 "type" => 'switch',
                 "hidden" => false,
-                "value" => $post->active(),
+                "value" => $post->getActive(),
             ],
         ];
 
         echo $this->twig->render('/admin/post/form.html.twig', [
             "title" => $title . " d'un post",
             "inputs" => $inputs,
-            "id_post" => $post->id() ?? 0,
+            "id_post" => $post->getId() ?? 0,
             "message" => $message // chargé après traitement du formulaire
         ]);
     }
@@ -148,12 +148,12 @@ class AdminPostController extends Controller
 
             /** Compare old linked  categories */
             foreach ($old_post_categories as $old_post_category) {
-                if (isset($new_post_categories[$old_post_category->name()])) {
+                if (isset($new_post_categories[$old_post_category->getName()])) {
                     # Category's already linked
-                    unset($new_post_categories[$old_post_category->name()]);
+                    unset($new_post_categories[$old_post_category->getName()]);
                 } else {
                     # Category isn't linked anymore
-                    $this->manager->unlinkCategory($persisted_id, $old_post_category->id());
+                    $this->manager->unlinkCategory($persisted_id, $old_post_category->getId());
                 }
             }
             foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {

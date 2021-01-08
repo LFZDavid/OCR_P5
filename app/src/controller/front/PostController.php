@@ -10,12 +10,12 @@ class PostController extends Controller
     public function show($id_post)
     {
         $post = $this->repository->getUniqueById((int)$id_post);
-        if (!$post->id() || !$post->active()) {
+        if (!$post->getId() || !$post->getActive()) {
             header('location: index.php');
         }
 
         echo $this->twig->render('/front/post/show.html.twig', [
-            "title" => $post->title(),
+            "title" => $post->getTitle(),
             "post" => $post
         ]);
     }

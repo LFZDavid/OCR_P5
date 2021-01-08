@@ -16,35 +16,35 @@ class Post extends Entity
 	protected $updated_at = "";
 
 	//GETTERS
-	public function title()
+	public function getTitle()
 	{
 		return $this->title;
 	}
-	public function chapo()
+	public function getChapo()
 	{
 		return $this->chapo;
 	}
-	public function content()
+	public function getContent()
 	{
 		return $this->content;
 	}
-	public function active()
+	public function getActive()
 	{
 		return $this->active;
 	}
-	public function categories()
+	public function getCategories()
 	{
 		return $this->categories;
 	}
-	public function id_author()
+	public function getIdAuthor()
 	{
 		return $this->id_author;
 	}
-	public function created_at()
+	public function getCreatedAt()
 	{
 		return $this->created_at;
 	}
-	public function updated_at()
+	public function getUpdatedAt()
 	{
 		return $this->updated_at;
 	}
