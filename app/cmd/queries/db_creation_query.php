@@ -75,13 +75,9 @@ INSERT INTO `blog_p5`.`categories`(
     `name`
 ) VALUES('News'),('Tips'),('Languages'),('Framework'),('Divers');
 
+-- --------------------------------------------------------
 ";
 
-// -- --------------------------------------------------------
-// -- Contraintes pour la table `posts`
-// --
-// ALTER TABLE `blog_p5`.`posts`
-// ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
 // -- --------------------------------------------------------
 // --
 // -- Contraintes pour la table `comments`
@@ -90,12 +86,3 @@ INSERT INTO `blog_p5`.`categories`(
 // ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
 // ALTER TABLE `blog_p5`.`comments`
 // ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);
-// -- --------------------------------------------------------
-// --
-// -- Contraintes pour la table `category_post`
-// --
-// ALTER TABLE `blog_p5`.`category_post`
-// ADD CONSTRAINT `category_post_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`);
-// ALTER TABLE `blog_p5`.`category_post`
-// ADD CONSTRAINT `category_post_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);
-// -- --------------------------------------------------------

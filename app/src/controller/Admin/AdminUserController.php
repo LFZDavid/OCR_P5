@@ -18,7 +18,7 @@ class AdminUserController extends Controller
         echo $this->twig->render('/admin/user/index.html.twig', [
             "title" => "Administration des utilisateurs",
             "users" => $users,
-            "message" => $this->message
+            "messages" => $this->messages
         ]);
     }
 
@@ -32,21 +32,21 @@ class AdminUserController extends Controller
         $this->manager->save($user);
 
         $this->fillMessage('success', 'l\'utilisateur n°' . $user->getId() . ' a été passé au niveau ' . $user->getRole() . ' !');
-        $this->index();
+        header('Location:index.php?admin-user=list');
     }
 
-    /**
-     * @param int $id_user
-     */
-    public function delete($id_user)
-    {
-        if ($this->repository->getUniqueById((int)$id_user)) {
-            if ($this->manager->delete((int)$id_user)) {
-                $message = 'L\'utilisateur n° ' . $id_user . ' a été supprimé';
-            } else {
-                $message = 'Impossible de supprimer l\'utilisateur n° ' . $id_user . ' !';
-            }
-        }
-        $this->index($message);
-    }
+    // /**
+    //  * @param int $id_user
+    //  */
+    // public function delete($id_user)
+    // {
+    //     if ($this->repository->getUniqueById((int)$id_user)) {
+    //         if ($this->manager->delete((int)$id_user)) {
+    //             $message = 'L\'utilisateur n° ' . $id_user . ' a été supprimé';
+    //         } else {
+    //             $message = 'Impossible de supprimer l\'utilisateur n° ' . $id_user . ' !';
+    //         }
+    //     }
+    //     $this->index($message);
+    // }
 }

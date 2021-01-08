@@ -9,7 +9,7 @@ abstract class Controller
     protected Environment $twig;
     protected $repository;
     protected $manager;
-    protected array $message;
+    protected array $messages = [];
 
     public function __construct(Environment $twig, $repository = null, $manager = null)
     {
@@ -29,7 +29,9 @@ abstract class Controller
 
     protected function fillMessage($type, $content)
     {
-        $this->message['type'] = $type;
-        $this->message['content'] .= $content;
+        $message = [
+            $type => $content
+        ];
+        array_push($this->messages, $message);
     }
 }

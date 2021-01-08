@@ -7,13 +7,21 @@ try {
 
     // $db->query($db_insert_demo_datas_query);
     // Insert users
-    $db->exec("INSERT INTO `blog_p5`.`users` (
+    $db->exec("
+    INSERT INTO `blog_p5`.`users` (
         `name`,
         `email`,
         `pwd`,
         `role`
         )
-        VALUES('admin','admin@admin.com','','admin')");
+        VALUES('admin','admin@admin.com','$2y$10\$oiNmLZMeZwUKDAU6H0VFIedFx6uBp3d4kulH75XEAf6Zup9flINXW','admin'),
+        ('Tony','stark@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
+        ('Steve','rodgers@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
+        ('Bruce','banner@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
+        ('Natasha','romanoff@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
+        ('Thor','odinsson@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user')
+            
+        ");
     // Insert posts
     $db->exec("INSERT INTO `blog_p5`.`posts`(
         `title`,

@@ -8,11 +8,20 @@
 
 {% block body %}
 <h1 class="users-title jumbotron">{{title}}</h1>
-{% if message is empty%}
+{% if messages is empty%}
 {% else %}
-<div class="alert alert-success">
-    {{message.content}}
+{% for type, content in messages %}
+<div class="alert
+{% if type == 'success' %}
+alert-success 
+{% elseif type == 'error' %} 
+alert-danger
+{% endif %}
+ ">
+    {{type}} : {{content}}
 </div>
+
+{% endfor %}
 
 {% endif %}
 <div class="container-fluid">

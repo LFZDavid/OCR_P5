@@ -58,7 +58,7 @@ class UserController extends Controller
             "title" => $title,
             "inputs" => $inputs,
             "id_user" => $user->getId() ?? 0,
-            "message" => $this->message
+            "messages" => $this->messages
         ]);
     }
 
@@ -67,6 +67,7 @@ class UserController extends Controller
     {
 
         $user_data = [];
+        $success = true;
         // Validation
         foreach ($data as $key => $value) {
             if ($key == 'name') {
@@ -75,9 +76,11 @@ class UserController extends Controller
                         $user_data['name'] = $this->checkInput($value);
                     } else {
                         $this->fillMessage('error', 'Ce pseudo n\'est pas disponible!');
+                        $success = false;
                     }
                 } else {
                     $this->fillMessage('error', 'Pseudo trop court : 5 caractère minimum.');
+                    $success = false;
                 }
             } elseif ($key == 'email') {
                 if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -85,30 +88,32 @@ class UserController extends Controller
                         $user_data['email'] = $this->checkInput($value);
                     } else {
                         $this->fillMessage('error', 'Cet email est déjà utilisé !');
+                        $success = false;
                     }
                 } else {
                     $this->fillMessage('error', "L'adresse email '$value' n'est pas valide.");
+                    $success = false;
                 }
             } elseif ($key == 'pwd') {
-                if (strlen($value) >= 6) {
+                if (strlen($value) >= 5) {
                     $user_data['pwd'] = password_hash($value, PASSWORD_DEFAULT);
                     //check with password_verify($_POST['pwd'], $user->pwd()) : bool;
                 } else {
                     $this->fillMessage('error', 'Mot de passe trop court : 6 caractère minimum');
+                    $success = false;
                 }
             } elseif ($key == 'confirm') {
                 if ($value !== $data['pwd']) {
                     $this->fillMessage('error', 'La confirmation et le mot de passe ne correspondent pas !');
+                    $success = false;
                 }
             } else {
                 $this->fillMessage('error', 'Le champ ' . $key . ' est inconnu !');
+                $success = false;
             }
         }
 
-        if (
-            !in_array('error', $this->message)
-            && $user_data != []
-        ) {
+        if ($success && !empty($user_data)) {
             $user->setName($user_data['name'])
                 ->setEmail($user_data['email'])
                 ->setPwd($user_data['pwd'])
