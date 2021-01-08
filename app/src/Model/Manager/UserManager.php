@@ -13,11 +13,13 @@ class UserManager extends Manager
 
     /**
      * add/update entity
+     *
      * @param User $user
+     * @return int
      */
-    public function save(User $user)
+    public function save(User $user): int
     {
-        if ($user->id() == null) {
+        if ($user->getId() == null) {
             return $this->add($user);
         }
         return $this->update($user);
@@ -30,12 +32,12 @@ class UserManager extends Manager
      */
     protected function add(User $user)
     {
-        $request = 'INSERT INTO ' . $this->table . '(`name`, `email`, `pwd`, `role`,`active`) VALUES(:name, :email, :pwd, :role, :active)';
+        $request = 'INSERT INTO ' . $this->table . '(`name`, `email`, `pwd`, `role`) VALUES(:name, :email, :pwd, :role)';
         $q = $this->pdo->prepare($request);
-        $q->bindValue(':name', (string) $user->name());
-        $q->bindValue(':email', (string) $user->email());
-        $q->bindValue(':pwd', (string) $user->pwd());
-        $q->bindValue(':role', (int) $user->role());
+        $q->bindValue(':name', (string) $user->getName());
+        $q->bindValue(':email', (string) $user->getEmail());
+        $q->bindValue(':pwd', (string) $user->getPwd());
+        $q->bindValue(':role', (string) $user->getRole());
         $q->execute();
         return $this->pdo->lastInsertId();
     }
@@ -49,12 +51,12 @@ class UserManager extends Manager
     {
         $request = 'UPDATE ' . $this->table . ' SET `name` = :name, `email` = :email, `pwd` = :pwd, `role` = :role WHERE `id` = :id';
         $q = $this->pdo->prepare($request);
-        $q->bindValue(':name', (string) $user->name());
-        $q->bindValue(':email', (string) $user->email());
-        $q->bindValue(':pwd', (string) $user->pwd());
-        $q->bindValue(':role', (int) $user->role());
-        $q->bindValue(':id', (int) $user->id(), PDO::PARAM_INT);
+        $q->bindValue(':name', (string) $user->getName());
+        $q->bindValue(':email', (string) $user->getEmail());
+        $q->bindValue(':pwd', (string) $user->getPwd());
+        $q->bindValue(':role', (string) $user->getRole());
+        $q->bindValue(':id', (int) $user->getId(), PDO::PARAM_INT);
         $q->execute();
-        return $user->id();
+        return $user->getId();
     }
 }

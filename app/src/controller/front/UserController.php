@@ -17,9 +17,6 @@ class UserController extends Controller
      */
     public function getForm(int $id_user)
     {
-        if (!empty($_POST)) {
-            $this->postProcess($_POST);
-        }
 
         if ($id_user == 0) {
             $user = new User();
@@ -29,6 +26,9 @@ class UserController extends Controller
             $title = "Modification";
         }
 
+        if (!empty($_POST)) {
+            $this->postProcess($_POST, $user);
+        }
 
         $inputs = [
 
@@ -57,12 +57,12 @@ class UserController extends Controller
         echo $this->twig->render('/front/user/form.html.twig', [
             "title" => $title,
             "inputs" => $inputs,
-            "id_user" => $user->id() ?? 0,
+            "id_user" => $user->getId() ?? 0,
             "message" => $this->message
         ]);
     }
 
-    public function postProcess(array $data)
+    public function postProcess(array $data, User $user = null)
     {
         // Validation
         foreach ($data as $key => $value) {
@@ -73,6 +73,8 @@ class UserController extends Controller
                 $this->fillMessage('error', 'Le champ ' . $key . ' est inconnu !');
                 $valid = false;
             }
+
+            $value = $this->checkInput($value);
 
             switch ($key) {
                 case 'name':
@@ -118,8 +120,21 @@ class UserController extends Controller
         }
 
         if (!key_exists('error', $this->message)) {
+
+            $user->setName($user_data['name'])
+                ->setEmail($user_data['email'])
+                ->setPwd($user_data['pwd'])
+                ->setRole('user');
+
+            print_r($user);
+            $persisted_id = $this->manager->save($user);
+
+            // if ($persisted_id) {
             $this->fillMessage('success', 'Utilisateur enregistré !');
             // LOGIN
+            // } else {
+            //     $this->fillMessage('error', 'Une erreur est survenue ! Merci de réessayer plus tard ou de contacter le support.');
+            // }
         }
     }
 

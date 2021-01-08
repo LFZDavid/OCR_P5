@@ -32,7 +32,7 @@ try {
 
 
     // Front
-        //Post
+    //Post
     if (isset($_GET['post'])) {
         $postController = new PostController($twig, $postRepository);
         if ($_GET['post'] <= 0) {
@@ -41,13 +41,13 @@ try {
             $postController->show($_GET['post']);
         }
         //User
-    }elseif(isset($_GET['user-form'])){
-        $userController = new UserController($twig, $userRepository);
-        if($_GET['user-form']==0){
+    } elseif (isset($_GET['user-form'])) {
+        $userController = new UserController($twig, $userRepository, $userManager);
+        if ($_GET['user-form'] == 0) {
             // TODO (get id_user in session/cookie for edit profile root)
             $userController->getForm(0);
         }
-    // Back
+        // Back
         // Post
     } elseif (isset($_GET['admin-post'])) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
@@ -64,20 +64,19 @@ try {
     ) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
         $adminPostController->delete($_GET['admin-post-delete']);
-    
+
         // User
-    } elseif (isset($_GET['admin-user'])){
+    } elseif (isset($_GET['admin-user'])) {
         $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
         if ($_GET['admin-user'] == 'list') {
             $adminUserController->index();
         }
-        
-    // Home (default)
+
+        // Home (default)
     } else {
         $homeController = new HomeController($twig);
         $homeController->homePage();
     }
-
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
 }

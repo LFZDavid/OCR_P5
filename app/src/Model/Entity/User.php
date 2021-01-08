@@ -16,7 +16,7 @@ class User extends Entity
     /**
      * Get the value of name
      */
-    public function name()
+    public function getName()
     {
         return $this->name;
     }
@@ -36,7 +36,7 @@ class User extends Entity
     /**
      * Get the value of email
      */
-    public function email()
+    public function getEmail()
     {
         return $this->email;
     }
@@ -56,7 +56,7 @@ class User extends Entity
     /**
      * Get the value of pwd
      */
-    public function pwd()
+    public function getPwd()
     {
         return $this->pwd;
     }
@@ -76,7 +76,7 @@ class User extends Entity
     /**
      * Get the value of created_at
      */
-    public function created_at()
+    public function getCreated_at()
     {
         return $this->created_at;
     }
@@ -96,7 +96,7 @@ class User extends Entity
     /**
      * Get the value of role
      */
-    public function role()
+    public function getRole()
     {
         return $this->role;
     }
