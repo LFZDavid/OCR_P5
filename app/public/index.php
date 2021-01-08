@@ -43,9 +43,9 @@ try {
         //User
     } elseif (isset($_GET['user-form'])) {
         $userController = new UserController($twig, $userRepository, $userManager);
-        if ($_GET['user-form'] == 0) {
+        if ($_GET['user-form']) {
             // TODO (get id_user in session/cookie for edit profile root)
-            $userController->getForm(0);
+            $userController->getForm();
         }
         // Back
         // Post

@@ -15,7 +15,7 @@
 {% endif %}
 
 <div class="container">
-    <form action="index.php?user-form" method="POST">
+    <form action="index.php?user-form=true" method="POST">
         {% for key, input in inputs %}
         <div class="mb-3 form-group">
             <label for="{{key}}" class="form-label">{{input.label}}</label>

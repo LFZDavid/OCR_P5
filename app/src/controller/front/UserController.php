@@ -12,18 +12,22 @@ class UserController extends Controller
 
     /**
      *
-     * @param integer $id_user
      * @return void
      */
-    public function getForm(int $id_user)
+    public function getForm()
     {
 
-        if ($id_user == 0) {
+        $id_user = false;
+        // todo récupérer l'id user dans SESSION
+
+        if (!$id_user) {
             $user = new User();
             $title = "Inscription";
+            $edit = false;
         } else {
             $user = $this->repository->getUniqueById($id_user);
             $title = "Modification";
+            $edit = true;
         }
 
         if (!empty($_POST)) {
@@ -35,12 +39,12 @@ class UserController extends Controller
             'name' => [
                 'label' => 'Pseudo',
                 'type' => 'text',
-                'value' => ""
+                'value' => $edit ? $user->getName() : ""
             ],
             'email' => [
                 'label' => 'Email',
                 'type' => 'email',
-                'value' => ""
+                'value' => $edit ? $user->getEmail() : ""
             ],
             'pwd' => [
                 'label' => 'Mot de passe',
