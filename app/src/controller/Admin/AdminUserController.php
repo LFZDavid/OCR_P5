@@ -11,15 +11,14 @@ class AdminUserController extends Controller
      * 
      * Build and display user BO
      */
-    public function index($message = null)
+    public function index()
     {
-        $message ?? "";
         $users = $this->repository->getList();
 
         echo $this->twig->render('/admin/user/index.html.twig', [
             "title" => "Administration des utilisateurs",
             "users" => $users,
-            "message" => $message
+            "message" => $this->message
         ]);
     }
 
@@ -32,8 +31,7 @@ class AdminUserController extends Controller
         $user->setRole((string) $role);
         $this->manager->save($user);
 
-
-        $this->fillMessage('success', 'l\'utilisateur n° x a été passé au niveau y !');
+        $this->fillMessage('success', 'l\'utilisateur n°' . $user->getId() . ' a été passé au niveau ' . $user->getRole() . ' !');
         $this->index();
     }
 

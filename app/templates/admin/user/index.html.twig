@@ -8,10 +8,12 @@
 
 {% block body %}
 <h1 class="users-title jumbotron">{{title}}</h1>
-{% if message !="" %}
-<div class="alert alert-success" role="alert">
-    {{message}}
+{% if message is empty%}
+{% else %}
+<div class="alert alert-success">
+    {{message.content}}
 </div>
+
 {% endif %}
 <div class="container-fluid">
     <a href="index.php?user-form=0" class="btn btn-primary" style="margin-bottom:20px;">Ajouter</a>
@@ -31,7 +33,6 @@
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.created_at}}</td>
-
                 <td>
                     <form action="index.php?admin-user=role" method="POST">
                         <select name="role" id="role">
