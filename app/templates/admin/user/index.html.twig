@@ -31,10 +31,23 @@
                 <td>{{user.name}}</td>
                 <td>{{user.email}}</td>
                 <td>{{user.created_at}}</td>
-                <td>{{user.role}}</td>
+
+                <td>
+                    <form action="index.php?admin-user=role" method="POST">
+                        <select name="role" id="role">
+                            <option value="user" {% if user.role=="user" %} selected="selected" {% endif %}>Utilisateur
+                            </option>
+                            <option value="editor" {% if user.role=="editor" %} selected="selected" {% endif %}>Editeur
+                            </option>
+                            <option value="admin" {% if user.role=="admin" %} selected="selected" {% endif %}>Admin
+                            </option>
+                        </select>
+                </td>
                 <td width="250">
                     <div class="row">
-                        <!-- <a href="index.php?admin-user-form={{user.id}}" class="btn btn-success">Modifier</a> -->
+                        <input type="hidden" name="id_user" value="{{user.id}}">
+                        <input type="submit" class="btn btn-primary" value="Enregistrer">
+                        </form>
                         <form action="index.php?admin-user-delete={{user.id}}" method="POST"
                             onclick="return confirm('Êtes-vous sûre ?')">
                             <input type="hidden" name="_method" value="DELETE">

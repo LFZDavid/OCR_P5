@@ -92,7 +92,7 @@ class UserController extends Controller
             } elseif ($key == 'pwd') {
                 if (strlen($value) >= 6) {
                     $user_data['pwd'] = password_hash($value, PASSWORD_DEFAULT);
-                    //check with : password_verify($_POST['pwd'], $user->pwd()) : bool;
+                    //check with password_verify($_POST['pwd'], $user->pwd()) : bool;
                 } else {
                     $this->fillMessage('error', 'Mot de passe trop court : 6 caractère minimum');
                 }
@@ -120,11 +120,7 @@ class UserController extends Controller
         }
     }
 
-    protected function fillMessage($type, $content)
-    {
-        $this->message['type'] = $type;
-        $this->message['content'] .= $content;
-    }
+
 
     /**
      * Test if username is available

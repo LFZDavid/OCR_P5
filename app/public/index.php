@@ -70,8 +70,9 @@ try {
         $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
         if ($_GET['admin-user'] == 'list') {
             $adminUserController->index();
+        } elseif ($_GET['admin-user'] == 'role') {
+            $adminUserController->changeRole();
         }
-
         // Home (default)
     } else {
         $homeController = new HomeController($twig);

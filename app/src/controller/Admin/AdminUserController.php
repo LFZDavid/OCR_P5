@@ -23,6 +23,20 @@ class AdminUserController extends Controller
         ]);
     }
 
+    public function changeRole()
+    {
+        $id_user = $this->checkInput($_POST['id_user']);
+        $role = $this->checkInput($_POST['role']);
+
+        $user = $this->repository->getUniqueById($id_user);
+        $user->setRole((string) $role);
+        $this->manager->save($user);
+
+
+        $this->fillMessage('success', 'l\'utilisateur n° x a été passé au niveau y !');
+        $this->index();
+    }
+
     /**
      * @param int $id_user
      */

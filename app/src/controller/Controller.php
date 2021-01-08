@@ -26,4 +26,10 @@ abstract class Controller
         $data = htmlspecialchars($data);
         return $data;
     }
+
+    protected function fillMessage($type, $content)
+    {
+        $this->message['type'] = $type;
+        $this->message['content'] .= $content;
+    }
 }
