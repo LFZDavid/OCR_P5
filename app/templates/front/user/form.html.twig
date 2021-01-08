@@ -9,7 +9,7 @@
 {% block body %}
 <h1 class="users-title jumbotron">{{title}}</h1>
 {% if message !=[] %}
-<div class="alert alert-{{message.success?'success':'alert'}}" role="alert">
+<div class="alert alert-{{message.type == 'error'?'danger':'success'}}" role="alert">
     {{message.content}}
 </div>
 {% endif %}
