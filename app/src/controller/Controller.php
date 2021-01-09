@@ -10,7 +10,6 @@ abstract class Controller
     protected $repository;
     protected $manager;
     protected array $messages = [];
-    protected int $isLogged;
 
     public function __construct(Environment $twig, $repository = null, $manager = null)
     {
@@ -18,7 +17,7 @@ abstract class Controller
         $this->repository = $repository;
         $this->manager = $manager;
         $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
-        $this->isLogged = isset($_SESSION) ? true : false;
+        $this->twig->addGlobal('session', $_SESSION);
     }
 
     public function checkInput($data)

@@ -27,9 +27,13 @@
 				</div>
 			</li>
 		</ul>
+			{% if session.id_user is null %}
 		<a class="nav-item" href="index.php?user-form=true">Inscription</a>
 		<a class="nav-item" href="index.php?user-login=true">Connexion</a>
+			{% else %}
+		<a class="nav-item" href="index.php?user-form=true">Mon Profil</a>
 		<a class="nav-item" href="index.php?user-logout=true">Deconnexion</a>
+			{% endif %}
 		<!-- <form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="text" placeholder="Search">
 			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
