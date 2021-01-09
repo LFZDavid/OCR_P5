@@ -19,7 +19,7 @@
     {% endfor %}
     <div div class="container">
         <div class="login-form">
-            <form action="index.php?user-login=true" method="POST">
+            <form action="" method="POST">
                 {% for key, input in inputs %}
                 <div class="mb-3 form-group">
                     <label for="{{key}}" class="form-label">{{input.label}}</label>
@@ -27,25 +27,12 @@
                         value="{{input.value}}">
                 </div>
                 {% endfor %}
-                <input type="hidden" id="user-form-submit" value="true">
                 <input type="submit" class="btn btn-success">
             </form>
             <a href="index.php">
                 <button class="btn btn-info">Retour à l'acceuil</button>
             </a>
         </div>
-        <a href="">Mot de passe oublié ?</a>
-        <div class="lost-pwd-form">
-            <form action="index.php?lost-pwd=true" method="POST">
-                <div class="input-group mb-3">
-                    <input type="{{lost_pwd_form.type}}" class="form-control" name="{{lost_pwd_form.name}}"
-                        id="{{lost_pwd_form.name}}" placeholder="Saisissez votre email">
-                    <button class="btn btn-secondary" type="submit" id="button-addon2">Envoyer</button>
-                </div>
-            </form>
-        </div>
-
-
     </div>
 
     {% endblock %}
