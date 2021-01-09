@@ -160,6 +160,12 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * LogIn for treatment
+     *
+     * @param array $post_data
+     * @return void
+     */
     protected function logIn(array $post_data)
     {
         $success = !empty($post_data) ? true : false;
@@ -183,8 +189,15 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Destroy session
+     *
+     * @return void
+     */
     public function logOut()
     {
+        session_destroy();
+        header('location: index.php');
     }
 
     /**

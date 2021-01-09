@@ -50,8 +50,9 @@ try {
     } elseif (isset($_GET['user-login'])) {
         $userController = new UserController($twig, $userRepository, $userManager);
         $userController->getLogInForm();
-
-
+    } elseif (isset($_GET['user-logout'])) {
+        $userController = new UserController($twig, $userRepository, $userManager);
+        $userController->LogOut();
         // Back
         // Post
     } elseif (isset($_GET['admin-post'])) {

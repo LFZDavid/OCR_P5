@@ -7,7 +7,16 @@
 {% endblock %}
 
 {% block body %}
-
+<h1 class="title jumbotron">{{title}}</h1>
+{% for message in messages %}
+    {% if message.type == "error" %}
+        <div class="alert alert-danger">
+    {% elseif message.type == "success" %}
+        <div class="alert alert-success">
+    {% endif %}
+        {{message.content}}
+        </div>
+{% endfor %}
 <div div class="container">
     <form action="index.php?user-login=true" method="POST">
         {% for key, input in inputs %}
