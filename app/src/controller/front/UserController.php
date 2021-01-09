@@ -231,9 +231,6 @@ class UserController extends Controller
 
     public function getResetPwdForm(int $id_user, string $hash)
     {
-
-
-
         if ($id_user > 0 && $hash != "") {
             if ($user = $this->repository->getUniqueById($id_user)) {
                 if ($user->getPwd() == $hash) {
@@ -271,8 +268,6 @@ class UserController extends Controller
                 "inputs" => $inputs,
                 "messages" => $this->messages
             ]);
-        } else {
-            header('Location: index.php');
         }
     }
 
@@ -304,6 +299,8 @@ class UserController extends Controller
                 'name' => $user->getName(),
                 'pwd' => $post_data['pwd']
             ]);
+        } else {
+            header('Refresh:0');
         }
     }
 
