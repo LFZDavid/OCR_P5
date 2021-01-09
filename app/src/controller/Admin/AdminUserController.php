@@ -7,6 +7,8 @@ use App\Model\Entity\User;
 
 class AdminUserController extends Controller
 {
+
+    protected string $required_role = "admin";
     /**
      * 
      * Build and display user BO
