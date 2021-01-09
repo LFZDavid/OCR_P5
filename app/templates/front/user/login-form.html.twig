@@ -7,25 +7,9 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="users-title jumbotron">{{title}}</h1>
-{% if messages is empty%}
-{% else %}
-{% for type, content in messages %}
-<div class="alert
-{% if type == 'success' %}
-alert-success 
-{% elseif type == 'error' %} 
-alert-danger
-{% endif %}
- ">
-    {{type}} : {{content}}
-</div>
 
-{% endfor %}
-{% endif %}
-
-<div class="container">
-    <form action="index.php?user-form=true" method="POST">
+<div div class="container">
+    <form action="index.php?user-login=true" method="POST">
         {% for key, input in inputs %}
         <div class="mb-3 form-group">
             <label for="{{key}}" class="form-label">{{input.label}}</label>

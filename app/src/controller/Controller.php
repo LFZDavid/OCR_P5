@@ -10,13 +10,15 @@ abstract class Controller
     protected $repository;
     protected $manager;
     protected array $messages = [];
+    protected int $isLogged;
 
     public function __construct(Environment $twig, $repository = null, $manager = null)
     {
         $this->twig = $twig;
         $this->repository = $repository;
         $this->manager = $manager;
-        $this->message = ['type' => '', 'content' => ''];
+        $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
+        $this->isLogged = isset($_SESSION) ? true : false;
     }
 
     public function checkInput($data)
@@ -27,10 +29,11 @@ abstract class Controller
         return $data;
     }
 
-    protected function fillMessage($type, $content)
+    protected function fillMessage(string $type, string $content)
     {
         $message = [
-            $type => $content
+            "type" => $type,
+            "content" => $content
         ];
         array_push($this->messages, $message);
     }
