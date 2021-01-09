@@ -16,9 +16,7 @@ class UserController extends Controller
      */
     public function getForm()
     {
-
-        $id_user = false;
-        // todo récupérer l'id user dans SESSION
+        $id_user = $_SESSION['id_user'] ?? false;
 
         if (!$id_user) {
             $user = new User();
@@ -101,7 +99,6 @@ class UserController extends Controller
             } elseif ($key == 'pwd') {
                 if (strlen($value) >= 5) {
                     $user_data['pwd'] = password_hash($value, PASSWORD_DEFAULT);
-                    //check with password_verify($_POST['pwd'], $user->pwd()) : bool;
                 } else {
                     $this->fillMessage('error', 'Mot de passe trop court : 5 caractère minimum');
                     $success = false;
@@ -126,6 +123,10 @@ class UserController extends Controller
             $persisted_id = $this->manager->save($user);
 
             $this->fillMessage('success', 'Utilisateur enregistré !');
+            $this->logIn([
+                'name' => $user->getName(),
+                'pwd' => $data['pwd']
+            ]);
         }
     }
 
