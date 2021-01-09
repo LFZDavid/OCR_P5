@@ -73,6 +73,9 @@ try {
         } elseif ($_GET['admin-user'] == 'role') {
             $adminUserController->changeRole();
         }
+    } elseif (isset($_GET['admin-user-delete'])) {
+        $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
+        $adminUserController->delete($_GET['admin-user-delete']);
         // Home (default)
     } else {
         $homeController = new HomeController($twig);
