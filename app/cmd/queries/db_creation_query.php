@@ -31,8 +31,8 @@ CREATE TABLE `blog_p5`.`users` (
     `name` varchar(50) NOT NULL,
     `email` varchar(50) NOT NULL,
     `pwd` varchar(255) NOT NULL,
-    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` timestamp
+    `role` varchar(50) NOT NULL,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 -- --------------------------------------------------------
 --
@@ -75,13 +75,9 @@ INSERT INTO `blog_p5`.`categories`(
     `name`
 ) VALUES('News'),('Tips'),('Languages'),('Framework'),('Divers');
 
+-- --------------------------------------------------------
 ";
 
-// -- --------------------------------------------------------
-// -- Contraintes pour la table `posts`
-// --
-// ALTER TABLE `blog_p5`.`posts`
-// ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
 // -- --------------------------------------------------------
 // --
 // -- Contraintes pour la table `comments`
@@ -90,12 +86,3 @@ INSERT INTO `blog_p5`.`categories`(
 // ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
 // ALTER TABLE `blog_p5`.`comments`
 // ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);
-// -- --------------------------------------------------------
-// --
-// -- Contraintes pour la table `category_post`
-// --
-// ALTER TABLE `blog_p5`.`category_post`
-// ADD CONSTRAINT `category_post_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`);
-// ALTER TABLE `blog_p5`.`category_post`
-// ADD CONSTRAINT `category_post_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);
-// -- --------------------------------------------------------
