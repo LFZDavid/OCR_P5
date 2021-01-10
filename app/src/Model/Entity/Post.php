@@ -9,37 +9,42 @@ class Post extends Entity
 	protected string $title = "";
 	protected string $chapo = "";
 	protected string $content = "";
-	protected int $id_author = 0;
-	protected bool $active = false;
+	protected int $id_author = 1;
+	protected int $active = 0;
+	protected array $categories = [];
 	protected $created_at = "";
 	protected $updated_at = "";
 
 	//GETTERS
-	public function title()
+	public function getTitle()
 	{
 		return $this->title;
 	}
-	public function chapo()
+	public function getChapo()
 	{
 		return $this->chapo;
 	}
-	public function content()
+	public function getContent()
 	{
 		return $this->content;
 	}
-	public function active()
+	public function getActive()
 	{
 		return $this->active;
 	}
-	public function id_author()
+	public function getCategories()
+	{
+		return $this->categories;
+	}
+	public function getIdAuthor()
 	{
 		return $this->id_author;
 	}
-	public function created_at()
+	public function getCreatedAt()
 	{
 		return $this->created_at;
 	}
-	public function updated_at()
+	public function getUpdatedAt()
 	{
 		return $this->updated_at;
 	}
@@ -71,9 +76,12 @@ class Post extends Entity
 	}
 	public function setActive($active)
 	{
-		if (!empty($active)) {
-			$this->active = (bool) $active;
-		}
+		$this->active = (int) $active;
+		return $this;
+	}
+	public function setCategories($categories)
+	{
+		$this->categories = $categories;
 		return $this;
 	}
 	public function setCreated_at($created_at)

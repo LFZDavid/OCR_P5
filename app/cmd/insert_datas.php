@@ -1,8 +1,8 @@
 <?php
 require 'config.php';
 
-try{
-    $db = new \PDO("mysql:host=" .$config['db_host']. ";dbname=" .$config['db_name'].";charset=utf8",$config['db_user'],$config['db_pwd']);
+try {
+    $db = new \PDO("mysql:host=" . $config['db_host'] . ";dbname=" . $config['db_name'] . ";charset=utf8", $config['db_user'], $config['db_pwd']);
     $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
     // $db->query($db_insert_demo_datas_query);
@@ -43,21 +43,17 @@ try{
             ('E etraset contaiLpsum passages, and more psum passages, and more etraset containing',1,1,1)");
 
     // Insert categories
-    $db->exec("INSERT INTO `blog_p5`.`categories`(
-        `name`
-    ) VALUES('new'),('Lorem'),('Ipsum'),('Letraset'),('passages'),('sheets')
-    ");
+    // $db->exec("INSERT INTO `blog_p5`.`categories`(
+    //     `name`
+    // ) VALUES('News'),('Tips'),('Languages'),('Framework'),('Divers')
+    // ");
     // Link categories to post
     $db->exec("INSERT INTO `blog_p5`.`category_post`(
         `id_post`,
         `id_category`
     ) VALUES(1,1),(1,2),(2,1),(3,2),(4,3),(4,5),(4,6)
     ");
-
-
-}
-catch (\PDOException $e){
+} catch (\PDOException $e) {
     echo 'La connexion à échoué.<br/>';
     echo 'Information : [', $e->getCode(), '] ', $e->getMessage();
 }
-

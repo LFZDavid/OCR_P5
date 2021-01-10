@@ -8,6 +8,7 @@ use App\Controller\Front\HomeController;
 use App\Controller\Front\PostController;
 use App\Model\Repository\PostRepository;
 use App\Model\Manager\PostManager;
+use App\Model\Repository\CategoryRepository;
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates/');
 $twig = new \Twig\Environment($loader, [
@@ -16,12 +17,12 @@ $twig = new \Twig\Environment($loader, [
 ]);
 $config['env'] == 'dev' ? $twig->addExtension(new \Twig\Extension\DebugExtension()) : "";
 
-
 try {
     $pdo = new \PDO("mysql:host=" . $config['db_host'] . ";dbname=" . $config['db_name'] . ";charset=utf8", $config['db_user'], $config['db_pwd']);
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $postRepository = new PostRepository($pdo);
     $postManager = new PostManager($pdo);
+    $CategoryRepository = new CategoryRepository($pdo);
 
 
     // Front
@@ -41,7 +42,7 @@ try {
         }
     } elseif (isset($_GET['admin-post-form'])) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
-        $adminPostController->getForm($_GET['admin-post-form']);
+        $adminPostController->getForm($_GET['admin-post-form'], $CategoryRepository);
     } elseif (
         isset($_GET['admin-post-delete'])
         && (isset($_POST['_method']))
