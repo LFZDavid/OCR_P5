@@ -184,7 +184,8 @@ class UserController extends Controller
         if ($success) {
             $this->fillMessage('success', 'Vous êtes connecté !');
             $_SESSION['id_user'] = $user->getId();
-            $_SESSION['username'] = $user->getName();
+            $_SESSION['name_user'] = $user->getName();
+            $_SESSION['role_user'] = $user->getRole();
             $_SESSION['messages'] = $this->messages;
             header('Location: index.php');
         }
