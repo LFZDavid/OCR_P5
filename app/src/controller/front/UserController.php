@@ -16,9 +16,7 @@ class UserController extends Controller
      */
     public function getForm()
     {
-
-        $id_user = false;
-        // todo récupérer l'id user dans SESSION
+        $id_user = $_SESSION['id_user'] ?? false;
 
         if (!$id_user) {
             $user = new User();
@@ -101,9 +99,8 @@ class UserController extends Controller
             } elseif ($key == 'pwd') {
                 if (strlen($value) >= 5) {
                     $user_data['pwd'] = password_hash($value, PASSWORD_DEFAULT);
-                    //check with password_verify($_POST['pwd'], $user->pwd()) : bool;
                 } else {
-                    $this->fillMessage('error', 'Mot de passe trop court : 6 caractère minimum');
+                    $this->fillMessage('error', 'Mot de passe trop court : 5 caractère minimum');
                     $success = false;
                 }
             } elseif ($key == 'confirm') {
@@ -126,10 +123,83 @@ class UserController extends Controller
             $persisted_id = $this->manager->save($user);
 
             $this->fillMessage('success', 'Utilisateur enregistré !');
+            $this->logIn([
+                'name' => $user->getName(),
+                'pwd' => $data['pwd']
+            ]);
         }
     }
 
 
+    public function getLogInForm()
+    {
+        if (isset($_SESSION['id_user'])) {
+            header('Location:index.php');
+        }
+
+        if (isset($_POST) && !empty($_POST)) {
+            $this->logIn($_POST);
+        }
+
+        $inputs = [
+            'name' => [
+                'label' => 'Pseudo',
+                'type' => 'text',
+                'value' => ""
+            ],
+            'pwd' => [
+                'label' => 'Mot de passe',
+                'type' => 'password',
+                'value' => ""
+            ]
+        ];
+
+        echo $this->twig->render('/front/user/login-form.html.twig', [
+            "title" => "Connexion",
+            "inputs" => $inputs,
+            "messages" => $this->messages
+        ]);
+    }
+
+    /**
+     * LogIn for treatment
+     *
+     * @param array $post_data
+     * @return void
+     */
+    protected function logIn(array $post_data)
+    {
+        $success = !empty($post_data) ? true : false;
+
+        if ($user = $this->repository->getUniqueByName($this->checkInput($post_data['name']))) {
+            if (!password_verify($post_data['pwd'], $user->getPwd())) {
+                $this->fillMessage('error', 'Pseudo ou mot de passe incorrect !');
+                $success = false;
+            }
+        } else {
+            $this->fillMessage('error', 'Pseudo ou mot de passe incorrect !');
+            $success = false;
+        }
+
+        if ($success) {
+            $this->fillMessage('success', 'Vous êtes connecté !');
+            $_SESSION['id_user'] = $user->getId();
+            $_SESSION['username'] = $user->getName();
+            $_SESSION['messages'] = $this->messages;
+            header('Location: index.php');
+        }
+    }
+
+    /**
+     * Destroy session
+     *
+     * @return void
+     */
+    public function logOut()
+    {
+        session_destroy();
+        header('location: index.php');
+    }
 
     /**
      * Test if username is available

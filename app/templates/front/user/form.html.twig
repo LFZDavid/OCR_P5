@@ -7,27 +7,31 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="users-title jumbotron">{{title}}</h1>
-{% if message !=[] %}
-<div class="alert alert-{{message.type == 'error'?'danger':'success'}}" role="alert">
-    {{message.content}}
-</div>
-{% endif %}
+<h1 class="title jumbotron">{{title}}</h1>
+{% for message in messages %}
+{% if message.type == "error" %}
+<div class="alert alert-danger">
+    {% elseif message.type == "success" %}
+    <div class="alert alert-success">
+        {% endif %}
+        {{message.content}}
+    </div>
+    {% endfor %}
 
-<div class="container">
-    <form action="index.php?user-form=true" method="POST">
-        {% for key, input in inputs %}
-        <div class="mb-3 form-group">
-            <label for="{{key}}" class="form-label">{{input.label}}</label>
-            <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
-        </div>
-        {% endfor %}
-        <input type="hidden" id="user-form-submit" value="true">
-        <input type="submit" class="btn btn-success">
-    </form>
-    <a href="index.php">
-        <button class="btn btn-info">Retour à l'acceuil</button>
-    </a>
-</div>
+    <div class="container">
+        <form action="index.php?user-form=true" method="POST">
+            {% for key, input in inputs %}
+            <div class="mb-3 form-group">
+                <label for="{{key}}" class="form-label">{{input.label}}</label>
+                <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
+            </div>
+            {% endfor %}
+            <input type="hidden" id="user-form-submit" value="true">
+            <input type="submit" class="btn btn-success">
+        </form>
+        <a href="index.php">
+            <button class="btn btn-info">Retour à l'acceuil</button>
+        </a>
+    </div>
 
-{% endblock %}
+    {% endblock %}

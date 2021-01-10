@@ -9,7 +9,8 @@ class HomeController extends Controller
     public function homePage()
     {
         echo $this->twig->render('front/home.html.twig', [
-            "title" => "Accueil"
+            "title" => "Accueil",
+            "messages" => $this->messages
         ]);
     }
 }

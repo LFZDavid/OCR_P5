@@ -16,7 +16,8 @@ abstract class Controller
         $this->twig = $twig;
         $this->repository = $repository;
         $this->manager = $manager;
-        $this->message = ['type' => '', 'content' => ''];
+        $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
+        $this->twig->addGlobal('session', $_SESSION);
     }
 
     public function checkInput($data)
@@ -27,10 +28,11 @@ abstract class Controller
         return $data;
     }
 
-    protected function fillMessage($type, $content)
+    protected function fillMessage(string $type, string $content)
     {
         $message = [
-            $type => $content
+            "type" => $type,
+            "content" => $content
         ];
         array_push($this->messages, $message);
     }

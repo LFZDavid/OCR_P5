@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $config = [
 
     "db_host" => "localhost",

@@ -5,4 +5,18 @@
 {% endblock %}
 
 {% block body %}
-{% endblock %}
+
+<h1 class="title jumbotron">{{title}}</h1>
+
+{% for message in messages %}
+{% if message.type == "error" %}
+<div class="alert alert-danger">
+    {% elseif message.type == "success" %}
+    <div class="alert alert-success">
+        {% endif %}
+        {{message.content}}
+    </div>
+    {% endfor %}
+    HOME
+
+    {% endblock %}
