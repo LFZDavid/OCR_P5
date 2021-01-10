@@ -1,5 +1,5 @@
 <?php
-// require '../../config.php';
+
 require 'config.php';
 include 'queries/db_creation_query.php';
 
