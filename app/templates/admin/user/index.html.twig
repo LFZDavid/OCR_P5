@@ -25,7 +25,6 @@ alert-danger
 
 {% endif %}
 <div class="container-fluid">
-    <a href="index.php?user-form=0" class="btn btn-primary" style="margin-bottom:20px;">Ajouter</a>
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
@@ -58,7 +57,7 @@ alert-danger
                         <input type="hidden" name="id_user" value="{{user.id}}">
                         <input type="submit" class="btn btn-primary" value="Enregistrer">
                         </form>
-                        <form action="index.php?admin-user-delete={{user.id}}" method="POST"
+                        <form action="index.php?admin-user=delete&amp;id_user={{user.id}}" method="POST"
                             onclick="return confirm('Êtes-vous sûre ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <button class="btn btn-danger">

@@ -28,69 +28,69 @@ try {
     $postManager = new PostManager($pdo);
     $userRepository = new UserRepository($pdo);
     $userManager = new UserManager($pdo);
-    $CategoryRepository = new CategoryRepository($pdo);
+    $categoryRepository = new CategoryRepository($pdo);
 
 
-    // Front
-    //Post
-    if (isset($_GET['post'])) {
+    if (key_exists('post', $_GET)) {
         $postController = new PostController($twig, $postRepository);
-        if ($_GET['post'] <= 0) {
+        if ($id_post = $_GET['post'] <= 0) {
             $postController->index();
         } else {
-            $postController->show($_GET['post']);
+            $postController->show($id_post);
         }
-        //User
-    } elseif (isset($_GET['user-form'])) {
+    } elseif (key_exists('user', $_GET)) {
         $userController = new UserController($twig, $userRepository, $userManager);
-        if ($_GET['user-form']) {
+        $request = $_GET['user'];
+        if ($request == 'form') {
             $userController->getForm();
+        } elseif ($request == 'login') {
+            $userController->getLogInForm();
+        } elseif ($request == 'logout') {
+            $userController->logOut();
+        } elseif ($request == 'lost-pwd') {
+            $userController->lostPwdProcess();
+        } elseif (
+            $request == 'reset-pwd'
+            && key_exists('id_user', $_GET)
+            && key_exists('hash', $_GET)
+        ) {
+            if ($id_user = $_GET['id_user'] > 0) {
+                $userController->getResetPwdForm($id_user, $_GET['hash']);
+            } else {
+                header('Location:index.php?user=login');
+            }
         }
-    } elseif (isset($_GET['user-login'])) {
-        $userController = new UserController($twig, $userRepository, $userManager);
-        $userController->getLogInForm();
-    } elseif (isset($_GET['user-logout'])) {
-        $userController = new UserController($twig, $userRepository, $userManager);
-        $userController->LogOut();
-    } elseif (isset($_GET['lost-pwd'])) {
-        $userController = new UserController($twig, $userRepository, $userManager);
-        $userController->lostPwdProcess();
-    } elseif (isset($_GET['reset-pwd']) && isset($_GET['id_user'])) {
-        $userController = new UserController($twig, $userRepository, $userManager);
-        $userController->getResetPwdForm($_GET['id_user'], $_GET['reset-pwd']);
-        // Back
-        // Post
-    } elseif (isset($_GET['admin-post'])) {
+    } elseif (key_exists('admin-post', $_GET)) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
-        if ($_GET['admin-post'] == 'list') {
+        $request = $_GET['admin-post'];
+        if ($request == 'list') {
             $adminPostController->index();
+        } elseif ($request == 'form') {
+            if (key_exists('id_post', $_GET)) {
+                $id_post = $_GET['id_post'];
+            } else {
+                $id_post = 0;
+            }
+            $adminPostController->getForm($id_post, $categoryRepository);
+        } elseif (
+            $request == 'delete'
+            && key_exists('_method', $_POST)
+            && key_exists('id_post', $_GET)
+            && ($_POST['_method'] == "DELETE")
+        ) {
+            $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
+            $adminPostController->delete($_GET['id_post']);
         }
-    } elseif (isset($_GET['admin-post-form'])) {
-        $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
-        $adminPostController->getForm($_GET['admin-post-form'], $CategoryRepository);
-    } elseif (
-        isset($_GET['admin-post-delete'])
-        && (isset($_POST['_method']))
-        && ($_POST['_method'] == "DELETE")
-    ) {
-        $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
-        $adminPostController->delete($_GET['admin-post-delete']);
-
-        // User
-    } elseif (isset($_GET['admin-user'])) {
+    } elseif (key_exists('admin-user', $_GET)) {
         $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
-        if ($_GET['admin-user'] == 'list') {
+        $request = $_GET['admin-user'];
+        if ($request == 'list') {
             $adminUserController->index();
-        } elseif ($_GET['admin-user'] == 'role') {
+        } elseif ($request == 'role') {
             $adminUserController->changeRole();
+        } elseif ($request == 'delete' && key_exists('id_user', $_GET)) {
+            $adminPostController->delete($id_user);
         }
-    } elseif (isset($_GET['admin-user-delete'])) {
-        $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
-        $adminUserController->delete($_GET['admin-user-delete']);
-
-
-
-        // Home (default)
     } else {
         $homeController = new HomeController($twig);
         $homeController->homePage();
