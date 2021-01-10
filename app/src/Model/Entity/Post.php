@@ -6,10 +6,11 @@ use \App\Model\Entity\Entity;
 
 class Post extends Entity
 {
-    protected $title;
-    protected $chapo;
-	protected $content;
-	protected $active;
+    protected string $title;
+    protected string $chapo;
+	protected string $content;
+	protected int $id_author;
+	protected bool $active;
 	protected $created_at;
     protected $updated_at;
     
@@ -30,6 +31,10 @@ class Post extends Entity
 	{
 		return $this->active;
 	}
+	public function id_author()
+	{
+		return $this->id_author;
+	}
 	public function created_at()
 	{
 		return $this->created_at;
@@ -42,34 +47,39 @@ class Post extends Entity
 	//SETTERS
 	public function setTitle($title)
 	{
-        $this->title = $title;
+        $this->title = (string) $title;
         return $this;
 	}
 	public function setChapo($chapo)
 	{
-        $this->chapo = $chapo;
+        $this->chapo = (string) $chapo;
         return $this;
 	}
 	public function setContent($content)
 	{
 		if(!empty($content)){
-			$this->content = $content;
+			$this->content = (string) $content;
+        }
+        return $this;
+	}
+	public function setId_author($id_author)
+	{
+		if(!empty($id_author)){
+			$this->content = (int) $id_author;
         }
         return $this;
 	}
 	public function setActive($active)
 	{
 		if(!empty($active)){
-			$this->active = $active;
+			$this->active = (bool) $active;
         }
         return $this;
 	}
 	public function setCreated_at($created_at)
 	{
 		if(!empty($created_at)){
-			// if($created_at <= time()){
-				$this->created_at = $created_at;
-			// }
+			$this->created_at = $created_at;
         }
         return $this;
 	}

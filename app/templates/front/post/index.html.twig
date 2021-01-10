@@ -1,0 +1,41 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{parent()}}
+	-
+	{{title}}
+{% endblock %}
+
+{% block body %}
+	<h1 class="posts-title jumbotron">{{title}}</h1>
+	<div class="container-fluid">
+		<div class="row">
+			{% for post in posts %}
+				<div class="col-sm-6 col-md-4">
+					<div class="thumbnail">
+						<h3 class="mini-post-title">
+							{{post.title}}
+						</h3>
+						<h4 class="mini-post-chapo">
+							{{post.chapo}}
+						</h4>
+						<p class="mini-post-date">
+							{% if post.updated_at != null%}
+								Dernière mise à jour :
+								{{post.updated_at}}
+							{% else %}
+								Créé le :
+								{{post.created_at}}
+							{% endif %}
+						</p>
+						<a href="index.php?post={{post.id}}" class="post-link">
+							<button class="btn btn-info">Lire</button>
+						</a>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+
+
+{% endblock %}

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Controller\Front;
+namespace App\Controller;
 
-use App\Model\Repository\Repository;
 use Twig\Environment;
 
 abstract class Controller
@@ -14,7 +13,5 @@ abstract class Controller
     {
         $this->twig = $twig;
         $this->repository = $repository;
-        
     }
-    
 }
