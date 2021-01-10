@@ -35,18 +35,18 @@ class AdminUserController extends Controller
         header('Location:index.php?admin-user=list');
     }
 
-    // /**
-    //  * @param int $id_user
-    //  */
-    // public function delete($id_user)
-    // {
-    //     if ($this->repository->getUniqueById((int)$id_user)) {
-    //         if ($this->manager->delete((int)$id_user)) {
-    //             $message = 'L\'utilisateur n° ' . $id_user . ' a été supprimé';
-    //         } else {
-    //             $message = 'Impossible de supprimer l\'utilisateur n° ' . $id_user . ' !';
-    //         }
-    //     }
-    //     $this->index($message);
-    // }
+    /**
+     * @param int $id_user
+     */
+    public function delete(int $id_user)
+    {
+        if ($this->repository->getUniqueById($id_user)) {
+            if ($this->manager->delete($id_user)) {
+                $message = 'Le post n° ' . $id_user . ' a été supprimé';
+            } else {
+                $message = 'Impossible de supprimer le post n° ' . $id_user . ' !';
+            }
+        }
+        header('Location:index.php?admin-user=list');
+    }
 }
