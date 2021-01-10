@@ -36,16 +36,19 @@ try {
         // Back
     } elseif (isset($_GET['admin-post'])) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
-        if ($_GET['admin-post'] <= 0) {
+        if ($_GET['admin-post'] == 'list') {
             $adminPostController->index();
-        } else {
-            if (isset($_POST['_method'])) {
-                if ($_POST['_method'] == "DELETE") {
-                    $adminPostController->delete($_GET['admin-post']);
-                }
-            }
-            // $adminPostController->form($_GET['admin-post']);
         }
+    } elseif (isset($_GET['admin-post-form'])) {
+        $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
+        $adminPostController->getForm($_GET['admin-post-form']);
+    } elseif (
+        isset($_GET['admin-post-delete'])
+        && (isset($_POST['_method']))
+        && ($_POST['_method'] == "DELETE")
+    ) {
+        $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
+        $adminPostController->delete($_GET['admin-post-delete']);
     } else {
         $homeController = new HomeController($twig);
         $homeController->homePage();

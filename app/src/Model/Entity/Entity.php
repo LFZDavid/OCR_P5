@@ -8,29 +8,30 @@ abstract class Entity
 
 	public function __construct($data = [])
 	{
-		if(!empty($data)){
+		if (!empty($data)) {
 			$this->hydrate($data);
 		}
 	}
 	public function hydrate($data)
 	{
-		foreach($data as $attribut => $value){
-			$method = 'set'.ucfirst($attribut);
+		foreach ($data as $attribut => $value) {
+			$method = 'set' . ucfirst($attribut);
 
-			if(is_callable([$this, $method])){
+			if (is_callable([$this, $method])) {
 				$this->$method($value);
 			}
 		}
 	}
-//GETTERS
-	public function id(){
+	//GETTERS
+	public function id()
+	{
 		return $this->id;
 	}
-//SETTERS
+	//SETTERS
 	public function setId($id)
 	{
 		$id = (int) $id;
-		if($id > 0){
+		if ($id > 0) {
 			$this->id = $id;
 		}
 	}

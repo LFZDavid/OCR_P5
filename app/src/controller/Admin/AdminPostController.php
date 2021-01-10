@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Controller\Controller;
+use App\Model\Entity\Post;
 
 class AdminPostController extends Controller
 {
@@ -16,6 +17,92 @@ class AdminPostController extends Controller
             "posts" => $posts,
             "message" => $message
         ]);
+    }
+
+    public function getForm(int $id_post)
+    {
+
+        if (isset($_POST)) {
+            $message = $this->postProcess($_POST);
+        }
+
+        if ($id_post == 0) {
+            $post = new Post();
+            $title = "Création";
+        } else {
+            $post = $this->repository->getUniqueById((int)$id_post);
+            $title = "Modification";
+        }
+
+        $inputs = [
+            [
+                "label" => 'id_post',
+                "field" => 'id',
+                "type" => 'text',
+                "hidden" => true,
+                "value" => $post->id() ?? 0,
+
+            ],
+            [
+                "label" => 'Titre',
+                "field" => 'title',
+                "type" => 'text',
+                "hidden" => false,
+                "value" => $post->title() ?? "",
+            ],
+            [
+                "label" => 'Chapô',
+                "field" => 'chapo',
+                "type" => 'text',
+                "hidden" => false,
+                "value" => $post->chapo() ?? "",
+            ],
+            [
+                "label" => 'Contenu',
+                "field" => 'content',
+                "type" => 'textarea',
+                "hidden" => false,
+                "value" => $post->content() ?? "",
+            ],
+        ];
+
+
+        echo $this->twig->render('/admin/post/form.html.twig', [
+            "title" => $title . " d'un post",
+            "inputs" => $inputs,
+            "id_post" => $post->id() ?? 0,
+            "message" => $message // chargé après traitement du formulaire
+        ]);
+    }
+
+    public function postProcess(array $data)
+    {
+        if ($data != []) {
+            $id = $this->checkInput($data['id']);
+            $title = $this->checkInput($data['title']);
+            $chapo = $this->checkInput($data['chapo']);
+            $content = $this->checkInput($data['content']);
+
+            if ($id > 0) {
+                $post = $this->repository->getUniqueById((int) $id);
+            } else {
+                $post = new Post();
+            }
+            $post->setTitle($title)->setChapo($chapo)->setContent($content);
+
+            if ($this->manager->save($post)) {
+                $message = [
+                    "success" => true,
+                    "content" => "Post sauvegardé !"
+                ];
+            } else {
+                $message = [
+                    "success" => false,
+                    "content" => "Erreur : un problème est survenu lors de l'enregistrement !"
+                ];
+            }
+            return $message;
+        }
     }
 
     public function delete($id_post)

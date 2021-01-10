@@ -16,4 +16,12 @@ abstract class Controller
         $this->repository = $repository;
         $this->manager = $manager;
     }
+
+    public function checkInput($data)
+    {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
 }

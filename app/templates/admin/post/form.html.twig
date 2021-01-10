@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	{{parent()}}
+	-
+	{{title}}
+{% endblock %}
+
+{% block body %}
+	<h1 class="posts-title jumbotron">{{title}}</h1>
+	{% if message !=[] %}
+		<div class="alert alert-{{message.success?'success':'alert'}}" role="alert">
+			{{message.content}}
+		</div>
+	{% endif %}
+	<div class="container">
+		<form action="index.php?admin-post-form={{id_post}}" method="POST">
+			{% for input in inputs %}
+				<div class="mb-3 form-group">
+					{% if input.hidden == false %}
+						<label for="{{input.field}}" class="form-label">{{input.label}}</label>
+					{% endif %}
+					{% if input.type == 'text' %}
+						<input type="text" class="form-control" name="{{input.field}}" id="{{input.field}}" value="{{input.value}}" {% if input.hidden %} hidden {% endif %}>
+					{% elseif input.type == 'textarea'%}
+						<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30" rows="10">{{input.value}}</textarea>
+					{% endif %}
+				</div>
+			{% endfor %}
+			<input type="hidden" id="post-form-submit" value="true">
+			<input type="submit" class="btn btn-success">
+		</form>
+		<a href="index.php?admin-post=list">
+			<button class="btn btn-info">Retour à la liste</button>
+		</a>
+	</div>
+
+{% endblock %}
