@@ -44,7 +44,6 @@ try {
     } elseif (isset($_GET['user-form'])) {
         $userController = new UserController($twig, $userRepository, $userManager);
         if ($_GET['user-form']) {
-            // TODO (get id_user in session/cookie for edit profile root)
             $userController->getForm();
         }
     } elseif (isset($_GET['user-login'])) {
@@ -53,6 +52,12 @@ try {
     } elseif (isset($_GET['user-logout'])) {
         $userController = new UserController($twig, $userRepository, $userManager);
         $userController->LogOut();
+    } elseif (isset($_GET['lost-pwd'])) {
+        $userController = new UserController($twig, $userRepository, $userManager);
+        $userController->lostPwdProcess();
+    } elseif (isset($_GET['reset-pwd']) && isset($_GET['id_user'])) {
+        $userController = new UserController($twig, $userRepository, $userManager);
+        $userController->getResetPwdForm($_GET['id_user'], $_GET['reset-pwd']);
         // Back
         // Post
     } elseif (isset($_GET['admin-post'])) {
@@ -82,6 +87,9 @@ try {
     } elseif (isset($_GET['admin-user-delete'])) {
         $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
         $adminUserController->delete($_GET['admin-user-delete']);
+
+
+
         // Home (default)
     } else {
         $homeController = new HomeController($twig);
