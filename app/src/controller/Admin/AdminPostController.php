@@ -118,7 +118,7 @@ class AdminPostController extends Controller
             $title = $this->checkInput($data['title']);
             $chapo = $this->checkInput($data['chapo']);
             $content = $this->checkInput($data['content']);
-            $categories = $data['categories'];
+            $categories = key_exists('categories', $data) ? $data['categories'] : [];
 
             /**active */
             if (isset($data['active'])) {
