@@ -8,8 +8,8 @@ use PDO;
 class CategoryRepository extends Repository
 {
 
-    protected $table = 'categories';
-    protected $classManaged = '\App\Model\Entity\Category';
+    protected string $table = 'categories';
+    protected string $classManaged = '\App\Model\Entity\Category';
 
     public function getListByPost($id_post)
     {
