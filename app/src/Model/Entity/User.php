@@ -10,23 +10,22 @@ class User extends Entity
     protected string $name;
     protected string $email;
     protected string $pwd;
-    protected string $created_at;
+    protected string $createdAt;
     protected string $role;
 
     /**
-     * Get the value of name
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * Set the value of name
-     *
-     * @return  self
+     * @param string $name
+     * @return self
      */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -34,19 +33,18 @@ class User extends Entity
     }
 
     /**
-     * Get the value of email
+     * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
     /**
-     * Set the value of email
-     *
-     * @return  self
+     * @param string $email
+     * @return self
      */
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -54,19 +52,18 @@ class User extends Entity
     }
 
     /**
-     * Get the value of pwd
+     * @return string
      */
-    public function getPwd()
+    public function getPwd(): string
     {
         return $this->pwd;
     }
 
     /**
-     * Set the value of pwd
-     *
-     * @return  self
+     * @param string $pwd
+     * @return self
      */
-    public function setPwd($pwd)
+    public function setPwd(string $pwd): self
     {
         $this->pwd = $pwd;
 
@@ -74,39 +71,38 @@ class User extends Entity
     }
 
     /**
-     * Get the value of created_at
+     * Get the value of createdAt
      */
-    public function getCreated_at()
+    public function getCreatedAt()
     {
-        return $this->created_at;
+        return $this->createdAt;
     }
 
     /**
-     * Set the value of created_at
+     * Set the value of createdAt
      *
      * @return  self
      */
-    public function setCreated_at($created_at)
+    public function setCreatedAt($createdAt): self
     {
-        $this->created_at = $created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
-     * Get the value of role
+     * @return string
      */
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
 
     /**
-     * Set the value of role
-     *
-     * @return  self
+     * @param string $role
+     * @return self
      */
-    public function setRole($role)
+    public function setRole(string $role): self
     {
         $this->role = $role;
 
