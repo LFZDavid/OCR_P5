@@ -12,15 +12,14 @@ class AdminPostController extends Controller
      * 
      * Build and display post BO
      */
-    public function index($message = null)
+    public function index()
     {
-        $message ?? "";
         $posts = $this->repository->getList();
 
         echo $this->twig->render('/admin/post/index.html.twig', [
             "title" => "Administration des posts",
             "posts" => $posts,
-            "message" => $message
+            "message" => $this->messages
         ]);
     }
 
@@ -41,7 +40,7 @@ class AdminPostController extends Controller
             $post = new Post();
             $title = "Création";
         } else {
-            $post = $this->repository->getUniqueById((int)$id_post);
+            $post = $this->repository->getUniqueById($id_post);
             $title = "Modification";
         }
 
@@ -111,7 +110,7 @@ class AdminPostController extends Controller
      * @param CategoryRepository $CategoryRepository
      * @return array $message
      */
-    public function postProcess(array $data, CategoryRepository $CategoryRepository)
+    public function postProcess(array $data, CategoryRepository $CategoryRepository): array
     {
         if ($data != []) {
 
@@ -181,10 +180,10 @@ class AdminPostController extends Controller
     /**
      * @param int $id_post
      */
-    public function delete($id_post)
+    public function delete(int $id_post)
     {
         if ($this->repository->getUniqueById((int)$id_post)) {
-            if ($this->manager->delete((int)$id_post)) {
+            if ($this->manager->delete($id_post)) {
                 $message = 'Le post n° ' . $id_post . ' a été supprimé';
             } else {
                 $message = 'Impossible de supprimer le post n° ' . $id_post . ' !';

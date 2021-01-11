@@ -29,8 +29,8 @@ class AdminUserController extends Controller
         $id_user = $this->checkInput($_POST['id_user']);
         $role = $this->checkInput($_POST['role']);
 
-        $user = $this->repository->getUniqueById($id_user);
-        $user->setRole((string) $role);
+        $user = $this->repository->getUniqueById((int) $id_user);
+        $user->setRole($role);
         $this->manager->save($user);
 
         $this->fillMessage('success', 'l\'utilisateur n°' . $user->getId() . ' a été passé au niveau ' . $user->getRole() . ' !');

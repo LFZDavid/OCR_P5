@@ -7,9 +7,6 @@ use App\Model\Entity\User;
 
 class UserController extends Controller
 {
-
-
-
     /**
      *
      * @return void
@@ -65,6 +62,13 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Form data treatment
+     *
+     * @param array $data
+     * @param User $user
+     * @return void
+     */
     public function postProcess(array $data, User $user = null)
     {
         $user_data = [];
@@ -138,6 +142,11 @@ class UserController extends Controller
     }
 
 
+    /**
+     * Display Login form
+     *
+     * @return void
+     */
     public function getLogInForm()
     {
         if (isset($_SESSION['id_user'])) {
@@ -178,7 +187,7 @@ class UserController extends Controller
     }
 
     /**
-     * LogIn for treatment
+     * LogIn form treatment
      *
      * @param array $post_data
      * @return void
@@ -218,6 +227,11 @@ class UserController extends Controller
         header('Location: index.php');
     }
 
+    /**
+     * lost password form treatment
+     *
+     * @return void
+     */
     public function lostPwdProcess()
     {
 
@@ -236,6 +250,13 @@ class UserController extends Controller
         header('Location: index.php?user=login');
     }
 
+    /**
+     * Display reset password form
+     *
+     * @param integer $id_user
+     * @param string $hash
+     * @return void
+     */
     public function getResetPwdForm(int $id_user, string $hash)
     {
         if ($id_user > 0 && $hash != "") {
@@ -278,6 +299,13 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * Reset password form treatment
+     *
+     * @param User $user
+     * @param array $post_data
+     * @return void
+     */
     protected function resetPwdpostProcess(User $user, array $post_data)
     {
         $success = true;
@@ -339,9 +367,9 @@ class UserController extends Controller
      * Send an email to the user with special link
      *
      * @param User $user
-     * @return void
+     * @return bool
      */
-    protected function sendResetPwdEmail(User $user)
+    protected function sendResetPwdEmail(User $user): bool
     {
         $to      = $user->getEmail();
         $subject = 'Réinitialisation de votre mot de passe';
@@ -350,7 +378,7 @@ class UserController extends Controller
             'Reply-To: contact@sitez-vous.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
 
-        mail($to, $subject, $message, $headers);
+        return mail($to, $subject, $message, $headers);
     }
 
     /**
