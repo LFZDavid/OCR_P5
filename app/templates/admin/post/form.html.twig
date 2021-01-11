@@ -11,7 +11,7 @@
 {% if message !=[] %}
 <div class="alert alert-{{message.success?'success':'alert'}}" role="alert">
 	{{message.content}}
-	<a href="index.php?admin-post=form&amp;id_post={{id_post}}">
+	<a href="index.php?post={{id_post}}">
 		<button class="btn btn-outline-primary">
 			Voir
 		</button>

@@ -110,12 +110,14 @@ class AdminPostController extends Controller
      * @param CategoryRepository $CategoryRepository
      * @return array $message
      */
-    public function postProcess(array $data, CategoryRepository $CategoryRepository): array
+    public function postProcess(array $data, CategoryRepository $CategoryRepository)
     {
         if ($data != []) {
 
+            // Todo : add id_author
+
             /**Check post values */
-            $id = $this->checkInput($data['id']);
+            $id = (int) $data['id'];
             $title = $this->checkInput($data['title']);
             $chapo = $this->checkInput($data['chapo']);
             $content = $this->checkInput($data['content']);
@@ -130,15 +132,17 @@ class AdminPostController extends Controller
 
             if ($id > 0) {
                 /** Edit */
-                $post = $this->repository->getUniqueById((int) $id);
+                $post = $this->repository->getUniqueById($id);
             } else {
                 /** Create */
                 $post = new Post();
             }
 
+            if (!key_exists('id_user', $_SESSION) || $_SESSION['id_user'] < 1) {
+                $this->fillMessage('error', 'Un problème est survenue : L\'auteur n\'est pas identifié');
+            }
             /** Set post values for saving */
-            $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active);
-
+            $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active)->setIdAuthor($_SESSION['id_user']);
             /** Get id_post from database (auto-incremented) */
             $persisted_id = $this->manager->save($post);
 

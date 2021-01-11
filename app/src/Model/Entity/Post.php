@@ -55,7 +55,7 @@ class Post extends Entity
 	 */
 	public function getIdAuthor(): int
 	{
-		return $this->id_author;
+		return $this->idAuthor;
 	}
 	/**
 	 * @return void
@@ -108,7 +108,7 @@ class Post extends Entity
 	public function setIdAuthor(int $idAuthor): self
 	{
 		if ($idAuthor > 0) {
-			$this->content = $idAuthor;
+			$this->idAuthor = $idAuthor;
 		}
 		return $this;
 	}

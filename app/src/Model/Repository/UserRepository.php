@@ -10,7 +10,7 @@ class UserRepository extends Repository
     protected string $table = 'users';
     protected string $classManaged = '\App\Model\Entity\User';
 
-    public function getUniqueByName(string $name): object
+    public function getUniqueByName(string $name)
     {
         $request = 'SELECT * FROM ' . $this->table . ' WHERE name LIKE :name';
         $q = $this->pdo->prepare($request);
@@ -20,7 +20,7 @@ class UserRepository extends Repository
         return $q->fetch();
     }
 
-    public function getUniqueByEmail(string $email): object
+    public function getUniqueByEmail(string $email)
     {
         $request = 'SELECT * FROM ' . $this->table . ' WHERE email LIKE :email';
         $q = $this->pdo->prepare($request);

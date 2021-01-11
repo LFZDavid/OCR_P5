@@ -11,7 +11,11 @@ class CategoryRepository extends Repository
     protected string $table = 'categories';
     protected string $classManaged = '\App\Model\Entity\Category';
 
-    public function getListByPost($id_post)
+    /**
+     * @param int $id_post
+     * @return array
+     */
+    public function getListByPost(int $id_post): array
     {
         $request = 'SELECT `id_category` as id, categories.name as name 
         FROM `category_post`

@@ -33,7 +33,7 @@ try {
 
     if (key_exists('post', $_GET)) {
         $postController = new PostController($twig, $postRepository);
-        if ($id_post = $_GET['post'] <= 0) {
+        if (($id_post = $_GET['post']) <= 0) {
             $postController->index();
         } else {
             $postController->show($id_post);
@@ -89,7 +89,7 @@ try {
         } elseif ($request == 'role') {
             $adminUserController->changeRole();
         } elseif ($request == 'delete' && key_exists('id_user', $_GET)) {
-            $adminPostController->delete($id_user);
+            $adminUserController->delete($_GET['id_user']);
         }
     } else {
         $homeController = new HomeController($twig);

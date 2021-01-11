@@ -7,11 +7,11 @@ use \App\Model\Entity\Entity;
 class User extends Entity
 {
 
-    protected string $name;
-    protected string $email;
-    protected string $pwd;
-    protected string $createdAt;
-    protected string $role;
+    protected string $name = "";
+    protected string $email = "";
+    protected string $pwd = "";
+    protected $createdAt;
+    protected string $role = "";
 
     /**
      * @return string
