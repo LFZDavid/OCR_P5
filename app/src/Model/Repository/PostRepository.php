@@ -40,7 +40,7 @@ class PostRepository extends Repository
 	 * Get Post adding categories (Collection)
 	 * @return Post $post
 	 */
-	public function getUniqueById(int $id)
+	public function getUniqueById(int $id): object
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';
 		$q = $this->pdo->prepare($request);
