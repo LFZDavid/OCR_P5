@@ -292,6 +292,7 @@ class UserController extends Controller
                 } else {
                     $this->fillMessage('error', 'Lien corrompu !');
                     $access = false;
+                    header('Location: index.php');
                 }
             } else {
                 $this->fillMessage('error', 'Utilisateur introuvable !');
