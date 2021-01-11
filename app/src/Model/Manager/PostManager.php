@@ -20,8 +20,9 @@ class PostManager extends Manager
     {
         if ($post->getId() == null) {
             return $this->add($post);
+        } else {
+            return $this->update($post);
         }
-        return $this->update($post);
     }
 
     /**
