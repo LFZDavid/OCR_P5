@@ -1,0 +1,22 @@
+{% block footer %}
+<div class="container">
+    <form action="#" method="POST">
+        {% if not user_logged %}
+        <div class="mb-3 form-group">
+            <input type="text" name="{{inputs.name.name}}" class="form-control"
+                placeholder="{{inputs.name.placeholder}}">
+        </div>
+        <div class="mb-3 form-group">
+            <input type="email" name="{{inputs.email.name}}" class="form-control"
+                placeholder="{{inputs.email.placeholder}}">
+        </div>
+        {% endif %}
+        <div class=" mb-3 form-group">
+            <input type="text" name="{{inputs.content.name}}" class="form-control"
+                placeholder="{{inputs.content.placeholder}}">
+        </div>
+
+        <input type="submit" class="btn btn-success">
+    </form>
+</div>
+{% endblock %}
