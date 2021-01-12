@@ -6,10 +6,10 @@ use \App\Model\Entity\Entity;
 
 class Comment extends Entity
 {
-    protected string $content;
-    protected int $idAuthor;
-    protected int $idPost;
-    protected int $active;
+    protected string $content = "";
+    protected int $idAuthor = 0;
+    protected int $idPost = 0;
+    protected int $active = 0;
     protected string $createdAt = "";
 
     /**

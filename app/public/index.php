@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 require '../../config.php';
 
+use App\Controller\Admin\AdminCommentController;
 use App\Controller\Admin\AdminPostController;
 use App\Controller\Admin\AdminUserController;
 use App\Controller\Front\HomeController;
@@ -11,8 +12,10 @@ use App\Controller\Front\UserController;
 use App\Controller\Front\ContactController;
 use App\Model\Repository\PostRepository;
 use App\Model\Repository\UserRepository;
+use App\Model\Repository\CommentRepository;
 use App\Model\Manager\PostManager;
 use App\Model\Manager\UserManager;
+use App\Model\Manager\CommentManager;
 use App\Model\Repository\CategoryRepository;
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates/');
@@ -26,9 +29,11 @@ try {
     $pdo = new \PDO("mysql:host=" . $config['db_host'] . ";dbname=" . $config['db_name'] . ";charset=utf8", $config['db_user'], $config['db_pwd']);
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $postRepository = new PostRepository($pdo);
-    $postManager = new PostManager($pdo);
     $userRepository = new UserRepository($pdo);
+    $commentRepository = new CommentRepository($pdo);
+    $postManager = new PostManager($pdo);
     $userManager = new UserManager($pdo);
+    $commentManager = new CommentManager($pdo);
     $categoryRepository = new CategoryRepository($pdo);
 
 
@@ -91,6 +96,12 @@ try {
             $adminUserController->changeRole();
         } elseif ($request == 'delete' && key_exists('id_user', $_GET)) {
             $adminUserController->delete($_GET['id_user']);
+        }
+    } elseif (key_exists('admin-comment', $_GET)) {
+        $adminCommentController = new AdminCommentController($twig, $commentRepository, $commentManager);
+        $request = $_GET['admin-comment'];
+        if ($request == 'list') {
+            $adminCommentController->index();
         }
     } else {
         $contactController = new ContactController($twig, $userRepository);

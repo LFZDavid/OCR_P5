@@ -21,7 +21,7 @@ class AdminCommentController extends Controller
         echo $this->twig->render('/admin/comment/index.html.twig', [
             "title" => "Administration des commentaires",
             "comments" => $comments,
-            "messages" => $this->message
+            "messages" => $this->messages
         ]);
     }
 
