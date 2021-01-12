@@ -31,10 +31,8 @@ try {
     $userManager = new UserManager($pdo);
     $categoryRepository = new CategoryRepository($pdo);
 
-    $display_form = false;
 
     if (key_exists('post', $_GET)) {
-        $display_form = true;
         $postController = new PostController($twig, $postRepository);
         if (($id_post = $_GET['post']) <= 0) {
             $postController->index();
@@ -42,7 +40,6 @@ try {
             $postController->show($id_post);
         }
     } elseif (key_exists('user', $_GET)) {
-        $display_form = true;
         $userController = new UserController($twig, $userRepository, $userManager);
         $request = $_GET['user'];
         if ($request == 'form') {
@@ -96,14 +93,10 @@ try {
             $adminUserController->delete($_GET['id_user']);
         }
     } else {
-        $display_form = true;
-        $homeController = new HomeController($twig);
-        $homeController->homePage();
-    }
-
-    if ($display_form) {
         $contactController = new ContactController($twig, $userRepository);
-        $contactController->getContactForm($config['admin_email']);
+
+        $homeController = new HomeController($twig);
+        $homeController->homePage($contactController, $config['admin_email'], $userRepository);
     }
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();

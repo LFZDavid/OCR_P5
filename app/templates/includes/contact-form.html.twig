@@ -1,19 +1,20 @@
-{% block footer %}
+{% block contact_form %}
 <div class="container">
+    <h3 class="form-title">{{contact_form.title}}</h3>
     <form action="#" method="POST">
-        {% if not user_logged %}
+        {% if not contact_form.user_logged %}
         <div class="mb-3 form-group">
-            <input type="text" name="{{inputs.name.name}}" class="form-control"
-                placeholder="{{inputs.name.placeholder}}">
+            <input type="text" name="{{contact_form.inputs.name.name}}" class="form-control"
+                placeholder="{{contact_form.inputs.name.placeholder}}">
         </div>
         <div class="mb-3 form-group">
-            <input type="email" name="{{inputs.email.name}}" class="form-control"
-                placeholder="{{inputs.email.placeholder}}">
+            <input type="email" name="{{contact_form.inputs.email.name}}" class="form-control"
+                placeholder="{{contact_form.inputs.email.placeholder}}">
         </div>
         {% endif %}
         <div class=" mb-3 form-group">
-            <input type="text" name="{{inputs.content.name}}" class="form-control"
-                placeholder="{{inputs.content.placeholder}}">
+            <input type="text" name="{{contact_form.inputs.content.name}}" class="form-control"
+                placeholder="{{contact_form.inputs.content.placeholder}}">
         </div>
 
         <input type="submit" class="btn btn-success">

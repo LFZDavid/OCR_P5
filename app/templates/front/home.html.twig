@@ -1,22 +1,26 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-{{parent()}} - {{title}}
+	{{parent()}}
+	-
+	{{title}}
 {% endblock %}
 
 {% block body %}
 
-<h1 class="title jumbotron">{{title}}</h1>
+	<h1 class="title jumbotron">{{title}}</h1>
 
-{% for message in messages %}
-{% if message.type == "error" %}
-<div class="alert alert-danger">
-    {% elseif message.type == "success" %}
-    <div class="alert alert-success">
-        {% endif %}
-        {{message.content}}
-    </div>
-    {% endfor %}
-    HOME
+	{% for message in messages %}
+		{% if message.type == "error" %}
+			<div class="alert alert-danger">
+			{% elseif message.type == "success" %}
+				<div class="alert alert-success">
+				{% endif %}
+				{{message.content}}
+			</div>
+		{% endfor %}
+		HOME
 
-    {% endblock %}
+		{% include "/includes/contact-form.html.twig" %}
+
+	{% endblock %}

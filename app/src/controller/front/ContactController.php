@@ -43,15 +43,23 @@ class ContactController extends Controller
             ]
         ];
 
-        echo $this->twig->render('/includes/contact-form.html.twig', [
+
+        return [
             "title" => $title,
             "inputs" => $inputs,
             "user_logged" => $id_user > 0,
             "messages" => $this->messages
-        ]);
+        ];
+
+        // echo $this->twig->render('/includes/contact-form.html.twig', [
+        //     "title" => $title,
+        //     "inputs" => $inputs,
+        //     "user_logged" => $id_user > 0,
+        //     "messages" => $this->messages
+        // ]);
     }
 
-    protected function postProcess(array $post_data, User $user = null, string $admin_email)
+    public function postProcess(array $post_data, User $user = null, string $admin_email)
     {
         $success = true;
 
@@ -73,7 +81,7 @@ class ContactController extends Controller
             'Reply-To: ' . $mail_data['email'] . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
         if ($success) {
-            mail($admin_email, 'Un message de la part de ' . $mail_data['name'], $mail_data['contact'], $headers);
+            mail($admin_email, 'Un message de la part de ' . $mail_data['name'], $mail_data['content'], $headers);
         }
     }
 }
