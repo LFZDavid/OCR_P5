@@ -43,6 +43,12 @@ class CommentManager extends Manager
         return $this->pdo->lastInsertId();
     }
 
+    /**
+     * Update Comment
+     *
+     * @param Comment $comment
+     * @return integer
+     */
     protected function update(Comment $comment): int
     {
         $request = 'UPDATE ' . $this->table . ' SET `content` = :content, `id_author` = :id_author, `id_post` = :id_post, `active` = :active, `updated_at` = NOW() WHERE `id` = :id';
