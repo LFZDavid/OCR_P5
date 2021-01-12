@@ -1,17 +1,15 @@
 {% block contact_form %}
-<div class="container">
+<div class="container contact_form">
     <h3 class="form-title">{{contact_form.title}}</h3>
     <form action="#" method="POST">
-        {% if not contact_form.user_logged %}
         <div class="mb-3 form-group">
             <input type="text" name="{{contact_form.inputs.name.name}}" class="form-control"
-                placeholder="{{contact_form.inputs.name.placeholder}}">
+                placeholder="{{contact_form.inputs.name.placeholder}}" value="{{contact_form.inputs.name.value}}">
         </div>
         <div class="mb-3 form-group">
             <input type="email" name="{{contact_form.inputs.email.name}}" class="form-control"
-                placeholder="{{contact_form.inputs.email.placeholder}}">
+                placeholder="{{contact_form.inputs.email.placeholder}}" value="{{contact_form.inputs.email.value}}">
         </div>
-        {% endif %}
         <div class=" mb-3 form-group">
             <input type="text" name="{{contact_form.inputs.content.name}}" class="form-control"
                 placeholder="{{contact_form.inputs.content.placeholder}}">

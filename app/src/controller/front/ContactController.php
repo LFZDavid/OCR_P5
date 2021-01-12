@@ -17,9 +17,10 @@ class ContactController extends Controller
     {
         $title = "Me contacter";
         $id_user = $_SESSION['id_user'] ?? false;
+        $user = $id_user ? $this->repository->getUniqueById($id_user) : null;
 
         if (!empty($_POST)) {
-            $this->postProcess($_POST, $this->repository->getUniqueById($id_user), $admin_email);
+            $this->postProcess($_POST, $user, $admin_email);
         }
 
         $inputs = [
@@ -27,12 +28,14 @@ class ContactController extends Controller
                 'label' => 'Pseudo',
                 'name' => 'name',
                 'type' => 'text',
+                'value' => $user != null ? $user->getName() : '',
                 'placeholder' => 'Votre pseudo'
             ],
             'email' => [
                 'label' => 'email',
                 'name' => 'email',
                 'type' => 'text',
+                'value' => $user != null ? $user->getEmail() : '',
                 'placeholder' => 'Votre e-mail'
             ],
             'content' => [
@@ -50,13 +53,6 @@ class ContactController extends Controller
             "user_logged" => $id_user > 0,
             "messages" => $this->messages
         ];
-
-        // echo $this->twig->render('/includes/contact-form.html.twig', [
-        //     "title" => $title,
-        //     "inputs" => $inputs,
-        //     "user_logged" => $id_user > 0,
-        //     "messages" => $this->messages
-        // ]);
     }
 
     public function postProcess(array $post_data, User $user = null, string $admin_email)
