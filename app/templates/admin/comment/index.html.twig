@@ -37,9 +37,18 @@
                     <td>{{comment.idAuthor}}</td>
                     <td>{{comment.idPost}}</td>
                     <td>{{comment.createdAt}}</td>
-                    <td>{{comment.active}}</td>
+                    <td>
+                        <form action="index.php?admin-comment=toggle" method="POST">
+                            <div class="form-check form-switch">
+                                <input type="checkbox" class="form-check-input" name="active" {% if comment.active==1 %}
+                                    checked {%endif%}>
+                            </div>
+                    </td>
                     <td width="250">
                         <div class="row">
+                            <input type="hidden" name="id_comment" value="{{comment.id}}">
+                            <input type="submit" class="btn btn-primary" value="Enregistrer">
+                            </form>
                             <form action="index.php?admin-comment=delete&amp;id_comment={{comment.id}}" method="POST"
                                 onclick="return confirm('Êtes-vous sûre ?')">
                                 <input type="hidden" name="_method" value="DELETE">

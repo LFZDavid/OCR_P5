@@ -104,6 +104,8 @@ try {
             $adminCommentController->index();
         } elseif ($request == 'delete' && key_exists('id_comment', $_GET)) {
             $adminCommentController->delete($_GET['id_comment']);
+        } elseif ($request == 'toggle') {
+            $adminCommentController->toggle();
         }
     } else {
         $contactController = new ContactController($twig, $userRepository);

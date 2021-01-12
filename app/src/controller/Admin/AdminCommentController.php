@@ -25,6 +25,21 @@ class AdminCommentController extends Controller
         ]);
     }
 
+    public function toggle()
+    {
+        $comment = $this->repository->getUniqueById($_POST['id_comment']);
+        $toggle = $_POST['active'] == 'on' ? 1 : 0;
+        $comment->setActive($toggle);
+        $this->manager->save($comment);
+
+        $this->fillMessage('success', 'Le comment est mis à jour !');
+        header('Location:index.php?admin-comment=list');
+    }
+
+    /**
+     * @param integer $id_comment
+     * @return void
+     */
     public function delete(int $id_comment)
     {
         if ($this->repository->getUniqueById($id_comment)) {
