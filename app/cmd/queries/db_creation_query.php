@@ -77,12 +77,3 @@ INSERT INTO `blog_p5`.`categories`(
 
 -- --------------------------------------------------------
 ";
-
-// -- --------------------------------------------------------
-// --
-// -- Contraintes pour la table `comments`
-// --
-// ALTER TABLE `blog_p5`.`comments`
-// ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
-// ALTER TABLE `blog_p5`.`comments`
-// ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);
