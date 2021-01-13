@@ -1,6 +1,7 @@
 <div class="container-fluid post_comments">
 	<h4>Commentaires</h4>
 	{% for comment in post.comments %}
+	{% if comment.Active%}
 	<div class="row">
 		<strong>{{comment.AuthorName}}
 			:
@@ -10,6 +11,7 @@
 		</em>
 		<p>{{comment.content}}</p>
 	</div>
+	{% endif %}
 	{% endfor %}
 	<div class="comment-form-block">
 		{% if session.id_user is null %}
