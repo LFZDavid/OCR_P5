@@ -9,8 +9,9 @@ class Comment extends Entity
     protected string $content = "";
     protected int $idAuthor = 0;
     protected int $idPost = 0;
-    protected int $active = 0;
+    protected bool $active = false;
     protected string $createdAt = "";
+
 
     /**
      * Get the value of content
@@ -75,7 +76,7 @@ class Comment extends Entity
     /**
      * Get the value of active
      */
-    public function getActive(): int
+    public function getActive(): bool
     {
         return $this->active;
     }
@@ -85,7 +86,7 @@ class Comment extends Entity
      *
      * @return  self
      */
-    public function setActive(int $active): self
+    public function setActive(bool $active): self
     {
         $this->active = $active;
 

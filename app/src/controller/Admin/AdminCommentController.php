@@ -17,7 +17,6 @@ class AdminCommentController extends Controller
     public function index()
     {
         $comments_complete_list = $this->repository->getCompleteList();
-
         echo $this->twig->render('/admin/comment/index.html.twig', [
             "title" => "Administration des commentaires",
             "comments" => $comments_complete_list,
@@ -28,10 +27,11 @@ class AdminCommentController extends Controller
     public function toggle()
     {
         $comment = $this->repository->getUniqueById($_POST['id_comment']);
-        $toggle = $_POST['active'] == 'on' ? 1 : 0;
+
+        $toggle = $comment->getActive() ? false : true;
+
         $comment->setActive($toggle);
         $this->manager->save($comment);
-
         $this->fillMessage('success', 'Le comment est mis à jour !');
         header('Location:index.php?admin-comment=list');
     }

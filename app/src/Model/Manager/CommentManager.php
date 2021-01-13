@@ -51,12 +51,12 @@ class CommentManager extends Manager
      */
     protected function update(Comment $comment): int
     {
-        $request = 'UPDATE ' . $this->table . ' SET `content` = :content, `id_author` = :id_author, `id_post` = :id_post, `active` = :active, `updated_at` = NOW() WHERE `id` = :id';
+        $request = 'UPDATE ' . $this->table . ' SET `content` = :content, `id_author` = :id_author, `id_post` = :id_post, `active` = :active WHERE `id` = :id';
         $q = $this->pdo->prepare($request);
         $q->bindValue(':content', $comment->getContent());
         $q->bindValue(':id_author', $comment->getIdAuthor(), PDO::PARAM_INT);
         $q->bindValue(':id_post', $comment->getIdPost(), PDO::PARAM_INT);
-        $q->bindValue(':active', $comment->getActive(), PDO::PARAM_INT);
+        $q->bindValue(':active', $comment->getActive(), PDO::PARAM_BOOL);
         $q->bindValue(':id', $comment->getId(), PDO::PARAM_INT);
         $q->execute();
         return $comment->getId();

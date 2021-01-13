@@ -44,9 +44,8 @@ CREATE TABLE `blog_p5`.`comments` (
     `content` text NOT NULL,
     `id_author` int(11) NOT NULL,
     `id_post` int(11) NOT NULL,
-    `active` tinyint(4) DEFAULT '0',
-    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` timestamp
+    `active` tinyint(1) DEFAULT '0',
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 --
 -- --------------------------------------------------------
