@@ -66,6 +66,7 @@ try {
                 header('Location:index.php?user=login');
             }
         }
+    } elseif (key_exists('comment', $_GET)) {
     } elseif (key_exists('admin-post', $_GET)) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
         $request = $_GET['admin-post'];
