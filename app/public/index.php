@@ -6,6 +6,7 @@ require '../../config.php';
 use App\Controller\Admin\AdminCommentController;
 use App\Controller\Admin\AdminPostController;
 use App\Controller\Admin\AdminUserController;
+use App\Controller\Front\CommentController;
 use App\Controller\Front\HomeController;
 use App\Controller\Front\PostController;
 use App\Controller\Front\UserController;
@@ -67,6 +68,11 @@ try {
             }
         }
     } elseif (key_exists('comment', $_GET)) {
+        $commentController = new CommentController($twig, $commentRepository, $commentManager);
+        $request = $_GET['comment'];
+        if ($request == 'add') {
+            $commentController->postProcess($_POST, $_GET['id_post']);
+        }
     } elseif (key_exists('admin-post', $_GET)) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
         $request = $_GET['admin-post'];

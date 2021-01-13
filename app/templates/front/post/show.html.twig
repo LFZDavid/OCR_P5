@@ -1,26 +1,27 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	{{parent()}}
-	-
-	{{title}}
+{{parent()}}
+-
+{{title}}
 {% endblock %}
 
 {% block body %}
-	<h1 class="post-title jumbotron">{{title}}</h1>
-	<h2 class="post-chapot">{{post.chapo}}</h2>
-	<p class="post-date">
+<h1 class="post-title jumbotron">{{title}}</h1>
 
-		{% if post.updated_at != null%}
-			Dernière mise à jour :
-			{{post.updated_at}}
-		{% else %}
-			Créé le :
-			{{post.created_at}}
-		{% endif %}
-		par :
-		{{post.id_author}}
-	</p>
-	<p class="post-content">{{post.content}}</p>
-	{% include "includes/post-comments.html.twig" %}
+<h2 class="post-chapot">{{post.chapo}}</h2>
+<p class="post-date">
+
+	{% if post.updated_at != null%}
+	Dernière mise à jour :
+	{{post.updated_at}}
+	{% else %}
+	Créé le :
+	{{post.created_at}}
+	{% endif %}
+	par :
+	{{post.id_author}}
+</p>
+<p class="post-content">{{post.content}}</p>
+{% include "includes/post-comments.html.twig" %}
 {% endblock %}

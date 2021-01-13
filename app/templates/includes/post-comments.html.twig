@@ -18,10 +18,10 @@
 		</p>
 		<a href="index.php?user=login">Se connecter/S'inscrire</a>
 		{% else %}
-		<form action="index.php?comment=add" method="post">
+		<form action="index.php?comment=add&amp;id_post={{post.id}}" method="post">
 			<div class=" mb-3 form-group">
 				<textarea class="form-control" id="comment_content" name="comment_content" rows="3"
-					placeholder="Votre commentaire..."></textarea>
+					placeholder="Votre commentaire..." required></textarea>
 			</div>
 			<input type="submit" class="btn btn-primary">
 		</form>
