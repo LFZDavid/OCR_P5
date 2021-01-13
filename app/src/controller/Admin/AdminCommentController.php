@@ -16,11 +16,11 @@ class AdminCommentController extends Controller
      */
     public function index()
     {
-        $comments = $this->repository->getList();
+        $comments_complete_list = $this->repository->getCompleteList();
 
         echo $this->twig->render('/admin/comment/index.html.twig', [
             "title" => "Administration des commentaires",
-            "comments" => $comments,
+            "comments" => $comments_complete_list,
             "messages" => $this->messages
         ]);
     }

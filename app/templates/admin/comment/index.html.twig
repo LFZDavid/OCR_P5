@@ -24,18 +24,22 @@
 					<tr>
 						<th>Commentaire</th>
 						<th>Auteur</th>
-						<th>Article (id)</th>
+						<th>Article</th>
 						<th>Créé le :</th>
 						<th>Visible</th>
-						<th>Action</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for comment in comments %}
 						<tr>
 							<td>{{comment.content}}</td>
-							<td>{{comment.id_author}}</td>
-							<td>{{comment.id_post}}</td>
+							<td>{{comment.author_name}}</td>
+							<td>
+								<a href="index.php?post={{comment.id_post}}" target="_blank">
+									{{comment.post_title}}
+								</a>
+							</td>
 							<td>{{comment.created_at}}</td>
 							<td>
 								<form action="index.php?admin-comment=toggle" method="POST">
