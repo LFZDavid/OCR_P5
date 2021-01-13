@@ -46,9 +46,9 @@ class CommentRepository extends Repository
      */
     public function getListByPostId(int $post_id, bool $only_active = false): array
     {
-        $where = ' WHERE `id_post` = ' . $post_id;
+        $where = ' WHERE `id_post` = ' . $post_id . ' ';
         $where .= $only_active ? 'AND  `comments.active` = 1' : '';
-        $request = 'SELECT * FROM ' . $this->table . $where;
+        $request = 'SELECT *, users.name as author_name FROM ' . $this->table . ' INNER JOIN users ON users.id = id_author ' . $where;
         $q = $this->pdo->query($request);
         $q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 

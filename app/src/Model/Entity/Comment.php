@@ -8,6 +8,7 @@ class Comment extends Entity
 {
     protected string $content = "";
     protected int $idAuthor = 0;
+    protected string $authorName = "";
     protected int $idPost = 0;
     protected bool $active = false;
     protected string $createdAt = "";
@@ -109,6 +110,29 @@ class Comment extends Entity
     public function setCreatedAt(string $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of author_name
+     *
+     * @return string
+     */
+    public function getAuthorName(): string
+    {
+        return $this->authorName;
+    }
+
+    /**
+     * Set the value of author_name
+     *
+     * @param string $author_name
+     * @return self
+     */
+    public function setAuthorName(string $authorName): self
+    {
+        $this->authorName = $authorName;
 
         return $this;
     }

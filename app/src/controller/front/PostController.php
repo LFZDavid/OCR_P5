@@ -16,6 +16,8 @@ class PostController extends Controller
     public function show(int $id_post)
     {
         $post = $this->repository->getUniqueById((int)$id_post);
+
+
         if ($id_post < 1 || !$post->getActive()) {
             header('location: index.php');
         }
