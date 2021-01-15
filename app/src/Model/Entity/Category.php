@@ -8,16 +8,21 @@ class Category extends Entity
 {
     protected string $name;
 
-    //GETTERS
-    public function getName()
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
 
-    //SETTERS
-    public function setName($name)
+    /**
+     * @param string $name
+     * @return self
+     */
+    public function setName(string $name): self
     {
-        $this->name = (string) $name;
+        $this->name = $name;
         return $this;
     }
 }

@@ -9,9 +9,9 @@ use PDO;
 class PostRepository extends Repository
 {
 
-	protected $table = 'posts';
-	protected $classManaged = '\App\Model\Entity\Post';
-	protected $paginate = 'LIMIT 0, 4';
+	protected string $table = 'posts';
+	protected string $classManaged = '\App\Model\Entity\Post';
+	protected string $paginate = 'LIMIT 0, 4';
 	protected $CategoryRepository;
 
 
@@ -20,7 +20,7 @@ class PostRepository extends Repository
 	 * Get list of Post adding categories (Collection)
 	 * @return array $post_list
 	 */
-	public function getList()
+	public function getList(): array
 	{
 		$q = $this->pdo->query('SELECT * FROM ' . $this->table);
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
@@ -40,7 +40,7 @@ class PostRepository extends Repository
 	 * Get Post adding categories (Collection)
 	 * @return Post $post
 	 */
-	public function getUniqueById($id)
+	public function getUniqueById(int $id): object
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';
 		$q = $this->pdo->prepare($request);

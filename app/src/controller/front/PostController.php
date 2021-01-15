@@ -7,10 +7,16 @@ use App\Controller\Controller;
 class PostController extends Controller
 {
 
-    public function show($id_post)
+    /**
+     * Display post in template
+     *
+     * @param integer $id_post
+     * @return void
+     */
+    public function show(int $id_post)
     {
         $post = $this->repository->getUniqueById((int)$id_post);
-        if (!$post->getId() || !$post->getActive()) {
+        if ($id_post < 1 || !$post->getActive()) {
             header('location: index.php');
         }
 
@@ -20,6 +26,11 @@ class PostController extends Controller
         ]);
     }
 
+    /**
+     * Display list of Post
+     *
+     * @return void
+     */
     public function index()
     {
         $posts = $this->repository->getListOfActives();

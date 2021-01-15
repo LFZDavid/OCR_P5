@@ -9,8 +9,8 @@ use PDO;
 class PostManager extends Manager
 {
 
-    protected $table = 'posts';
-    protected $classManaged = '\App\Model\Entity\Post';
+    protected string $table = 'posts';
+    protected string $classManaged = '\App\Model\Entity\Post';
 
     /**
      * add/update entity
@@ -20,8 +20,9 @@ class PostManager extends Manager
     {
         if ($post->getId() == null) {
             return $this->add($post);
+        } else {
+            return $this->update($post);
         }
-        return $this->update($post);
     }
 
     /**
@@ -29,7 +30,7 @@ class PostManager extends Manager
      * @param Post $post
      * @return int $id //Return auto-incremented id for form treatment
      */
-    protected function add(Post $post)
+    protected function add(Post $post): int
     {
         $request = 'INSERT INTO ' . $this->table . '(`title`, `chapo`, `content`, `id_author`,`active`) VALUES(:title, :chapo, :content, :id_author, :active)';
         $q = $this->pdo->prepare($request);
@@ -47,7 +48,7 @@ class PostManager extends Manager
      * @param Post $post
      * @return int $id //Return auto-incremented id for form treatment
      */
-    protected function update(Post $post)
+    protected function update(Post $post): int
     {
         $request = 'UPDATE ' . $this->table . ' SET `title` = :title, `chapo` = :chapo, `content` = :content, `id_author` = :id_author, `active` = :active, `updated_at` = NOW() WHERE `id` = :id';
         $q = $this->pdo->prepare($request);
@@ -65,7 +66,7 @@ class PostManager extends Manager
      * @param int $id_post
      * @param int $id_category
      */
-    public function linkCategory($id_post, $id_category)
+    public function linkCategory(int $id_post, int $id_category)
     {
         $request = 'INSERT INTO `category_post` (`id_post`, `id_category`) VALUES(:id_post, :id_category)';
         $q = $this->pdo->prepare($request);
@@ -78,7 +79,7 @@ class PostManager extends Manager
      * @param int $id_post
      * @param int $id_category
      */
-    public function unlinkCategory($id_post, $id_category)
+    public function unlinkCategory(int $id_post, int $id_category)
     {
         $request = 'DELETE FROM `category_post` WHERE id_post = :id_post AND id_category = :id_category';
         $q = $this->pdo->prepare($request);

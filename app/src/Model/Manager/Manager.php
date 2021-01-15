@@ -6,9 +6,9 @@ use PDO;
 
 abstract class Manager
 {
-    protected $pdo;
-    protected $table;
-    protected $classManaged;
+    protected PDO $pdo;
+    protected string $table;
+    protected string $classManaged;
 
     /**
      * @param PDO $pdo
@@ -23,7 +23,7 @@ abstract class Manager
      * @param int $id
      * @return bool
      */
-    public function delete($id)
+    public function delete(int $id): bool
     {
         $request = 'DELETE FROM ' . $this->table . ' WHERE id =:id';
         $q = $this->pdo->prepare($request);

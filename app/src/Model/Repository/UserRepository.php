@@ -7,8 +7,8 @@ use PDO;
 
 class UserRepository extends Repository
 {
-    protected $table = 'users';
-    protected $classManaged = '\App\Model\Entity\User';
+    protected string $table = 'users';
+    protected string $classManaged = '\App\Model\Entity\User';
 
     public function getUniqueByName(string $name)
     {

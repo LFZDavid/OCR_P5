@@ -4,15 +4,15 @@ namespace App\Model\Entity;
 
 abstract class Entity
 {
-	protected $id;
+	protected int $id;
 
-	public function __construct($data = [])
+	public function __construct(array $data = [])
 	{
 		if (!empty($data)) {
 			$this->hydrate($data);
 		}
 	}
-	public function hydrate($data)
+	public function hydrate(array $data)
 	{
 		foreach ($data as $attribut => $value) {
 			$method = 'set' . ucfirst($attribut);
@@ -22,17 +22,24 @@ abstract class Entity
 			}
 		}
 	}
-	//GETTERS
-	public function getId()
+
+	/**
+	 * @return integer
+	 */
+	public function getId(): int
 	{
-		return $this->id;
+		return $this->id ?? false;
 	}
-	//SETTERS
-	public function setId($id)
+
+	/**
+	 * @param integer $id
+	 * @return self
+	 */
+	public function setId(int $id): self
 	{
-		$id = (int) $id;
 		if ($id > 0) {
 			$this->id = $id;
+			return $this;
 		}
 	}
 }

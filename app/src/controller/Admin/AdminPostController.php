@@ -12,15 +12,14 @@ class AdminPostController extends Controller
      * 
      * Build and display post BO
      */
-    public function index($message = null)
+    public function index()
     {
-        $message ?? "";
         $posts = $this->repository->getList();
 
         echo $this->twig->render('/admin/post/index.html.twig', [
             "title" => "Administration des posts",
             "posts" => $posts,
-            "message" => $message
+            "message" => $this->messages
         ]);
     }
 
@@ -29,23 +28,23 @@ class AdminPostController extends Controller
      * Build and display form
      * 
      * @param int $id_post
-     * @param CategoryRepository $CategoryRepository
+     * @param CategoryRepository $categoryRepository
      */
-    public function getForm(int $id_post, CategoryRepository $CategoryRepository)
+    public function getForm(int $id_post, CategoryRepository $categoryRepository)
     {
         if (isset($_POST)) {
-            $message = $this->postProcess($_POST, $CategoryRepository);
+            $this->postProcess($_POST, $categoryRepository);
         }
 
         if ($id_post == 0) {
             $post = new Post();
             $title = "Création";
         } else {
-            $post = $this->repository->getUniqueById((int)$id_post);
+            $post = $this->repository->getUniqueById($id_post);
             $title = "Modification";
         }
 
-        $categories = $CategoryRepository->getList();
+        $categories = $categoryRepository->getList();
 
         foreach ($post->getCategories() as $post_category) {
             $checked_categories[$post_category->getName()] = true;
@@ -102,25 +101,24 @@ class AdminPostController extends Controller
             "title" => $title . " d'un post",
             "inputs" => $inputs,
             "id_post" => $post->getId() ?? 0,
-            "message" => $message // chargé après traitement du formulaire
+            "messages" => $this->messages // chargé après traitement du formulaire
         ]);
     }
 
     /**
      * @param array $data
-     * @param CategoryRepository $CategoryRepository
-     * @return array $message
+     * @param CategoryRepository $categoryRepository
      */
-    public function postProcess(array $data, CategoryRepository $CategoryRepository)
+    public function postProcess(array $data, CategoryRepository $categoryRepository)
     {
         if ($data != []) {
 
             /**Check post values */
-            $id = $this->checkInput($data['id']);
+            $id = (int) $data['id'];
             $title = $this->checkInput($data['title']);
             $chapo = $this->checkInput($data['chapo']);
             $content = $this->checkInput($data['content']);
-            $categories = $data['categories'] ?? [];
+            $categories = key_exists('categories', $data) ? $data['categories'] : [];
 
             /**active */
             if (isset($data['active'])) {
@@ -131,19 +129,21 @@ class AdminPostController extends Controller
 
             if ($id > 0) {
                 /** Edit */
-                $post = $this->repository->getUniqueById((int) $id);
+                $post = $this->repository->getUniqueById($id);
             } else {
                 /** Create */
                 $post = new Post();
             }
 
+            if (!key_exists('id_user', $_SESSION) || $_SESSION['id_user'] < 1) {
+                $this->fillMessage('error', 'Un problème est survenue : L\'auteur n\'est pas identifié');
+            }
             /** Set post values for saving */
-            $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active);
-
+            $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active)->setIdAuthor($_SESSION['id_user']);
             /** Get id_post from database (auto-incremented) */
             $persisted_id = $this->manager->save($post);
 
-            $old_post_categories = $CategoryRepository->getListByPost($persisted_id);
+            $old_post_categories = $categoryRepository->getListByPost($persisted_id);
             $new_post_categories = $categories;
 
             /** Compare old linked  categories */
@@ -163,28 +163,20 @@ class AdminPostController extends Controller
             /**--- */
 
             if ($persisted_id > 0) {
-                $message = [
-                    "success" => true,
-                    "content" => "Post n° $persisted_id sauvegardé !",
-                    "id_post" => $persisted_id
-                ];
+                $this->fillMessage('success', "Post n° $persisted_id sauvegardé !");
             } else {
-                $message = [
-                    "success" => false,
-                    "content" => "Erreur : un problème est survenu lors de l'enregistrement !"
-                ];
+                $this->fillMessage('error', "Erreur : un problème est survenu lors de l'enregistrement !");
             }
-            return $message;
         }
     }
 
     /**
      * @param int $id_post
      */
-    public function delete($id_post)
+    public function delete(int $id_post)
     {
         if ($this->repository->getUniqueById((int)$id_post)) {
-            if ($this->manager->delete((int)$id_post)) {
+            if ($this->manager->delete($id_post)) {
                 $message = 'Le post n° ' . $id_post . ' a été supprimé';
             } else {
                 $message = 'Impossible de supprimer le post n° ' . $id_post . ' !';

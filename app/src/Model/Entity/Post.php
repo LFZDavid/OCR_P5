@@ -9,92 +9,147 @@ class Post extends Entity
 	protected string $title = "";
 	protected string $chapo = "";
 	protected string $content = "";
-	protected int $id_author = 1;
+	protected int $idAuthor = 1;
 	protected int $active = 0;
 	protected array $categories = [];
-	protected $created_at = "";
-	protected $updated_at = "";
+	protected $createdAt = "";
+	protected $updatedAt = "";
 
-	//GETTERS
-	public function getTitle()
+	/**
+	 * @return string
+	 */
+	public function getTitle(): string
 	{
 		return $this->title;
 	}
-	public function getChapo()
+	/**
+	 * @return string
+	 */
+	public function getChapo(): string
 	{
 		return $this->chapo;
 	}
-	public function getContent()
+	/**
+	 * @return string
+	 */
+	public function getContent(): string
 	{
 		return $this->content;
 	}
-	public function getActive()
+	/**
+	 * @return integer
+	 */
+	public function getActive(): int
 	{
 		return $this->active;
 	}
-	public function getCategories()
+	/**
+	 * @return array
+	 */
+	public function getCategories(): array
 	{
 		return $this->categories;
 	}
-	public function getIdAuthor()
+	/**
+	 * @return integer
+	 */
+	public function getIdAuthor(): int
 	{
-		return $this->id_author;
+		return $this->idAuthor;
 	}
+	/**
+	 * @return void
+	 */
 	public function getCreatedAt()
 	{
 		return $this->created_at;
 	}
+	/**
+	 * @return void
+	 */
 	public function getUpdatedAt()
 	{
 		return $this->updated_at;
 	}
 
-	//SETTERS
-	public function setTitle($title)
+	/**
+	 * @param string $title
+	 * @return self
+	 */
+	public function setTitle(string $title): self
 	{
-		$this->title = (string) $title;
+		$this->title = $title;
 		return $this;
 	}
-	public function setChapo($chapo)
+	/**
+	 * @param string $chapo
+	 * @return self
+	 */
+	public function setChapo(string $chapo): self
 	{
-		$this->chapo = (string) $chapo;
+		$this->chapo = $chapo;
 		return $this;
 	}
-	public function setContent($content)
+	/**
+	 * @param string $content
+	 * @return self
+	 */
+	public function setContent(string $content): self
 	{
 		if (!empty($content)) {
-			$this->content = (string) $content;
+			$this->content = $content;
 		}
 		return $this;
 	}
-	public function setId_author($id_author)
+	/**
+	 * @param integer $id_author
+	 * @return self
+	 */
+	public function setIdAuthor(int $idAuthor): self
 	{
-		if (!empty($id_author)) {
-			$this->content = (int) $id_author;
+		if ($idAuthor > 0) {
+			$this->idAuthor = $idAuthor;
 		}
 		return $this;
 	}
-	public function setActive($active)
+	/**
+	 * @param integer $active
+	 * @return self
+	 */
+	public function setActive(int $active): self
 	{
-		$this->active = (int) $active;
+		$this->active = $active;
 		return $this;
 	}
-	public function setCategories($categories)
+	/**
+	 * @param array $categories
+	 * @return self
+	 */
+	public function setCategories(array $categories): self
 	{
 		$this->categories = $categories;
 		return $this;
 	}
-	public function setCreated_at($created_at)
+	/**
+	 * @param [type] $created_at
+	 * @return self
+	 */
+	public function setCreatedAt($createdAt): self
 	{
-		if (!empty($created_at)) {
-			$this->created_at = $created_at;
+		if (!empty($createdAt)) {
+			$this->createdAt = $createdAt;
 		}
 		return $this;
 	}
-	public function setUpdated_at($updated_at)
+
+	/**
+	 * @param [type] $updated_at
+	 * @return self
+	 */
+	public function setUpdatedAt($updatedAt): self
 	{
-		if (!empty($updated_at)) {
-			$this->updated_at = $updated_at;
+		if (!empty($updatedAt)) {
+			$this->updatedAt = $updatedAt;
 		}
 		return $this;
 	}

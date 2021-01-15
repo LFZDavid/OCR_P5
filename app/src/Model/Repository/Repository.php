@@ -6,16 +6,19 @@ use PDO;
 
 abstract class Repository
 {
-	protected $pdo;
-	protected $table;
-	protected $classManaged;
+	protected PDO $pdo;
+	protected string $table;
+	protected string $classManaged;
 
 	public function __construct(PDO $pdo)
 	{
 		$this->pdo = $pdo;
 	}
 
-	public function getList()
+	/**
+	 * @return array
+	 */
+	public function getList(): array
 	{
 		$q = $this->pdo->query('SELECT * FROM ' . $this->table);
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
@@ -25,8 +28,10 @@ abstract class Repository
 
 	/**
 	 * Get List of entity with active attribute set to 1
+	 *
+	 * @return array
 	 */
-	public function getListOfActives()
+	public function getListOfActives(): array
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE active = 1';
 		$q = $this->pdo->query($request);
@@ -35,7 +40,11 @@ abstract class Repository
 		return $q->fetchAll();
 	}
 
-	public function getUniqueById($id)
+	/**
+	 * @param integer $id
+	 * @return object
+	 */
+	public function getUniqueById(int $id): object
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';
 		$q = $this->pdo->prepare($request);

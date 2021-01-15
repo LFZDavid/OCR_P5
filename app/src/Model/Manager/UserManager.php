@@ -8,8 +8,8 @@ use PDO;
 
 class UserManager extends Manager
 {
-    protected $table = 'users';
-    protected $classManaged = '\App\Model\Entity\User';
+    protected string $table = 'users';
+    protected string $classManaged = '\App\Model\Entity\User';
 
     /**
      * add/update entity
@@ -30,7 +30,7 @@ class UserManager extends Manager
      * @param User $user
      * @return int $id //Return auto-incremented id for form treatment
      */
-    protected function add(User $user)
+    protected function add(User $user): int
     {
         $request = 'INSERT INTO ' . $this->table . '(`name`, `email`, `pwd`, `role`) VALUES(:name, :email, :pwd, :role)';
         $q = $this->pdo->prepare($request);
@@ -47,7 +47,7 @@ class UserManager extends Manager
      * @param User $user
      * @return int $id //Return auto-incremented id for form treatment
      */
-    protected function update(User $user)
+    protected function update(User $user): int
     {
         $request = 'UPDATE ' . $this->table . ' SET `name` = :name, `email` = :email, `pwd` = :pwd, `role` = :role WHERE `id` = :id';
         $q = $this->pdo->prepare($request);

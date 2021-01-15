@@ -22,7 +22,14 @@ abstract class Controller
         $this->redirectIfNotAllowed();
     }
 
-    public function checkInput($data)
+    /**
+     * escape suspicius inputs
+     * for validate form
+     *
+     * @param string $data
+     * @return string
+     */
+    public function checkInput(string $data): string
     {
         $data = trim($data);
         $data = stripslashes($data);
