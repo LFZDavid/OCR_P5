@@ -7,16 +7,12 @@ use Twig\Environment;
 abstract class Controller
 {
     protected Environment $twig;
-    protected $repository;
-    protected $manager;
     protected array $messages = [];
     protected string $required_role = "";
 
-    public function __construct(Environment $twig, $repository = null, $manager = null)
+    public function __construct(Environment $twig)
     {
         $this->twig = $twig;
-        $this->repository = $repository;
-        $this->manager = $manager;
         $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
         $this->twig->addGlobal('session', $_SESSION);
         $this->redirectIfNotAllowed();

@@ -3,42 +3,43 @@
 namespace App\Controller\Front;
 
 use App\Controller\Controller;
+use Twig\Environment;
+use App\Model\Repository\PostRepository;
+use App\Model\Repository\CommentRepository;
 
 class PostController extends Controller
 {
+    private PostRepository $postRepository;
+    private CommentRepository $commentRepository;
 
-    /**
-     * Display post in template
-     *
-     * @param integer $id_post
-     * @return void
-     */
-    public function show(int $id_post)
+
+    public function __construct(Environment $twig, PostRepository $postRepository, CommentRepository $commentRepository)
     {
-        $post = $this->repository->getUniqueById((int)$id_post);
+        $this->postRepository = $postRepository;
+        $this->commentRepository = $commentRepository;
 
+        parent::__construct($twig);
+    }
 
-        if ($id_post < 1 || !$post->getActive()) {
+    public function show(int $id_post): void
+    {
+        $post = $this->repository->getUniqueById($id_post);
+
+        if (!$post || !$post->getActive()) {
             header('location: index.php');
         }
 
+        //Comments = $this->commentRepository->getListByPost()
+
         echo $this->twig->render('/front/post/show.html.twig', [
-            "title" => $post->getTitle(),
             "post" => $post
         ]);
     }
 
-    /**
-     * Display list of Post
-     *
-     * @return void
-     */
-    public function index()
+    public function index(): void
     {
         $posts = $this->repository->getListOfActives();
-
         echo $this->twig->render('/front/post/index.html.twig', [
-            "title" => "Liste des posts",
             "posts" => $posts
         ]);
     }
