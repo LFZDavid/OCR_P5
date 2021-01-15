@@ -44,9 +44,8 @@ CREATE TABLE `blog_p5`.`comments` (
     `content` text NOT NULL,
     `id_author` int(11) NOT NULL,
     `id_post` int(11) NOT NULL,
-    `active` tinyint(4) DEFAULT '0',
-    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` timestamp
+    `active` tinyint(1) DEFAULT '0',
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 --
 -- --------------------------------------------------------
@@ -77,12 +76,3 @@ INSERT INTO `blog_p5`.`categories`(
 
 -- --------------------------------------------------------
 ";
-
-// -- --------------------------------------------------------
-// --
-// -- Contraintes pour la table `comments`
-// --
-// ALTER TABLE `blog_p5`.`comments`
-// ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`id_author`) REFERENCES `users` (`id`);
-// ALTER TABLE `blog_p5`.`comments`
-// ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`id_post`) REFERENCES `posts` (`id`);

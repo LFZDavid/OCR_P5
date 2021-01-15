@@ -51,12 +51,6 @@ try {
             ('Lpsum passages, and more etraset containing',1,3,1),
             ('E etraset contaiLpsum passages, and more psum passages, and more etraset containing',1,1,1)");
 
-    // Insert categories
-    // $db->exec("INSERT INTO `blog_p5`.`categories`(
-    //     `name`
-    // ) VALUES('News'),('Tips'),('Languages'),('Framework'),('Divers')
-    // ");
-    // Link categories to post
     $db->exec("INSERT INTO `blog_p5`.`category_post`(
         `id_post`,
         `id_category`

@@ -15,11 +15,16 @@ abstract class Entity
 	public function hydrate(array $data)
 	{
 		foreach ($data as $attribut => $value) {
-			$method = 'set' . ucfirst($attribut);
+			$this->__set($attribut, $value);
+		}
+	}
 
-			if (is_callable([$this, $method])) {
-				$this->$method($value);
-			}
+	public function __set($name, $value)
+	{
+		if (isset($this->$name)) {
+			$this->$name = $value;
+		} else if (false !== strpos($name, '_')) {
+			$this->__set($this->snakeCaseToCamelCase($name), $value);
 		}
 	}
 
@@ -41,5 +46,17 @@ abstract class Entity
 			$this->id = $id;
 			return $this;
 		}
+	}
+
+	/**
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	protected function snakeCaseToCamelCase($str)
+	{
+		$upperCamelCase = str_replace('_', '', ucwords($str, '_'));
+
+		return strtolower(substr($upperCamelCase, 0, 1)) . substr($upperCamelCase, 1);
 	}
 }
