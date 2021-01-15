@@ -59,7 +59,7 @@ class UserController extends Controller
         echo $this->twig->render('/front/user/form.html.twig', [
             "title" => $title,
             "inputs" => $inputs,
-            "id_user" => $user->getId() ?? 0,
+            "id_user" => $user->getId(),
             "messages" => $this->messages
         ]);
     }
@@ -67,18 +67,21 @@ class UserController extends Controller
 
     public function postProcess(array $data, User $user = null)
     {
-
         $user_data = [];
         $success = true;
         // Validation
         foreach ($data as $key => $value) {
             if ($key == 'name') {
                 if (strlen($value) > 4) {
-                    if ($this->isNameAvailable($value)) {
-                        $user_data['name'] = $this->checkInput($value);
+                    if ($user == null || $user->getName() != $value) {
+                        if ($this->isNameAvailable($value)) {
+                            $user_data['name'] = $this->checkInput($value);
+                        } else {
+                            $this->fillMessage('error', 'Ce pseudo n\'est pas disponible!');
+                            $success = false;
+                        }
                     } else {
-                        $this->fillMessage('error', 'Ce pseudo n\'est pas disponible!');
-                        $success = false;
+                        $user_data['name'] = $user->getName();
                     }
                 } else {
                     $this->fillMessage('error', 'Pseudo trop court : 5 caractère minimum.');
@@ -86,11 +89,15 @@ class UserController extends Controller
                 }
             } elseif ($key == 'email') {
                 if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    if ($this->isEmailAvailable($value)) {
-                        $user_data['email'] = $this->checkInput($value);
+                    if ($user == null || $user->getEmail() != $value) {
+                        if ($this->isEmailAvailable($value)) {
+                            $user_data['email'] = $this->checkInput($value);
+                        } else {
+                            $this->fillMessage('error', 'Cet email est déjà utilisé !');
+                            $success = false;
+                        }
                     } else {
-                        $this->fillMessage('error', 'Cet email est déjà utilisé !');
-                        $success = false;
+                        $user_data['email'] = $user->getEmail();
                     }
                 } else {
                     $this->fillMessage('error', "L'adresse email '$value' n'est pas valide.");
@@ -208,7 +215,7 @@ class UserController extends Controller
     public function logOut()
     {
         session_destroy();
-        header('location: index.php');
+        header('Location: index.php');
     }
 
     public function lostPwdProcess()
@@ -226,7 +233,7 @@ class UserController extends Controller
             $this->fillMessage('error', 'C\'est pas un email ça ?!');
         }
 
-        header('Location: index.php?user-login=true');
+        header('Location: index.php?user=login');
     }
 
     public function getResetPwdForm(int $id_user, string $hash)
@@ -338,7 +345,7 @@ class UserController extends Controller
     {
         $to      = $user->getEmail();
         $subject = 'Réinitialisation de votre mot de passe';
-        $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $this->getCurrentUrl() . '?reset-pwd=' . $user->getPwd() . '&id_user=' . $user->getId();
+        $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $this->getCurrentUrl() . '?user=reset-pwd&hash=' . $user->getPwd() . '&id_user=' . $user->getId();
         $headers = 'From: no-reply@sitez-vous.com' . "\r\n" .
             'Reply-To: contact@sitez-vous.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
