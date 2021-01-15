@@ -3,20 +3,29 @@
 namespace App\Controller\Admin;
 
 use App\Controller\Controller;
+use App\Model\Repository\CommentRepository;
+use App\Model\Manager\CommentManager;
+use Twig\Environment;
 
 class AdminCommentController extends Controller
 {
 
     protected string $required_role = "admin";
 
-    /**
-     * Build and display comments BO
-     *
-     * @return void
-     */
-    public function index()
+    private CommentRepository $commentRepository;
+    private CommentManager $commentManager;
+
+    public function __construct(Environment $twig, CommentRepository $commentRepository, CommentManager $commentManager)
     {
-        $comments_complete_list = $this->repository->getCompleteList();
+        $this->commentRepository = $commentRepository;
+        $this->commentManager = $commentManager;
+
+        parent::__construct($twig);
+    }
+
+    public function index(): void
+    {
+        $comments_complete_list = $this->commentRepository->getCompleteList();
         echo $this->twig->render('/admin/comment/index.html.twig', [
             "title" => "Administration des commentaires",
             "comments" => $comments_complete_list,
@@ -24,26 +33,22 @@ class AdminCommentController extends Controller
         ]);
     }
 
-    public function toggle()
+    public function toggle(): void
     {
-        $comment = $this->repository->getUniqueById($_POST['id_comment']);
+        $comment = $this->commentRepository->getUniqueById($_POST['id_comment']);
 
         $toggle = $comment->getActive() ? false : true;
 
         $comment->setActive($toggle);
-        $this->manager->save($comment);
+        $this->commentManager->save($comment);
         $this->fillMessage('success', 'Le comment est mis à jour !');
         header('Location:index.php?admin-comment=list');
     }
 
-    /**
-     * @param integer $id_comment
-     * @return void
-     */
-    public function delete(int $id_comment)
+    public function delete(int $id_comment): void
     {
-        if ($this->repository->getUniqueById($id_comment)) {
-            if ($this->manager->delete($id_comment)) {
+        if ($this->commentRepository->getUniqueById($id_comment)) {
+            if ($this->commentManager->delete($id_comment)) {
                 $this->fillMessage('success', 'Le commentaire n° ' . $id_comment . ' a été supprimé');
             } else {
                 $this->fillMessage('success', 'Impossible de supprimer le commentaire n° ' . $id_comment . ' !');

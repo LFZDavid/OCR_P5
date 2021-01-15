@@ -14,51 +14,35 @@ class PostRepository extends Repository
 	protected string $classManaged = '\App\Model\Entity\Post';
 	protected string $paginate = 'LIMIT 0, 4';
 	protected CategoryRepository $categoryRepository;
-	protected CommentRepository $CommentRepository;
+	protected UserRepository $userRepository;
 
 
 	public function __construct(
 		PDO $pdo,
 		CategoryRepository $categoryRepository,
-		CommentRepository $commentRepository
+		UserRepository $userRepository
 	) {
 		$this->categoryRepository = $categoryRepository;
-		$this->CommentRepository = $commentRepository;
+		$this->userRepository = $userRepository;
 		parent::__construct($pdo);
 	}
 
-	/**
-	 * overrided herited method for post
-	 * Get list of Post adding categories (Collection)
-	 * @return array $post_list
-	 */
 	public function getList(): array
 	{
 		$q = $this->pdo->query('SELECT * FROM ' . $this->table);
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 
-
-
 		$list = $q->fetchAll();
 		foreach ($list as $post) {
 			/**add categories */
-			$post_categories = $this->categoryRepository->getListByPost($post->getId());
-			$post->setCategories($post_categories);
-
-			/**add comments */
-			$post_comments = $this->CommentRepository->getListByPostId($post->getId());
-			$post->setComments($post_comments);
+			$postCategories = $this->categoryRepository->getListByPost($post->getId());
+			$post->setCategories($postCategories);
 
 			$post_list[] = $post;
 		}
 		return $post_list;
 	}
 
-	/**
-	 * overrided herited method for post
-	 * Get Post adding categories (Collection)
-	 * @return Post $post
-	 */
 	public function getUniqueById(int $id): object
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';
@@ -69,13 +53,9 @@ class PostRepository extends Repository
 
 		$post = $q->fetch();
 
-		/**add categories */
-		$post_categories = $this->categoryRepository->getListByPost($post->getId());
-		$post->setCategories($post_categories);
-
-		/**add comments */
-		$post_comments = $this->CommentRepository->getListByPostId($post->getId());
-		$post->setComments($post_comments);
+		$postCategories = $this->categoryRepository->getListByPost($post->getId());
+		$author = $this->userRepository->getUniqueByPost($id);
+		$post->setCategories($postCategories)->setAuthor($author);
 
 		return $post;
 	}

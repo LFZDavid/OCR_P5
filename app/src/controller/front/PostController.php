@@ -23,22 +23,21 @@ class PostController extends Controller
 
     public function show(int $id_post): void
     {
-        $post = $this->repository->getUniqueById($id_post);
+        $post = $this->postRepository->getUniqueById($id_post);
 
         if (!$post || !$post->getActive()) {
             header('location: index.php');
         }
 
-        //Comments = $this->commentRepository->getListByPost()
-
         echo $this->twig->render('/front/post/show.html.twig', [
-            "post" => $post
+            "post" => $post,
+            'comments' => $this->commentRepository->getListByPost($post->getId(), true)
         ]);
     }
 
     public function index(): void
     {
-        $posts = $this->repository->getListOfActives();
+        $posts = $this->postRepository->getListOfActives();
         echo $this->twig->render('/front/post/index.html.twig', [
             "posts" => $posts
         ]);

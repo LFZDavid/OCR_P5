@@ -18,22 +18,7 @@ abstract class Controller
         $this->redirectIfNotAllowed();
     }
 
-    /**
-     * escape suspicius inputs
-     * for validate form
-     *
-     * @param string $data
-     * @return string
-     */
-    public function checkInput(string $data): string
-    {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
-    protected function fillMessage(string $type, string $content)
+    protected function fillMessage(string $type, string $content): void
     {
         $message = [
             "type" => $type,
@@ -42,7 +27,7 @@ abstract class Controller
         array_push($this->messages, $message);
     }
 
-    public function redirectIfNotAllowed()
+    public function redirectIfNotAllowed(): void
     {
         if (
             !empty($_SESSION)

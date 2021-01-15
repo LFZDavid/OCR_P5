@@ -9,8 +9,16 @@ use Twig\Environment;
 
 class HomeController extends Controller
 {
+    private UserRepository $userRepository;
 
-    public function homePage($contactController, $email_dest, $userRepository)
+    public function __construct(Environment $twig, UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+
+        parent::__construct($twig);
+    }
+
+    public function homePage($email_dest)
     {
         echo $this->twig->render('front/home.html.twig', [
             "title" => "Accueil",
@@ -23,7 +31,7 @@ class HomeController extends Controller
     {
         $title = "Me contacter";
         $userId = $_SESSION['id_user'] ?? false;
-        $user = $userId ? $this->repository->getUniqueById($userId) : null;
+        $user = $userId ? $this->userRepository->getUniqueById($userId) : null;
 
         if (!empty($_POST)) {
             $this->postProcess($_POST, $user, $admin_email);

@@ -1,18 +1,18 @@
 {% block contact_form %}
 <div class="container contact_form">
-    <h3 class="form-title">{{contact_form.title}}</h3>
+    <h3 class="form-title">{{contactForm.title}}</h3>
     <form action="#" method="POST">
         <div class="mb-3 form-group">
-            <input type="text" name="{{contact_form.inputs.name.name}}" class="form-control"
-                placeholder="{{contact_form.inputs.name.placeholder}}" value="{{contact_form.inputs.name.value}}">
+            <input type="text" name="{{contactForm.inputs.name.name}}" class="form-control"
+                placeholder="{{contactForm.inputs.name.placeholder}}" value="{{contactForm.inputs.name.value}}">
         </div>
         <div class="mb-3 form-group">
-            <input type="email" name="{{contact_form.inputs.email.name}}" class="form-control"
-                placeholder="{{contact_form.inputs.email.placeholder}}" value="{{contact_form.inputs.email.value}}">
+            <input type="email" name="{{contactForm.inputs.email.name}}" class="form-control"
+                placeholder="{{contactForm.inputs.email.placeholder}}" value="{{contactForm.inputs.email.value}}">
         </div>
         <div class=" mb-3 form-group">
-            <input type="text" name="{{contact_form.inputs.content.name}}" class="form-control"
-                placeholder="{{contact_form.inputs.content.placeholder}}">
+            <input type="text" name="{{contactForm.inputs.content.name}}" class="form-control"
+                placeholder="{{contactForm.inputs.content.placeholder}}">
         </div>
 
         <input type="submit" class="btn btn-success">

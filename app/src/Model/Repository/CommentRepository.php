@@ -10,15 +10,9 @@ class CommentRepository extends Repository
     protected string $table = 'comments';
     protected string $classManaged = '\App\Model\Entity\Comment';
 
-    /**
-     * Get list of comment with author name and post title
-     *
-     * @param boolean $only_active
-     * @return array
-     */
-    public function getCompleteList(bool $only_active = false): array
+    public function getCompleteList(bool $onlyActive = false): array
     {
-        $where = $only_active ? ' WHERE `comments.active` = 1' : '';
+        $where = $onlyActive ? ' WHERE `comments.active` = 1' : '';
         $request = 'SELECT 
         ' . $this->table . '.id,
         comments.content,
@@ -37,17 +31,10 @@ class CommentRepository extends Repository
         return $q->fetchAll();
     }
 
-    /**
-     * Get Post comments
-     *
-     * @param integer $post_id
-     * @param boolean $only_active
-     * @return array
-     */
-    public function getListByPostId(int $post_id, bool $only_active = false): array
+    public function getListByPost(int $postId, bool $onlyActive = false): array
     {
-        $where = ' WHERE `id_post` = ' . $post_id . ' ';
-        $where .= $only_active ? 'AND  `comments.active` = 1' : '';
+        $where = ' WHERE `id_post` = ' . $postId . ' ';
+        $where .= $onlyActive ? 'AND comments.active = 1' : '';
         $request = 'SELECT *, users.name as author_name FROM ' . $this->table . ' INNER JOIN users ON users.id = id_author ' . $where;
         $q = $this->pdo->query($request);
         $q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);

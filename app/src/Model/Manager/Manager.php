@@ -10,19 +10,11 @@ abstract class Manager
     protected string $table;
     protected string $classManaged;
 
-    /**
-     * @param PDO $pdo
-     */
     public function __construct(PDO $pdo)
     {
         $this->pdo = $pdo;
     }
 
-
-    /**
-     * @param int $id
-     * @return bool
-     */
     public function delete(int $id): bool
     {
         $request = 'DELETE FROM ' . $this->table . ' WHERE id =:id';

@@ -15,9 +15,6 @@ abstract class Repository
 		$this->pdo = $pdo;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getList(): array
 	{
 		$q = $this->pdo->query('SELECT * FROM ' . $this->table);
@@ -26,11 +23,6 @@ abstract class Repository
 		return $q->fetchAll();
 	}
 
-	/**
-	 * Get List of entity with active attribute set to 1
-	 *
-	 * @return array
-	 */
 	public function getListOfActives(): array
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE active = 1';
@@ -40,10 +32,6 @@ abstract class Repository
 		return $q->fetchAll();
 	}
 
-	/**
-	 * @param integer $id
-	 * @return object
-	 */
 	public function getUniqueById(int $id): object
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';

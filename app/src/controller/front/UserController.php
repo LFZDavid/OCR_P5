@@ -4,14 +4,25 @@ namespace App\Controller\Front;
 
 use App\Controller\Controller;
 use App\Model\Entity\User;
+use Twig\Environment;
+use App\Model\Repository\UserRepository;
+use App\Model\Manager\UserManager;
 
 class UserController extends Controller
 {
-    /**
-     *
-     * @return void
-     */
-    public function getForm()
+
+    private UserRepository $userRepository;
+    private UserManager $userManager;
+
+    public function __construct(Environment $twig, UserRepository $userRepository, UserManager $userManager)
+    {
+        $this->userRepository = $userRepository;
+        $this->userManager = $userManager;
+
+        parent::__construct($twig);
+    }
+
+    public function getForm(): void
     {
         $id_user = $_SESSION['id_user'] ?? false;
 
@@ -22,7 +33,7 @@ class UserController extends Controller
             $edit = false;
         } else {
             // Edit user
-            $user = $this->repository->getUniqueById($id_user);
+            $user = $this->userRepository->getUniqueById($id_user);
             $title = "Modification";
             $edit = true;
             $change_pwd_link = 'index.php?user=reset-pwd&hash=' . $user->getPwd() . '&id_user=' . $user->getId();
@@ -82,15 +93,7 @@ class UserController extends Controller
         ]);
     }
 
-
-    /**
-     * Form data treatment
-     *
-     * @param array $data
-     * @param User $user
-     * @return void
-     */
-    public function postProcess(bool $edit, array $data, User $user = null)
+    public function postProcess(bool $edit, array $data, User $user = null): void
     {
         $user_data = [];
         $success = true;
@@ -100,7 +103,7 @@ class UserController extends Controller
                 if (strlen($value) > 4) {
                     if (!$edit || $user->getName() != $value) {
                         if ($this->isNameAvailable($value)) {
-                            $user_data['name'] = $this->checkInput($value);
+                            $user_data['name'] = $value;
                         } else {
                             $this->fillMessage('error', 'Ce pseudo n\'est pas disponible!');
                             $success = false;
@@ -116,7 +119,7 @@ class UserController extends Controller
                 if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     if (!$edit || $user->getEmail() != $value) {
                         if ($this->isEmailAvailable($value)) {
-                            $user_data['email'] = $this->checkInput($value);
+                            $user_data['email'] = $value;
                         } else {
                             $this->fillMessage('error', 'Cet email est déjà utilisé !');
                             $success = false;
@@ -153,7 +156,7 @@ class UserController extends Controller
                 $user->setPwd($user_data['pwd']);
             }
 
-            $this->manager->save($user);
+            $this->userManager->save($user);
             $this->fillMessage('success', 'Utilisateur enregistré !');
 
             if (!$edit) {
@@ -167,13 +170,7 @@ class UserController extends Controller
         }
     }
 
-
-    /**
-     * Display Login form
-     *
-     * @return void
-     */
-    public function getLogInForm()
+    public function getLogInForm(): void
     {
         if (isset($_SESSION['id_user'])) {
             header('Location:index.php');
@@ -212,17 +209,11 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * LogIn form treatment
-     *
-     * @param array $post_data
-     * @return void
-     */
-    protected function logIn(array $post_data, $force = false)
+    protected function logIn(array $post_data, bool $force = false): void
     {
         $success = !empty($post_data) ? true : false;
 
-        if ($user = $this->repository->getUniqueByName($this->checkInput($post_data['name']))) {
+        if ($user = $this->userRepository->getUniqueByName($post_data['name'])) {
             if (!password_verify($post_data['pwd'], $user->getPwd()) && !$force) {
                 $this->fillMessage('error', 'Pseudo ou mot de passe incorrect !');
                 $success = false;
@@ -242,28 +233,17 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Destroy session
-     *
-     * @return void
-     */
-    public function logOut()
+    public function logOut(): void
     {
         session_destroy();
         header('Location: index.php');
     }
 
-    /**
-     * lost password form treatment
-     *
-     * @return void
-     */
-    public function lostPwdProcess()
+    public function lostPwdProcess(): void
     {
-
         if (isset($_POST['email_user'])) {
-            $email_user = $this->checkInput($_POST['email_user']);
-            if ($user = $this->repository->getUniqueByEmail($email_user)) {
+            $email_user = $_POST['email_user'];
+            if ($user = $this->userRepository->getUniqueByEmail($email_user)) {
                 $this->sendResetPwdEmail($user);
                 $this->fillMessage('success', 'Un email vient de vous être envoyé !');
             } else {
@@ -272,21 +252,13 @@ class UserController extends Controller
         } else {
             $this->fillMessage('error', 'C\'est pas un email ça ?!');
         }
-
         header('Location: index.php?user=login');
     }
 
-    /**
-     * Display reset password form
-     *
-     * @param integer $id_user
-     * @param string $hash
-     * @return void
-     */
-    public function getResetPwdForm(int $id_user, string $hash)
+    public function getResetPwdForm(int $id_user, string $hash): void
     {
         if ($id_user > 0 && $hash != "") {
-            if ($user = $this->repository->getUniqueById($id_user)) {
+            if ($user = $this->userRepository->getUniqueById($id_user)) {
                 if ($user->getPwd() == $hash) {
                     $access = true;
                 } else {
@@ -326,14 +298,7 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Reset password form treatment
-     *
-     * @param User $user
-     * @param array $post_data
-     * @return void
-     */
-    protected function resetPwdpostProcess(User $user, array $post_data)
+    protected function resetPwdpostProcess(User $user, array $post_data): void
     {
         $success = true;
         if (!empty($post_data['pwd'])) {
@@ -354,7 +319,7 @@ class UserController extends Controller
 
         if ($success) {
             $user->setPwd($new_pwd);
-            $this->manager->save($user);
+            $this->userManager->save($user);
             $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
 
             $this->logIn([
@@ -366,36 +331,19 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Test if username is available
-     *
-     * @param string $name
-     * @return boolean
-     */
     protected function isNameAvailable(string $name): bool
     {
-        $user = $this->repository->getUniqueByName($name);
+        $user = $this->userRepository->getUniqueByName($name);
         return $user ? false : true;
     }
 
-    /**
-     * Test if email is available
-     *
-     * @param string $email
-     * @return boolean
-     */
     protected function isEmailAvailable(string $email): bool
     {
-        $user = $this->repository->getUniqueByEmail($email);
+        $user = $this->userRepository->getUniqueByEmail($email);
         return $user ? false : true;
     }
 
-    /**
-     * Send an email to the user with special link
-     *
-     * @param User $user
-     * @return bool
-     */
+
     protected function sendResetPwdEmail(User $user): bool
     {
         $to      = $user->getEmail();
@@ -408,10 +356,6 @@ class UserController extends Controller
         return mail($to, $subject, $message, $headers);
     }
 
-    /**
-     *
-     * @return string
-     */
     protected function getCurrentUrl(): string
     {
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {

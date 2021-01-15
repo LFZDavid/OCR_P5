@@ -30,15 +30,14 @@ try {
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     $userRepository = new UserRepository($pdo);
     $commentRepository = new CommentRepository($pdo);
+    $categoryRepository = new CategoryRepository($pdo);
+    $postRepository = new PostRepository($pdo, $categoryRepository, $userRepository);
     $postManager = new PostManager($pdo);
     $userManager = new UserManager($pdo);
-    $categoryRepository = new CategoryRepository($pdo);
     $commentManager = new CommentManager($pdo);
-    $postRepository = new PostRepository($pdo, $categoryRepository, $commentRepository);
-
 
     if (key_exists('post', $_GET)) {
-        $postController = new PostController($twig, $postRepository);
+        $postController = new PostController($twig, $postRepository, $commentRepository);
         if (($id_post = $_GET['post']) <= 0) {
             $postController->index();
         } else {
@@ -61,19 +60,19 @@ try {
             && key_exists('hash', $_GET)
         ) {
             if ($id_user = $_GET['id_user'] > 0) {
-                $userController->getResetPwdForm($id_user, $_GET['hash']);
+                $userController->getResetPwdForm($_GET['id_user'], $_GET['hash']);
             } else {
                 header('Location:index.php?user=login');
             }
         }
     } elseif (key_exists('comment', $_GET)) {
-        $commentController = new CommentController($twig, $commentRepository, $commentManager);
+        $commentController = new CommentController($twig, $commentManager);
         $request = $_GET['comment'];
         if ($request == 'add') {
             $commentController->postProcess($_POST, $_GET['id_post']);
         }
     } elseif (key_exists('admin-post', $_GET)) {
-        $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
+        $adminPostController = new AdminPostController($twig, $postRepository, $categoryRepository, $userRepository, $postManager);
         $request = $_GET['admin-post'];
         if ($request == 'list') {
             $adminPostController->index();
@@ -90,7 +89,6 @@ try {
             && key_exists('id_post', $_GET)
             && ($_POST['_method'] == "DELETE")
         ) {
-            $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
             $adminPostController->delete($_GET['id_post']);
         }
     } elseif (key_exists('admin-user', $_GET)) {
@@ -119,9 +117,41 @@ try {
             $adminCommentController->delete($_GET['id_comment']);
         }
     } else {
-        $homeController = new HomeController($twig);
-        $homeController->homePage($contactController, $config['admin_email'], $userRepository);
+        $homeController = new HomeController($twig, $userRepository);
+        $homeController->homePage($config['admin_email']);
     }
+    /**DEBUG **************************/
+    echo '<div style="background-color:black;color:green;">';
+    echo 'SESSION';
+    echo '<br>';
+    foreach ($_SESSION as $key => $value) {
+        print_r($key);
+        echo '=>';
+        print_r($value);
+        echo '<br>';
+    }
+    echo '<br>';
+    echo 'POST';
+    echo '<br>';
+    foreach ($_POST as $key => $value) {
+        print_r($key);
+        echo '=>';
+        print_r($value);
+        echo '<br>';
+    }
+    echo '<br>';
+    echo 'GET';
+    echo '<br>';
+    foreach ($_GET as $key => $value) {
+        print_r($key);
+        echo '=>';
+        print_r($value);
+        echo '<br>';
+    }
+    echo '<br>';
+
+    echo '</div>';
+    /** **************************/
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
 }

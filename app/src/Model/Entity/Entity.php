@@ -28,18 +28,11 @@ abstract class Entity
 		}
 	}
 
-	/**
-	 * @return integer
-	 */
 	public function getId(): int
 	{
 		return $this->id ?? false;
 	}
 
-	/**
-	 * @param integer $id
-	 * @return self
-	 */
 	public function setId(int $id): self
 	{
 		if ($id > 0) {
@@ -48,12 +41,7 @@ abstract class Entity
 		}
 	}
 
-	/**
-	 *
-	 * @param string $str
-	 * @return string
-	 */
-	protected function snakeCaseToCamelCase($str)
+	protected function snakeCaseToCamelCase(string $str): string
 	{
 		$upperCamelCase = str_replace('_', '', ucwords($str, '_'));
 

@@ -4,17 +4,36 @@ namespace App\Controller\Admin;
 
 use App\Controller\Controller;
 use App\Model\Entity\Post;
+use App\Model\Manager\PostManager;
+use Twig\Environment;
+use App\Model\Repository\PostRepository;
 use App\Model\Repository\CategoryRepository;
+use App\Model\Repository\UserRepository;
 
 class AdminPostController extends Controller
 {
-    /**
-     * 
-     * Build and display post BO
-     */
-    public function index()
+    protected string $required_role = "admin";
+    private PostRepository $postRepository;
+    private PostManager $postManager;
+
+    public function __construct(
+        Environment $twig,
+        PostRepository $postRepository,
+        CategoryRepository $categoryRepository,
+        UserRepository $userRepository,
+        PostManager $postManager
+    ) {
+        $this->postRepository = $postRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
+        $this->postManager = $postManager;
+
+        parent::__construct($twig);
+    }
+
+    public function index(): void
     {
-        $posts = $this->repository->getList();
+        $posts = $this->postRepository->getList();
 
         echo $this->twig->render('/admin/post/index.html.twig', [
             "title" => "Administration des posts",
@@ -23,28 +42,21 @@ class AdminPostController extends Controller
         ]);
     }
 
-    /**
-     * 
-     * Build and display form
-     * 
-     * @param int $id_post
-     * @param CategoryRepository $categoryRepository
-     */
-    public function getForm(int $id_post, CategoryRepository $categoryRepository)
+    public function getForm(int $id_post): void
     {
         if (isset($_POST)) {
-            $this->postProcess($_POST, $categoryRepository);
+            $this->postProcess($_POST, $this->categoryRepository);
         }
 
         if ($id_post == 0) {
             $post = new Post();
             $title = "Création";
         } else {
-            $post = $this->repository->getUniqueById($id_post);
+            $post = $this->postRepository->getUniqueById($id_post);
             $title = "Modification";
         }
 
-        $categories = $categoryRepository->getList();
+        $categories = $this->categoryRepository->getList();
 
         foreach ($post->getCategories() as $post_category) {
             $checked_categories[$post_category->getName()] = true;
@@ -105,19 +117,11 @@ class AdminPostController extends Controller
         ]);
     }
 
-    /**
-     * @param array $data
-     * @param CategoryRepository $categoryRepository
-     */
-    public function postProcess(array $data, CategoryRepository $categoryRepository)
+    public function postProcess(array $data): void
     {
         if ($data != []) {
 
             /**Check post values */
-            $id = (int) $data['id'];
-            $title = $this->checkInput($data['title']);
-            $chapo = $this->checkInput($data['chapo']);
-            $content = $this->checkInput($data['content']);
             $categories = key_exists('categories', $data) ? $data['categories'] : [];
 
             /**active */
@@ -127,9 +131,9 @@ class AdminPostController extends Controller
                 $active = 0;
             }
 
-            if ($id > 0) {
+            if ($data['id'] > 0) {
                 /** Edit */
-                $post = $this->repository->getUniqueById($id);
+                $post = $this->postRepository->getUniqueById($data['id']);
             } else {
                 /** Create */
                 $post = new Post();
@@ -138,12 +142,17 @@ class AdminPostController extends Controller
             if (!key_exists('id_user', $_SESSION) || $_SESSION['id_user'] < 1) {
                 $this->fillMessage('error', 'Un problème est survenue : L\'auteur n\'est pas identifié');
             }
+            $author = $this->userRepository->getUniqueById($_SESSION['id_user']);
             /** Set post values for saving */
-            $post->setTitle($title)->setChapo($chapo)->setContent($content)->setActive($active)->setIdAuthor($_SESSION['id_user']);
+            $post->setTitle($data['title'])
+                ->setChapo($data['chapo'])
+                ->setContent($data['content'])
+                ->setActive($active)
+                ->setAuthor($author);
             /** Get id_post from database (auto-incremented) */
-            $persisted_id = $this->manager->save($post);
+            $persisted_id = $this->postManager->save($post);
 
-            $old_post_categories = $categoryRepository->getListByPost($persisted_id);
+            $old_post_categories = $this->categoryRepository->getListByPost($persisted_id);
             $new_post_categories = $categories;
 
             /** Compare old linked  categories */
@@ -158,7 +167,7 @@ class AdminPostController extends Controller
             }
             foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {
                 # Category has to be linked
-                $this->manager->linkCategory($persisted_id, $new_post_category_id);
+                $this->postManager->linkCategory($persisted_id, $new_post_category_id);
             }
             /**--- */
 
@@ -170,13 +179,10 @@ class AdminPostController extends Controller
         }
     }
 
-    /**
-     * @param int $id_post
-     */
-    public function delete(int $id_post)
+    public function delete(int $id_post): void
     {
-        if ($this->repository->getUniqueById((int)$id_post)) {
-            if ($this->manager->delete($id_post)) {
+        if ($this->postRepository->getUniqueById((int)$id_post)) {
+            if ($this->postManager->delete($id_post)) {
                 $message = 'Le post n° ' . $id_post . ' a été supprimé';
             } else {
                 $message = 'Impossible de supprimer le post n° ' . $id_post . ' !';

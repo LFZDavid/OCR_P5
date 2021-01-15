@@ -4,11 +4,23 @@ namespace App\Controller\Front;
 
 use App\Controller\Controller;
 use App\Model\Entity\Comment;
+use Twig\Environment;
+use App\Model\Manager\CommentManager;
 
 class CommentController extends Controller
 {
 
-    public function postProcess(array $post_data, int $id_post)
+    private CommentManager $commentManager;
+
+    public function __construct(Environment $twig, CommentManager $commentManager)
+    {
+        $this->commentManager = $commentManager;
+
+        parent::__construct($twig);
+    }
+
+
+    public function postProcess(array $post_data, int $id_post): void
     {
         $success = true;
 
@@ -20,14 +32,13 @@ class CommentController extends Controller
             $success = false;
         }
 
-
         if ($success) {
             $comment = new Comment();
-            $comment->setContent($this->checkInput($post_data['comment_content']))
+            $comment->setContent($post_data['comment_content'])
                 ->setIdAuthor($_SESSION['id_user'])
                 ->setIdPost($id_post);
 
-            if ($this->manager->save($comment)) {
+            if ($this->commentManager->save($comment)) {
                 $this->fillMessage('success', 'Votre commentaire est enregistré, il sera soumis à validation avant d\'être visible.');
             }
         }

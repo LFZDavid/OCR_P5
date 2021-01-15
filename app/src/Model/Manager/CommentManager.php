@@ -12,10 +12,6 @@ class CommentManager extends Manager
     protected string $table = 'comments';
     protected string $classManaged = '\App\Model\Entity\Comment';
 
-    /**
-     * add/update entity
-     * @param Comment $comment
-     */
     public function save(Comment $comment)
     {
         if ($comment->getId() == null) {
@@ -25,12 +21,6 @@ class CommentManager extends Manager
         }
     }
 
-    /**
-     * Add Comment into database
-     *
-     * @param Comment $comment
-     * @return integer
-     */
     protected function add(Comment $comment): int
     {
         $request = 'INSERT INTO ' . $this->table . '(`content`, `id_author`, `id_post`) VALUES(:content, :id_author, :id_post)';
@@ -43,12 +33,6 @@ class CommentManager extends Manager
         return $this->pdo->lastInsertId();
     }
 
-    /**
-     * Update Comment
-     *
-     * @param Comment $comment
-     * @return integer
-     */
     protected function update(Comment $comment): int
     {
         $request = 'UPDATE ' . $this->table . ' SET `content` = :content, `id_author` = :id_author, `id_post` = :id_post, `active` = :active WHERE `id` = :id';

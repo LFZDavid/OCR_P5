@@ -29,4 +29,14 @@ class UserRepository extends Repository
         $q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
         return $q->fetch();
     }
+
+    public function getUniqueByPost(int $postId)
+    {
+        $request = 'SELECT users.* FROM `users` INNER JOIN `posts` ON posts.id = :postId WHERE users.id = posts.id_author';
+        $q = $this->pdo->prepare($request);
+        $q->bindValue(':postId', $postId, PDO::PARAM_INT);
+        $q->execute();
+        $q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
+        return $q->fetch();
+    }
 }
