@@ -9,10 +9,11 @@ class Post extends Entity
 	protected string $title = "";
 	protected string $chapo = "";
 	protected string $content = "";
-	protected int $idAuthor = 1;
+	protected User $author;
+	// protected int $idAuthor = 1;
 	protected int $active = 0;
+	/** $categories Category[] */
 	protected array $categories = [];
-	protected array $comments = [];
 	protected $createdAt = "";
 	protected $updatedAt = "";
 
@@ -152,27 +153,6 @@ class Post extends Entity
 		if (!empty($updatedAt)) {
 			$this->updatedAt = $updatedAt;
 		}
-		return $this;
-	}
-
-	/**
-	 * Get the value of comments
-	 * @return array
-	 */
-	public function getComments(): array
-	{
-		return $this->comments;
-	}
-
-	/**
-	 * Set the value of comments
-	 * @param array
-	 * @return  self
-	 */
-	public function setComments(array $comments): self
-	{
-		$this->comments = $comments;
-
 		return $this;
 	}
 }

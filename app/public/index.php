@@ -6,10 +6,10 @@ require '../../config.php';
 use App\Controller\Admin\AdminCommentController;
 use App\Controller\Admin\AdminPostController;
 use App\Controller\Admin\AdminUserController;
+use App\Controller\Front\CommentController;
 use App\Controller\Front\HomeController;
 use App\Controller\Front\PostController;
 use App\Controller\Front\UserController;
-use App\Controller\Front\ContactController;
 use App\Model\Repository\PostRepository;
 use App\Model\Repository\UserRepository;
 use App\Model\Repository\CommentRepository;
@@ -28,13 +28,13 @@ $config['env'] == 'dev' ? $twig->addExtension(new \Twig\Extension\DebugExtension
 try {
     $pdo = new \PDO("mysql:host=" . $config['db_host'] . ";dbname=" . $config['db_name'] . ";charset=utf8", $config['db_user'], $config['db_pwd']);
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-    $postRepository = new PostRepository($pdo);
     $userRepository = new UserRepository($pdo);
     $commentRepository = new CommentRepository($pdo);
     $postManager = new PostManager($pdo);
     $userManager = new UserManager($pdo);
-    $commentManager = new CommentManager($pdo);
     $categoryRepository = new CategoryRepository($pdo);
+    $commentManager = new CommentManager($pdo);
+    $postRepository = new PostRepository($pdo, $categoryRepository, $commentRepository);
 
 
     if (key_exists('post', $_GET)) {
@@ -65,6 +65,12 @@ try {
             } else {
                 header('Location:index.php?user=login');
             }
+        }
+    } elseif (key_exists('comment', $_GET)) {
+        $commentController = new CommentController($twig, $commentRepository, $commentManager);
+        $request = $_GET['comment'];
+        if ($request == 'add') {
+            $commentController->postProcess($_POST, $_GET['id_post']);
         }
     } elseif (key_exists('admin-post', $_GET)) {
         $adminPostController = new AdminPostController($twig, $postRepository, $postManager);
@@ -113,8 +119,6 @@ try {
             $adminCommentController->delete($_GET['id_comment']);
         }
     } else {
-        $contactController = new ContactController($twig, $userRepository);
-
         $homeController = new HomeController($twig);
         $homeController->homePage($contactController, $config['admin_email'], $userRepository);
     }

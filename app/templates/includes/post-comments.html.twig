@@ -1,6 +1,7 @@
-<div class="container post_comments">
+<div class="container-fluid post_comments">
 	<h4>Commentaires</h4>
 	{% for comment in post.comments %}
+	{% if comment.Active%}
 	<div class="row">
 		<strong>{{comment.AuthorName}}
 			:
@@ -10,5 +11,22 @@
 		</em>
 		<p>{{comment.content}}</p>
 	</div>
+	{% endif %}
 	{% endfor %}
+	<div class="comment-form-block">
+		{% if session.id_user is null %}
+		<p>
+			Vous devez être connecté pour poster un commentaire.
+		</p>
+		<a href="index.php?user=login">Se connecter/S'inscrire</a>
+		{% else %}
+		<form action="index.php?comment=add&amp;id_post={{post.id}}" method="post">
+			<div class=" mb-3 form-group">
+				<textarea class="form-control" id="comment_content" name="comment_content" rows="3"
+					placeholder="Votre commentaire..." required></textarea>
+			</div>
+			<input type="submit" class="btn btn-primary">
+		</form>
+		{% endif %}
+	</div>
 </div>

@@ -13,9 +13,19 @@ class PostRepository extends Repository
 	protected string $table = 'posts';
 	protected string $classManaged = '\App\Model\Entity\Post';
 	protected string $paginate = 'LIMIT 0, 4';
-	protected $CategoryRepository;
-	protected $CommentRepository;
+	protected CategoryRepository $categoryRepository;
+	protected CommentRepository $CommentRepository;
 
+
+	public function __construct(
+		PDO $pdo,
+		CategoryRepository $categoryRepository,
+		CommentRepository $commentRepository
+	) {
+		$this->categoryRepository = $categoryRepository;
+		$this->CommentRepository = $commentRepository;
+		parent::__construct($pdo);
+	}
 
 	/**
 	 * overrided herited method for post
@@ -27,13 +37,12 @@ class PostRepository extends Repository
 		$q = $this->pdo->query('SELECT * FROM ' . $this->table);
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 
-		$this->CategoryRepository = new CategoryRepository($this->pdo);
-		$this->CommentRepository = new CommentRepository($this->pdo);
+
 
 		$list = $q->fetchAll();
 		foreach ($list as $post) {
 			/**add categories */
-			$post_categories = $this->CategoryRepository->getListByPost($post->getId());
+			$post_categories = $this->categoryRepository->getListByPost($post->getId());
 			$post->setCategories($post_categories);
 
 			/**add comments */
@@ -60,11 +69,8 @@ class PostRepository extends Repository
 
 		$post = $q->fetch();
 
-		$this->CategoryRepository = new CategoryRepository($this->pdo);
-		$this->CommentRepository = new CommentRepository($this->pdo);
-
 		/**add categories */
-		$post_categories = $this->CategoryRepository->getListByPost($post->getId());
+		$post_categories = $this->categoryRepository->getListByPost($post->getId());
 		$post->setCategories($post_categories);
 
 		/**add comments */
