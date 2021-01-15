@@ -4,6 +4,7 @@ namespace App\Model\Repository;
 
 use App\Model\Repository\Repository;
 use App\Model\Repository\CategoryRepository;
+use App\Model\Repository\CommentRepository;
 use PDO;
 
 class PostRepository extends Repository
@@ -13,6 +14,7 @@ class PostRepository extends Repository
 	protected string $classManaged = '\App\Model\Entity\Post';
 	protected string $paginate = 'LIMIT 0, 4';
 	protected $CategoryRepository;
+	protected $CommentRepository;
 
 
 	/**
@@ -26,10 +28,18 @@ class PostRepository extends Repository
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 
 		$this->CategoryRepository = new CategoryRepository($this->pdo);
+		$this->CommentRepository = new CommentRepository($this->pdo);
+
 		$list = $q->fetchAll();
 		foreach ($list as $post) {
+			/**add categories */
 			$post_categories = $this->CategoryRepository->getListByPost($post->getId());
 			$post->setCategories($post_categories);
+
+			/**add comments */
+			$post_comments = $this->CommentRepository->getListByPostId($post->getId());
+			$post->setComments($post_comments);
+
 			$post_list[] = $post;
 		}
 		return $post_list;
@@ -47,10 +57,20 @@ class PostRepository extends Repository
 		$q->bindValue(':id', $id, PDO::PARAM_INT);
 		$q->execute();
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
+
 		$post = $q->fetch();
+
 		$this->CategoryRepository = new CategoryRepository($this->pdo);
+		$this->CommentRepository = new CommentRepository($this->pdo);
+
+		/**add categories */
 		$post_categories = $this->CategoryRepository->getListByPost($post->getId());
 		$post->setCategories($post_categories);
+
+		/**add comments */
+		$post_comments = $this->CommentRepository->getListByPostId($post->getId());
+		$post->setComments($post_comments);
+
 		return $post;
 	}
 }
