@@ -19,7 +19,9 @@
             {% block body %}
             {% endblock %}
         </div>
+        {% block footer %}
         {% include "/includes/footer.html.twig" %}
+        {% endblock %}
     </div>
     {% block javascript %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

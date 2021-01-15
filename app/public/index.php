@@ -8,6 +8,7 @@ use App\Controller\Admin\AdminUserController;
 use App\Controller\Front\HomeController;
 use App\Controller\Front\PostController;
 use App\Controller\Front\UserController;
+use App\Controller\Front\ContactController;
 use App\Model\Repository\PostRepository;
 use App\Model\Repository\UserRepository;
 use App\Model\Manager\PostManager;
@@ -92,8 +93,10 @@ try {
             $adminUserController->delete($_GET['id_user']);
         }
     } else {
+        $contactController = new ContactController($twig, $userRepository);
+
         $homeController = new HomeController($twig);
-        $homeController->homePage();
+        $homeController->homePage($contactController, $config['admin_email'], $userRepository);
     }
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
