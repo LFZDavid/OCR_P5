@@ -45,4 +45,13 @@ class CommentManager extends Manager
         $q->execute();
         return $comment->getId();
     }
+
+    public function deleteByPost(int $postID): bool
+    {
+        $request = 'DELETE FROM ' . $this->table . ' WHERE `id_post` = :id_post';
+        $q = $this->pdo->prepare($request);
+        $q->bindValue(':id_post', $postID, PDO::PARAM_INT);
+        $q->execute();
+        return true;
+    }
 }

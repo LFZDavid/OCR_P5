@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Controller;
 use App\Model\Entity\Post;
+use App\Model\Manager\CommentManager;
 use App\Model\Manager\PostManager;
 use Twig\Environment;
 use App\Model\Repository\PostRepository;
@@ -13,20 +14,24 @@ use App\Model\Repository\UserRepository;
 class AdminPostController extends Controller
 {
     protected string $required_role = "admin";
+    private CategoryRepository $categoryRepository;
     private PostRepository $postRepository;
     private PostManager $postManager;
+    private CommentManager $commentManager;
 
     public function __construct(
         Environment $twig,
         PostRepository $postRepository,
         CategoryRepository $categoryRepository,
         UserRepository $userRepository,
-        PostManager $postManager
+        PostManager $postManager,
+        CommentManager $commentManager
     ) {
         $this->postRepository = $postRepository;
         $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
         $this->postManager = $postManager;
+        $this->commentManager = $commentManager;
 
         parent::__construct($twig);
     }
@@ -179,15 +184,16 @@ class AdminPostController extends Controller
         }
     }
 
-    public function delete(int $id_post): void
+    public function delete(int $postID): void
     {
-        if ($this->postRepository->getUniqueById((int)$id_post)) {
-            if ($this->postManager->delete($id_post)) {
-                $message = 'Le post n° ' . $id_post . ' a été supprimé';
+        if ($this->postRepository->getUniqueById($postID)) {
+            $this->commentManager->deleteByPost($postID);
+            if ($this->postManager->delete($postID)) {
+                $this->fillMessage('success', 'Le post n° ' . $postID . ' a été supprimé');
             } else {
-                $message = 'Impossible de supprimer le post n° ' . $id_post . ' !';
+                $this->fillMessage('error', 'Impossible de supprimer le post n° ' . $postID . ' !');
             }
         }
-        $this->index($message);
+        header('Location:index.php?admin-post=list');
     }
 }

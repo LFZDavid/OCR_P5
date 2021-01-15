@@ -72,7 +72,7 @@ try {
             $commentController->postProcess($_POST, $_GET['id_post']);
         }
     } elseif (key_exists('admin-post', $_GET)) {
-        $adminPostController = new AdminPostController($twig, $postRepository, $categoryRepository, $userRepository, $postManager);
+        $adminPostController = new AdminPostController($twig, $postRepository, $categoryRepository, $userRepository, $postManager, $commentManager);
         $request = $_GET['admin-post'];
         if ($request == 'list') {
             $adminPostController->index();
@@ -120,38 +120,42 @@ try {
         $homeController = new HomeController($twig, $userRepository);
         $homeController->homePage($config['admin_email']);
     }
-    /**DEBUG **************************/
-    echo '<div style="background-color:black;color:green;">';
-    echo 'SESSION';
-    echo '<br>';
-    foreach ($_SESSION as $key => $value) {
-        print_r($key);
-        echo '=>';
-        print_r($value);
-        echo '<br>';
-    }
-    echo '<br>';
-    echo 'POST';
-    echo '<br>';
-    foreach ($_POST as $key => $value) {
-        print_r($key);
-        echo '=>';
-        print_r($value);
-        echo '<br>';
-    }
-    echo '<br>';
-    echo 'GET';
-    echo '<br>';
-    foreach ($_GET as $key => $value) {
-        print_r($key);
-        echo '=>';
-        print_r($value);
-        echo '<br>';
-    }
-    echo '<br>';
 
-    echo '</div>';
-    /** **************************/
+    if ($config['env'] == 'dev') {
+
+        /**DEBUG **************************/
+        echo '<div style="background-color:black;color:green;">';
+        echo 'SESSION';
+        echo '<br>';
+        foreach ($_SESSION as $key => $value) {
+            print_r($key);
+            echo '=>';
+            print_r($value);
+            echo '<br>';
+        }
+        echo '<br>';
+        echo 'POST';
+        echo '<br>';
+        foreach ($_POST as $key => $value) {
+            print_r($key);
+            echo '=>';
+            print_r($value);
+            echo '<br>';
+        }
+        echo '<br>';
+        echo 'GET';
+        echo '<br>';
+        foreach ($_GET as $key => $value) {
+            print_r($key);
+            echo '=>';
+            print_r($value);
+            echo '<br>';
+        }
+        echo '<br>';
+
+        echo '</div>';
+        /** **************************/
+    }
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
 }
