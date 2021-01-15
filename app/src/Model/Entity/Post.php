@@ -13,8 +13,8 @@ class Post extends Entity
 	protected int $active = 0;
 	/** $categories Category[] */
 	protected array $categories = [];
-	protected $createdAt = "";
-	protected $updatedAt = "";
+	protected ?string $createdAt = null;
+	protected ?string $updatedAt = null;
 
 	public function getTitle(): string
 	{
@@ -46,12 +46,12 @@ class Post extends Entity
 		return $this->author;
 	}
 
-	public function getCreatedAt()
+	public function getCreatedAt(): ?string
 	{
 		return $this->created_at;
 	}
 
-	public function getUpdatedAt()
+	public function getUpdatedAt(): ?string
 	{
 		return $this->updated_at;
 	}
@@ -98,7 +98,7 @@ class Post extends Entity
 		return $this;
 	}
 
-	public function setCreatedAt($createdAt): self
+	public function setCreatedAt(string $createdAt): self
 	{
 		if (!empty($createdAt)) {
 			$this->createdAt = $createdAt;
@@ -106,7 +106,7 @@ class Post extends Entity
 		return $this;
 	}
 
-	public function setUpdatedAt($updatedAt): self
+	public function setUpdatedAt(string $updatedAt): self
 	{
 		if (!empty($updatedAt)) {
 			$this->updatedAt = $updatedAt;

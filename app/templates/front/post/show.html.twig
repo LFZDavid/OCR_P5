@@ -12,12 +12,12 @@
 <h2 class="post-chapot">{{post.chapo}}</h2>
 <p class="post-date">
 
-	{% if post.updated_at != null%}
+	{% if post.updated_at is defined %}
 	Dernière mise à jour :
-	{{post.updated_at}}
+	{{post.created_at|date('d-m-Y')}}
 	{% else %}
 	Créé le :
-	{{post.created_at}}
+	{{post.created_at|date('d-m-Y')}}
 	{% endif %}
 	par :
 	{{post.author.name}}

@@ -10,7 +10,7 @@ class User extends Entity
     protected string $name = "";
     protected string $email = "";
     protected string $pwd = "";
-    protected $createdAt;
+    protected string $createdAt = "";
     protected string $role = "";
 
     public function getName(): string
@@ -49,12 +49,12 @@ class User extends Entity
         return $this;
     }
 
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt): self
+    public function setCreatedAt(string $createdAt): self
     {
         $this->createdAt = $createdAt;
 
