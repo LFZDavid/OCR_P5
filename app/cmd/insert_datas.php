@@ -1,6 +1,16 @@
 <?php
 require 'config.php';
 
+for ($i = 0; $i < 10; $i++) {
+    $randD = rand(1, 28);
+    $randM = rand(1, 12);
+    $randY = rand(2000, 2020);
+    $date = new \DateTime();
+    $date->setDate($randY, $randM, $randD);
+    $date->setTime(0, 0);
+    $randomDates[] = $date->format('Y-m-d H:i:s');
+}
+
 try {
     $db = new \PDO("mysql:host=" . $config['db_host'] . ";dbname=" . $config['db_name'] . ";charset=utf8", $config['db_user'], $config['db_pwd']);
     $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -12,14 +22,15 @@ try {
         `name`,
         `email`,
         `pwd`,
-        `role`
+        `role`,
+        `created_at`
         )
-        VALUES('admin','admin@admin.com','$2y$10\$oiNmLZMeZwUKDAU6H0VFIedFx6uBp3d4kulH75XEAf6Zup9flINXW','admin'),
-        ('Tony','stark@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
-        ('Steve','rodgers@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
-        ('Bruce','banner@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
-        ('Natasha','romanoff@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user'),
-        ('Thor','odinsson@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user')
+        VALUES('admin','admin@admin.com','$2y$10\$oiNmLZMeZwUKDAU6H0VFIedFx6uBp3d4kulH75XEAf6Zup9flINXW','admin','" . $randomDates[rand(1, 9)] . "'),
+        ('Tony','stark@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user','" . $randomDates[rand(1, 9)] . "'),
+        ('Steve','rodgers@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user','" . $randomDates[rand(1, 9)] . "'),
+        ('Bruce','banner@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user','" . $randomDates[rand(1, 9)] . "'),
+        ('Natasha','romanoff@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user','" . $randomDates[rand(1, 9)] . "'),
+        ('Thor','odinsson@gmail.com','$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO','user','" . $randomDates[rand(1, 9)] . "')
             
         ");
     // Insert posts
