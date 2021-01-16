@@ -129,21 +129,6 @@ try {
         /**DEBUG **************************/
         echo '<div style="background-color:black;color:green;">';
 
-        for ($i = 0; $i < 10; $i++) {
-            $randD = rand(1, 28);
-            $randM = rand(1, 12);
-            $randY = rand(2000, 2020);
-            $date = new \DateTime();
-            $date->setDate($randY, $randM, $randD);
-            $date->setTime(0, 0);
-            $randomDates[] = $date->format('Y-m-d H:i:s');
-        }
-        foreach ($randomDates as $dates) {
-            echo '<br>';
-            print_r($dates);
-            echo '<br>';
-        }
-
         echo 'SESSION';
         echo '<br>';
         foreach ($_SESSION as $key => $value) {

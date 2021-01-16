@@ -11,7 +11,7 @@ class Comment extends Entity
     protected string $authorName = "";
     protected int $idPost = 0;
     protected bool $active = false;
-    protected string $createdAt = "";
+    protected ?string $createdAt = "";
 
     public function getContent(): string
     {
@@ -61,12 +61,12 @@ class Comment extends Entity
         return $this;
     }
 
-    public function getCreatedAt(): string
+    public function getCreatedAt(): ?string
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(string $createdAt): self
+    public function setCreatedAt(?string $createdAt): self
     {
         $this->createdAt = $createdAt;
 

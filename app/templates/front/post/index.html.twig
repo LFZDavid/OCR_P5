@@ -22,10 +22,10 @@
 				<p class="mini-post-date">
 					{% if post.updated_at is defined %}
 					Dernière mise à jour :
-					{{post.updated_at|date('d-m-Y')}}
+					{{post.updatedAt|date('d-m-Y')}}
 					{% else %}
 					Créé le :
-					{{post.created_at|date('d-m-Y')}}
+					{{post.createdAt|date('d-m-Y')}}
 					{% endif %}
 				</p>
 				<a href="index.php?post={{post.id}}" class="post-link">
