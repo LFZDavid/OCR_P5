@@ -14,7 +14,7 @@ $config = [
 ];
 
 $links = [
-    "cv" => "#",
+    "cv" => "/app/public/downloads/CV David Cornacchia.pdf",
     "linkedin" => "https://www.linkedin.com/in/david-cornacchia-25a951199/",
     "github" => "https://github.com/LFZDavid"
 
