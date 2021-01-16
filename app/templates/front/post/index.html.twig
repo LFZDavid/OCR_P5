@@ -20,7 +20,7 @@
 					{{post.chapo}}
 				</h4>
 				<p class="mini-post-date">
-					{% if post.updated_at is defined %}
+					{% if post.updatedAt !="" %}
 					Dernière mise à jour :
 					{{post.updatedAt|date('d-m-Y')}}
 					{% else %}
