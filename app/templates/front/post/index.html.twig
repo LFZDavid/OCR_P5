@@ -13,6 +13,7 @@
 		{% for post in posts %}
 		<div class="col-sm-6 col-md-4">
 			<div class="thumbnail">
+				<img src="https://picsum.photos/200/200?random={{post.id}}" alt="{{post.title}}" class="post-img">
 				<h3 class="mini-post-title">
 					{{post.title}}
 				</h3>

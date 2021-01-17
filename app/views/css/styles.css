@@ -1,0 +1,16 @@
+.title-block{
+    background: url("https://picsum.photos/900/600") no-repeat;
+    background-size: cover;
+    padding:20% 0px;
+}
+
+.title-band{
+    position: relative;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+}
+
+.title{
+    color: white;
+    text-align: center;
+}

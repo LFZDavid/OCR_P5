@@ -7,7 +7,11 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="post-title jumbotron">{{post.title}}</h1>
+<div class="title-block jumbotron">
+	<div class="title-band">
+		<h1 class="title">{{post.title}}</h1>
+	</div>
+</div>
 
 <h2 class="post-chapot">{{post.chapo}}</h2>
 <p class="post-date">
