@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="posts-title jumbotron">Liste des Articles</h1>
+
 <div class="container-fluid">
 	<div class="row">
 		{% for post in posts %}
@@ -20,7 +20,7 @@
 				<h4 class="mini-post-chapo">
 					{{post.chapo}}
 				</h4>
-				<p class="mini-post-date">
+				<em class="mini-post-date">
 					{% if post.updated_at is defined %}
 					Dernière mise à jour :
 					{{post.updated_at|date('d-m-Y')}}
@@ -28,10 +28,13 @@
 					Créé le :
 					{{post.created_at|date('d-m-Y')}}
 					{% endif %}
-				</p>
-				<a href="index.php?post={{post.id}}" class="post-link">
-					<button class="btn btn-info">Lire</button>
-				</a>
+				</em>
+				<br>
+				<div class="post-link-btn">
+					<a href="index.php?post={{post.id}}" class="post-link">
+						<button class="btn btn-info">Lire</button>
+					</a>
+				</div>
 			</div>
 		</div>
 		{% endfor %}

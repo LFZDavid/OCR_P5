@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block body %}
-<h1 class="users-title jumbotron">{{title}}</h1>
 {% for message in messages %}
 {% if message.type == "error" %}
 <div class="alert alert-danger">

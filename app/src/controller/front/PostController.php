@@ -31,7 +31,8 @@ class PostController extends Controller
 
         echo $this->twig->render('/front/post/show.html.twig', [
             "post" => $post,
-            'comments' => $this->commentRepository->getListByPost($post->getId(), true)
+            'comments' => $this->commentRepository->getListByPost($post->getId(), true),
+            "title" => $post->getTitle()
         ]);
     }
 
@@ -39,7 +40,8 @@ class PostController extends Controller
     {
         $posts = $this->postRepository->getListOfActives();
         echo $this->twig->render('/front/post/index.html.twig', [
-            "posts" => $posts
+            "posts" => $posts,
+            "title" => "Liste des articles"
         ]);
     }
 }
