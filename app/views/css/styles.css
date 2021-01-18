@@ -121,3 +121,14 @@
 .comment-form-block>form>input{
     margin: 0 auto;
 }
+
+/* ADMIN POST */
+.action-btns{
+    display:flex;
+    justify-content: space-evenly;
+}
+.add-btn-block{
+    display:flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
