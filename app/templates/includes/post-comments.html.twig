@@ -1,15 +1,19 @@
-<div class="container-fluid post_comments">
+<div class="container-fluid post-comments">
 	<h4>Commentaires</h4>
 	{% for comment in comments %}
 	{% if comment.Active%}
-	<div class="row">
-		<strong>{{comment.AuthorName}}
-			:
-		</strong>
-		<em>
-			{{comment.createdAt|date('d-m-Y')}}
-		</em>
-		<p>{{comment.content}}</p>
+	<div class="comment">
+		<div class="comment-infos">
+			<strong>{{comment.AuthorName}}
+				:
+			</strong>
+			<em>
+				{{comment.createdAt|date('d-m-Y')}}
+			</em>
+		</div>
+		<div class="comment-content">
+			<p>{{comment.content}}</p>
+		</div>
 	</div>
 	{% endif %}
 	{% endfor %}
@@ -17,8 +21,8 @@
 		{% if session.id_user is null %}
 		<p>
 			Vous devez être connecté pour poster un commentaire.
+			<a href="index.php?user=login">Se connecter/S'inscrire</a>
 		</p>
-		<a href="index.php?user=login">Se connecter/S'inscrire</a>
 		{% else %}
 		<form action="index.php?comment=add&amp;id_post={{post.id}}" method="post">
 			<div class=" mb-3 form-group">

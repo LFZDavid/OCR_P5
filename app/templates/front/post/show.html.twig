@@ -9,7 +9,7 @@
 {% block body %}
 
 <h2 class="post-chapot">{{post.chapo}}</h2>
-<p class="post-date">
+<em class="post-date">
 
 	{% if post.updatedAt is not null %}
 	Dernière mise à jour :
@@ -21,7 +21,14 @@
 
 	par :
 	{{post.author.name}}
-</p>
+</em>
+<div class="divider bg-primary"></div>
 <p class="post-content">{{post.content}}</p>
 {% include "includes/post-comments.html.twig" %}
+<br>
+<a href="index.php?post=list">
+	<button class="btn btn-secondary">
+		Retour à la liste
+	</button>
+</a>
 {% endblock %}

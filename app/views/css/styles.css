@@ -76,3 +76,48 @@
 .mini-post-chapo{
     text-align: center;
 }
+
+.divider{
+    height: 2px;
+    width: 50%;
+    display:flex;
+    margin:15px auto;
+}
+
+/* POST COMMENTS */
+.post-comments{
+    border: 1px solid black;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px black;
+    padding: 15px 15px; 
+}
+
+.comment{
+    border: 1px solid black;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.comment-infos{
+    background:grey;
+    color:white;
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    padding: 5px 0 0 5px;
+    
+}
+.comment-content{
+    padding: 5px 0 0 5px;
+}
+
+.comment-form-block>p{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    text-align: center;
+}
+
+.comment-form-block>form>input{
+    margin: 0 auto;
+}
