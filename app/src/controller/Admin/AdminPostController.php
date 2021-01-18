@@ -167,7 +167,7 @@ class AdminPostController extends Controller
                     unset($new_post_categories[$old_post_category->getName()]);
                 } else {
                     # Category isn't linked anymore
-                    $this->manager->unlinkCategory($persisted_id, $old_post_category->getId());
+                    $this->postManager->unlinkCategory($persisted_id, $old_post_category->getId());
                 }
             }
             foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {
