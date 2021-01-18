@@ -39,7 +39,7 @@
                             {{comment.post_title}}
                         </a>
                     </td>
-                    <td>{{comment.created_at}}</td>
+                    <td>{{comment.created_at|date('d-m-Y')}}</td>
                     <td>
                         <form action="index.php?admin-comment=toggle" method="POST">
                             <input type="hidden" name="id_comment" value="{{comment.id}}">

@@ -11,13 +11,14 @@
 <h2 class="post-chapot">{{post.chapo}}</h2>
 <p class="post-date">
 
-	{% if post.updated_at is defined %}
+	{% if post.updatedAt is not null %}
 	Dernière mise à jour :
-	{{post.created_at|date('d-m-Y')}}
+	{{post.updatedAt|date('d-m-Y')}}
 	{% else %}
 	Créé le :
-	{{post.created_at|date('d-m-Y')}}
+	{{post.createdAt|date('d-m-Y')}}
 	{% endif %}
+
 	par :
 	{{post.author.name}}
 </p>
