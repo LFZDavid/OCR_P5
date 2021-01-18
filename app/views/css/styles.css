@@ -132,3 +132,20 @@
     justify-content: flex-end;
     flex-direction: row;
 }
+
+/* ADMIN USER */
+.roles-btns{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.roles-btns>form{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.delete-user-btn{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
