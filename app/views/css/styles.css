@@ -63,3 +63,16 @@
     justify-content: center;
     margin-bottom: 20px;
 }
+
+.mini-post{
+    margin-bottom: 30px !important;
+    border-radius: 6px;
+}
+
+.mini-post>img{
+    height: 200px;
+}
+.mini-post-title,
+.mini-post-chapo{
+    text-align: center;
+}

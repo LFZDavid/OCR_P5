@@ -11,29 +11,28 @@
 <div class="container-fluid">
 	<div class="row">
 		{% for post in posts %}
-		<div class="col-sm-6 col-md-4">
-			<div class="thumbnail">
-				<img src="https://picsum.photos/200/200?random={{post.id}}" alt="{{post.title}}" class="post-img">
-				<h3 class="mini-post-title">
-					{{post.title}}
-				</h3>
-				<h4 class="mini-post-chapo">
-					{{post.chapo}}
-				</h4>
-				<p class="mini-post-date">
-					{% if post.updatedAt !="" %}
-					Dernière mise à jour :
-					{{post.updatedAt|date('d-m-Y')}}
-					{% else %}
-					Créé le :
-					{{post.createdAt|date('d-m-Y')}}
-					{% endif %}
-					</em>
-					<br>
-				<div class="post-link-btn">
-					<a href="index.php?post={{post.id}}" class="post-link">
-						<button class="btn btn-info">Lire</button>
+		<div class="col-sm-12 col-md-4">
+			<div class="card mini-post">
+				<img src="https://picsum.photos/150/150?random={{post.id}}" alt="{{post.title}}" class="card-img-top">
+				<div class="card-body">
+					<a href="index.php?post={{post.id}}">
+						<h3 class="mini-post-title">
+							{{post.title}}
+						</h3>
+						<h4 class="mini-post-chapo">
+							{{post.chapo}}
+						</h4>
 					</a>
+					<br>
+					<em>
+						{% if post.updatedAt !="" %}
+						Dernière mise à jour le :
+						{{post.updatedAt|date('d-m-Y')}}
+						{% else %}
+						Créé le :
+						{{post.createdAt|date('d-m-Y')}}
+						{% endif %}
+					</em>
 				</div>
 			</div>
 		</div>
