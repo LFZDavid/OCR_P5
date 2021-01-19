@@ -82,6 +82,7 @@ class AdminPostController extends Controller
                 "type" => 'text',
                 "hidden" => false,
                 "value" => $post->getTitle() ?? "",
+                "required" => true
             ],
             [
                 "label" => 'Chapô',
@@ -89,6 +90,7 @@ class AdminPostController extends Controller
                 "type" => 'text',
                 "hidden" => false,
                 "value" => $post->getChapo() ?? "",
+                "required" => true
             ],
             [
                 "label" => 'Categories',
@@ -104,6 +106,7 @@ class AdminPostController extends Controller
                 "type" => 'textarea',
                 "hidden" => false,
                 "value" => $post->getContent() ?? "",
+                "required" => true
             ],
             [
                 "label" => 'Visible',

@@ -25,7 +25,8 @@
 				{% endif %}
 				{% if input.type == 'text' %}
 				<input type="text" class="form-control" name="{{input.field}}" id="{{input.field}}"
-					value="{{input.value}}" {% if input.hidden %} hidden {% endif %}>
+					value="{{input.value}}" {% if input.hidden %} hidden {% endif %} {% if input.required %} required {%
+					endif %}>
 				{% elseif input.type == 'checkbox'%}
 				<div class="btn-group btn-group-toggle" data-toggle="buttons">
 					{% for category in input.value %}
@@ -38,8 +39,8 @@
 					{% endfor %}
 				</div>
 				{% elseif input.type == 'textarea'%}
-				<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30"
-					rows="10">{{input.value}}</textarea>
+				<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30" rows="10" {% if
+					input.required %} required {% endif %}>{{input.value}}</textarea>
 
 				{% elseif input.type == 'switch' %}
 				<div class="form-group">
