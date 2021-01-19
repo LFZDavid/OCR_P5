@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-	<a class="navbar-brand" href="index.php">Blog</a>
+	<a class="navbar-brand" href="index.php">Sitez-vous</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
 		aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -7,41 +7,33 @@
 	<div class="collapse navbar-collapse" id="navbarColor01">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="#">Home
+				<a class="nav-link" href="index.php">Home
 					<span class="sr-only">(current)</span>
 				</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="index.php?post">Articles</a>
 			</li>
-			{% if session.id_user is null %}
-			<!-- <a class="nav-item" href="index.php?user=form">Inscription</a> -->
-			<a class="nav-item" href="index.php?user=login">Connexion</a>
-			{% else %}
-			<a class="nav-item" href="index.php?user=form">Mon Profil</a>
-			<a class="nav-item" href="index.php?user=logout">Deconnexion</a>
-			{% if session.role_user == 'admin' %}
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-					aria-expanded="false">Admin</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="index.php?admin-post=list">Articles</a>
-					<a class="dropdown-item" href="index.php?admin-post=form">Ajouter un article</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="index.php?admin-user=list">Utilisateurs</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="index.php?admin-comment=list">Commentaires</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">link</a>
-				</div>
+			{% if session.id_user is not null %}
+			<li>
+				<a class="nav-link" href="index.php?user=form">
+					Mon profil
+				</a>
 			</li>
 			{% endif %}
-			{% endif %}
-		</ul>
+			<div class="logs-logo">
+				{% if session.id_user is null %}
+				<a class="nav-item" href="index.php?user=login">
+					<i style="font-size:25px;" class="fas fa-sign-in-alt"></i>
+				</a>
+				{% else %}
 
-		<!-- <form class="form-inline my-2 my-lg-0">
-			<input class="form-control mr-sm-2" type="text" placeholder="Search">
-			<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-		</form> -->
+				<a class="nav-item" href="index.php?user=logout">
+					<i style="font-size:25px; color:red;" class="fas fa-power-off">
+					</i>
+				</a>
+				{% endif %}
+			</div>
+		</ul>
 	</div>
 </nav>
