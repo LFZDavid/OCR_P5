@@ -22,40 +22,37 @@
             <thead>
                 <tr>
                     <th>Commentaire</th>
-                    <th>Auteur</th>
-                    <th>Article</th>
-                    <th>Créé le :</th>
-                    <th>Visible</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {% for comment in comments %}
                 <tr>
-                    <td>{{comment.content}}</td>
-                    <td>{{comment.author_name}}</td>
                     <td>
+                        <strong>
+                            {{comment.author_name}} : </strong>
                         <a href="index.php?post={{comment.id_post}}" target="_blank">
                             {{comment.post_title}}
                         </a>
+                        <br>
+                        <em>{{comment.created_at|date('d-m-Y')}}</em>
+                        {{comment.content}}
                     </td>
-                    <td>{{comment.created_at|date('d-m-Y')}}</td>
-                    <td>
-                        <form action="index.php?admin-comment=toggle" method="POST">
-                            <input type="hidden" name="id_comment" value="{{comment.id}}">
-                            <div class="btn-group-toggle" data-toggle="buttons">
-                                <input type="submit" class="btn btn-secondary 
-                                {% if comment.active %} active" value="Oui" {% else %} " value=" Non" {% endif %}>
-                            </div>
-                        </form>
-                    </td>
-                    <td width="250">
-                        <div class="row">
+                    <td width="120">
+                        <div class="row admin-comm-btns">
+                            <form action="index.php?admin-comment=toggle" method="POST">
+                                <input type="hidden" name="id_comment" value="{{comment.id}}">
+                                <div class="btn-group-toggle" data-toggle="buttons">
+                                    <input type="submit" class="btn btn-secondary 
+                                        {% if comment.active %} active" value="On" {% else %} " value=" Off" {% endif
+                                        %}>
+                                </div>
+                            </form>
                             <form action="index.php?admin-comment=delete&amp;id_comment={{comment.id}}" method="POST"
                                 onclick="return confirm('Êtes-vous sûre ?')">
                                 <input type="hidden" name="_method" value="DELETE">
                                 <button class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-remove">Supprimer</span>
+                                    <i class="fas fa-trash-alt"></i>
                                 </button>
                             </form>
                         </div>

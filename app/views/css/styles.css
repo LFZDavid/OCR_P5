@@ -149,3 +149,8 @@
     flex-direction: row;
     justify-content: center;
 }
+.admin-comm-btns{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+}
