@@ -21,19 +21,21 @@
         </form>
         <p>Pas encore inscrit ? <a href="index.php?user=form">Inscription</a></p>
     </div>
-    <a href="">Mot de passe oublié ?</a>
+    <div>
 
-    <div class="lost-pwd-form">
-        <form action="index.php?user=lost-pwd" method="POST">
-            <div class="input-group mb-3">
-                <input type="{{lost_pwd_form.type}}" class="form-control" name="{{lost_pwd_form.name}}"
-                    id="{{lost_pwd_form.name}}" placeholder="Saisissez votre email">
-                <button class="btn btn-secondary" type="submit" id="button-addon2">Envoyer</button>
-            </div>
-        </form>
+        <a id="lost-pwd-btn" href="">Mot de passe oublié ?</a>
+        <div class="lost-pwd-form">
+            <form action="index.php?user=lost-pwd" method="POST">
+                <div class="input-group mb-3">
+                    <input type="{{lost_pwd_form.type}}" class="form-control" name="{{lost_pwd_form.name}}"
+                        id="{{lost_pwd_form.name}}" placeholder="Saisissez votre email">
+                    <button class="btn btn-secondary" type="submit" id="button-addon2">Envoyer</button>
+                </div>
+            </form>
+        </div>
     </div>
     <a href="index.php">
-        <button class="btn btn-outline-info">Retour à l'acceuil</button>
+        <button class="btn btn-outline-info backToHomeBtn">Retour à l'acceuil</button>
     </a>
 
 

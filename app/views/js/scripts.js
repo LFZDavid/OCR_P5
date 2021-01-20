@@ -6,4 +6,10 @@ $(document).ready(function () {
         $('html').animate({ scrollTop: 0 }, 'slow');
     });
 
+    $('.lost-pwd-form').hide(0);
+    $('#lost-pwd-btn').on('click', function (e) {
+        e.preventDefault();
+        $('.lost-pwd-form').slideDown('slow');
+    });
+
 });
