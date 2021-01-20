@@ -7,32 +7,22 @@
 {% endblock %}
 
 {% block body %}
-{% for message in messages %}
-{% if message.type == "error" %}
-<div class="alert alert-danger">
-    {% elseif message.type == "success" %}
-    <div class="alert alert-success">
-        {% endif %}
-        {{message.content}}
+<div div class="container">
+    <div class="login-form">
+        <form action="#" method="POST">
+            {% for key, input in inputs %}
+            <div class="mb-3 form-group">
+                <label for="{{key}}" class="form-label">{{input.label}}</label>
+                <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
+            </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-success">
+        </form>
+        <br>
+        <a href="index.php">
+            <button class="btn btn-outline-info">Retour à l'acceuil</button>
+        </a>
     </div>
-    {% endfor %}
-    <div div class="container">
-        <div class="login-form">
-            <form action="#" method="POST">
-                {% for key, input in inputs %}
-                <div class="mb-3 form-group">
-                    <label for="{{key}}" class="form-label">{{input.label}}</label>
-                    <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}"
-                        value="{{input.value}}">
-                </div>
-                {% endfor %}
-                <input type="submit" class="btn btn-success">
-            </form>
-            <br>
-            <a href="index.php">
-                <button class="btn btn-outline-info">Retour à l'acceuil</button>
-            </a>
-        </div>
-    </div>
+</div>
 
-    {% endblock %}
+{% endblock %}

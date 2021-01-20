@@ -8,76 +8,67 @@
 
 {% block body %}
 <h1 class="users-title jumbotron">{{title}}</h1>
-{% for message in messages %}
-{% if message.type == "error" %}
-<div class="alert alert-danger">
-	{% elseif message.type == "success" %}
-	<div class="alert alert-success">
-		{% endif %}
-		{{message.content}}
-	</div>
-	{% endfor %}
-	<div class="container-fluid">
-		<table class="table table-striped table-bordered">
-			<thead>
-				<tr>
-					<th>Infos</th>
-					<th>Role</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for user in users %}
-				<tr>
-					<td>{{user.name}}
-						{{user.email}}
-						<em>{{user.createdAt|date('d-m-Y')}}</em>
-					</td>
-					<td width="300">
-						<div class="row roles-btns">
-							<form action="index.php?admin-user=role" method="POST">
-								<div class="btn-group-toggle" data-toggle="buttons">
-									<input type="submit" {% if user.role=="user" %} class="btn btn-secondary active"
-										value="user" {% else %} class="btn btn-secondary" value="user" {% endif %}
-										name="role">
-								</div>
-								<input type="hidden" name="id_user" value="{{user.id}}">
-							</form>
-							<form action="index.php?admin-user=role" method="POST">
-								<div class="btn-group-toggle" data-toggle="buttons">
-									<input type="submit" {% if user.role=="editor" %} class="btn btn-secondary active"
-										value="editor" {% else %} class="btn btn-secondary" value="editor" {% endif %}
-										name="role">
-								</div>
-								<input type="hidden" name="id_user" value="{{user.id}}">
-							</form>
-							<form action="index.php?admin-user=role" method="POST">
-								<div class="btn-group-toggle" data-toggle="buttons">
-									<input type="submit" {% if user.role=="admin" %} class="btn btn-secondary active"
-										value="admin" {% else %} class="btn btn-secondary" value="admin" {% endif %}
-										name="role">
-								</div>
-								<input type="hidden" name="id_user" value="{{user.id}}">
-							</form>
-						</div>
-					</td>
-					<td width="150">
-						<div class="row delete-user-btn">
-							<form action="index.php?admin-user=delete&amp;id_user={{user.id}}" method="POST"
-								onclick="return confirm('Êtes-vous sûre ?')">
-								<input type="hidden" name="_method" value="DELETE">
-								<button class="btn btn-danger">
-									<span class="glyphicon glyphicon-remove">
-										<i class="fas fa-trash-alt"></i>
-									</span>
-								</button>
-							</form>
-						</div>
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
+<div class="container-fluid">
+	<table class="table table-striped table-bordered">
+		<thead>
+			<tr>
+				<th>Infos</th>
+				<th>Role</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in users %}
+			<tr>
+				<td>{{user.name}}
+					{{user.email}}
+					<em>{{user.createdAt|date('d-m-Y')}}</em>
+				</td>
+				<td width="300">
+					<div class="row roles-btns">
+						<form action="index.php?admin-user=role" method="POST">
+							<div class="btn-group-toggle" data-toggle="buttons">
+								<input type="submit" {% if user.role=="user" %} class="btn btn-secondary active"
+									value="user" {% else %} class="btn btn-secondary" value="user" {% endif %}
+									name="role">
+							</div>
+							<input type="hidden" name="id_user" value="{{user.id}}">
+						</form>
+						<form action="index.php?admin-user=role" method="POST">
+							<div class="btn-group-toggle" data-toggle="buttons">
+								<input type="submit" {% if user.role=="editor" %} class="btn btn-secondary active"
+									value="editor" {% else %} class="btn btn-secondary" value="editor" {% endif %}
+									name="role">
+							</div>
+							<input type="hidden" name="id_user" value="{{user.id}}">
+						</form>
+						<form action="index.php?admin-user=role" method="POST">
+							<div class="btn-group-toggle" data-toggle="buttons">
+								<input type="submit" {% if user.role=="admin" %} class="btn btn-secondary active"
+									value="admin" {% else %} class="btn btn-secondary" value="admin" {% endif %}
+									name="role">
+							</div>
+							<input type="hidden" name="id_user" value="{{user.id}}">
+						</form>
+					</div>
+				</td>
+				<td width="150">
+					<div class="row delete-user-btn">
+						<form action="index.php?admin-user=delete&amp;id_user={{user.id}}" method="POST"
+							onclick="return confirm('Êtes-vous sûre ?')">
+							<input type="hidden" name="_method" value="DELETE">
+							<button class="btn btn-danger">
+								<span class="glyphicon glyphicon-remove">
+									<i class="fas fa-trash-alt"></i>
+								</span>
+							</button>
+						</form>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
 
-	{% endblock %}
+{% endblock %}

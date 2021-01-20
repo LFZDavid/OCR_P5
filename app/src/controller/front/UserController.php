@@ -228,7 +228,6 @@ class UserController extends Controller
             $_SESSION['id_user'] = $user->getId();
             $_SESSION['name_user'] = $user->getName();
             $_SESSION['role_user'] = $user->getRole();
-            $_SESSION['messages'] = $this->messages;
             header('Location: index.php');
         }
     }

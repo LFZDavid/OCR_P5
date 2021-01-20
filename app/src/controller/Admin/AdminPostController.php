@@ -42,8 +42,7 @@ class AdminPostController extends Controller
 
         echo $this->twig->render('/admin/post/index.html.twig', [
             "title" => "Administration des posts",
-            "posts" => $posts,
-            "message" => $this->messages
+            "posts" => $posts
         ]);
     }
 
@@ -120,8 +119,7 @@ class AdminPostController extends Controller
         echo $this->twig->render('/admin/post/form.html.twig', [
             "title" => $title . " d'un post",
             "inputs" => $inputs,
-            "id_post" => $post->getId() ?? 0,
-            "messages" => $this->messages // chargé après traitement du formulaire
+            "id_post" => $post->getId() ?? 0
         ]);
     }
 
@@ -173,7 +171,7 @@ class AdminPostController extends Controller
                     $this->postManager->unlinkCategory($persisted_id, $old_post_category->getId());
                 }
             }
-            foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {
+            foreach ($new_post_categories as $new_post_category_id) {
                 # Category has to be linked
                 $this->postManager->linkCategory($persisted_id, $new_post_category_id);
             }
@@ -184,6 +182,7 @@ class AdminPostController extends Controller
             } else {
                 $this->fillMessage('error', "Erreur : un problème est survenu lors de l'enregistrement !");
             }
+            header('Location:index.php?admin-post=list');
         }
     }
 

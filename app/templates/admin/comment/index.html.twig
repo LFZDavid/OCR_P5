@@ -7,59 +7,49 @@
 {% endblock %}
 
 {% block body %}
-{% for message in messages %}
-{% if message.type == "error" %}
-<div class="alert alert-danger">
-    {% elseif message.type == "success" %}
-    <div class="alert alert-success">
-        {% endif %}
-        {{message.content}}
-    </div>
-    {% endfor %}
-
-    <div class="container-fluid">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Commentaire</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for comment in comments %}
-                <tr>
-                    <td>
-                        <strong>
-                            {{comment.author_name}} : </strong>
-                        <a href="index.php?post={{comment.id_post}}" target="_blank">
-                            {{comment.post_title}}
-                        </a>
-                        <br>
-                        <em>{{comment.created_at|date('d-m-Y')}}</em>
-                        {{comment.content}}
-                    </td>
-                    <td width="120">
-                        <div class="row admin-comm-btns">
-                            <form action="index.php?admin-comment=toggle" method="POST">
-                                <input type="hidden" name="id_comment" value="{{comment.id}}">
-                                <div class="btn-group-toggle" data-toggle="buttons">
-                                    <input type="submit" class="btn btn-secondary 
+<div class="container-fluid">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Commentaire</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            <tr>
+                <td>
+                    <strong>
+                        {{comment.author_name}} : </strong>
+                    <a href="index.php?post={{comment.id_post}}" target="_blank">
+                        {{comment.post_title}}
+                    </a>
+                    <br>
+                    <em>{{comment.created_at|date('d-m-Y')}}</em>
+                    {{comment.content}}
+                </td>
+                <td width="120">
+                    <div class="row admin-comm-btns">
+                        <form action="index.php?admin-comment=toggle" method="POST">
+                            <input type="hidden" name="id_comment" value="{{comment.id}}">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <input type="submit" class="btn btn-secondary 
                                         {% if comment.active %} active" value="On" {% else %} " value=" Off" {% endif
-                                        %}>
-                                </div>
-                            </form>
-                            <form action="index.php?admin-comment=delete&amp;id_comment={{comment.id}}" method="POST"
-                                onclick="return confirm('Êtes-vous sûre ?')">
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button class="btn btn-danger">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    {% endblock %}
+                                    %}>
+                            </div>
+                        </form>
+                        <form action="index.php?admin-comment=delete&amp;id_comment={{comment.id}}" method="POST"
+                            onclick="return confirm('Êtes-vous sûre ?')">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-danger">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

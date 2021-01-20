@@ -28,8 +28,7 @@ class AdminCommentController extends Controller
         $comments_complete_list = $this->commentRepository->getCompleteList();
         echo $this->twig->render('/admin/comment/index.html.twig', [
             "title" => "Administration des commentaires",
-            "comments" => $comments_complete_list,
-            "messages" => $this->messages
+            "comments" => $comments_complete_list
         ]);
     }
 

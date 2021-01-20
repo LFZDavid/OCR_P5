@@ -13,8 +13,8 @@ abstract class Controller
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
-        $this->messages = isset($_SESSION['messages']) ? $_SESSION['messages'] : [];
         $this->twig->addGlobal('session', $_SESSION);
+        $_SESSION['messages'] = $this->messages;
         $this->redirectIfNotAllowed();
     }
 
@@ -24,7 +24,9 @@ abstract class Controller
             "type" => $type,
             "content" => $content
         ];
+
         array_push($this->messages, $message);
+        $_SESSION['messages'] = $this->messages;
     }
 
     public function redirectIfNotAllowed(): void
