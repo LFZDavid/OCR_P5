@@ -88,8 +88,7 @@ class UserController extends Controller
             "inputs" => $inputs,
             "edit" => $edit,
             "id_user" => $user->getId(),
-            "change_pwd_link" => $edit ? $change_pwd_link : "#",
-            "messages" => $this->messages
+            "change_pwd_link" => $edit ? $change_pwd_link : "#"
         ]);
     }
 
@@ -159,14 +158,9 @@ class UserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'Utilisateur enregistré !');
 
-            if (!$edit) {
-                $this->logIn([
-                    'name' => $user->getName(),
-                    'pwd' => $data['pwd']
-                ]);
-            } else {
-                $this->logIn(['name' => $user->getName()], true);
-            }
+            $_SESSION['id_user'] = $user->getId();
+            $_SESSION['name_user'] = $user->getName();
+            $_SESSION['role_user'] = $user->getRole();
         }
     }
 
@@ -204,8 +198,7 @@ class UserController extends Controller
         echo $this->twig->render('/front/user/login-form.html.twig', [
             "title" => "Connexion",
             "inputs" => $inputs,
-            "lost_pwd_form" => $lost_pwd_form,
-            "messages" => $this->messages
+            "lost_pwd_form" => $lost_pwd_form
         ]);
     }
 
@@ -321,10 +314,10 @@ class UserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
 
-            $this->logIn([
-                'name' => $user->getName(),
-                'pwd' => $post_data['pwd']
-            ]);
+            $_SESSION['id_user'] = $user->getId();
+            $_SESSION['name_user'] = $user->getName();
+            $_SESSION['role_user'] = $user->getRole();
+            header('Location:index.php?user=form');
         } else {
             header('Refresh:0');
         }
