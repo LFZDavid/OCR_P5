@@ -28,7 +28,7 @@
 					value="{{input.value}}" {% if input.hidden %} hidden {% endif %} {% if input.required %} required {%
 					endif %}>
 				{% elseif input.type == 'checkbox'%}
-				<div class="btn-group btn-group-toggle" data-toggle="buttons">
+				<div class="btn-group btn-group-toggle post-cat-btns" data-toggle="buttons">
 					{% for category in input.value %}
 					<label class="btn btn-primary">
 						<input type="checkbox" id="categories" name="categories[{{category.name}}]"

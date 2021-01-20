@@ -29,7 +29,7 @@ class PostRepository extends Repository
 
 	public function getList(?string $limit = null): array
 	{
-		$request = 'SELECT * FROM ' . $this->table . ' ORDER BY `id`';
+		$request = 'SELECT * FROM ' . $this->table . ' ORDER BY `id` DESC';
 		if ($limit != null) {
 			$request .= ' LIMIT ' . $limit;
 		}
