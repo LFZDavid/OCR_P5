@@ -34,8 +34,12 @@
 }
 
 .scrollUpBtn{
-    font-size: 50px;
     text-align: center;
+}
+
+.scrollUpBtn>a>.fas{
+    font-size: 45px!important;
+    margin-bottom: 25px;
 }
 
 .footer-bottom{
