@@ -1,25 +1,21 @@
 {% block contact_form %}
-<section id="contact_form">
+<div class="container contact_form">
+    <h3 class="form-title">{{contactForm.title}}</h3>
+    <form action="#" method="POST">
+        <div class="mb-3 form-group">
+            <input type="text" name="{{contactForm.inputs.name.name}}" class="form-control"
+                placeholder="{{contactForm.inputs.name.placeholder}}" value="{{contactForm.inputs.name.value}}">
+        </div>
+        <div class="mb-3 form-group">
+            <input type="email" name="{{contactForm.inputs.email.name}}" class="form-control"
+                placeholder="{{contactForm.inputs.email.placeholder}}" value="{{contactForm.inputs.email.value}}">
+        </div>
+        <div class=" mb-3 form-group">
+            <input type="text" name="{{contactForm.inputs.content.name}}" class="form-control"
+                placeholder="{{contactForm.inputs.content.placeholder}}">
+        </div>
 
-    <div class="container contact_form">
-        <h3 class="form-title">{{contactForm.title}}</h3>
-        <form action="#" method="POST">
-            <div class="mb-3 form-group">
-                <input type="text" name="{{contactForm.inputs.name.name}}" class="form-control"
-                    placeholder="{{contactForm.inputs.name.placeholder}}" value="{{contactForm.inputs.name.value}}">
-            </div>
-            <div class="mb-3 form-group">
-                <input type="email" name="{{contactForm.inputs.email.name}}" class="form-control"
-                    placeholder="{{contactForm.inputs.email.placeholder}}" value="{{contactForm.inputs.email.value}}">
-            </div>
-            <div class=" mb-3 form-group">
-                <input type="text" name="{{contactForm.inputs.content.name}}" class="form-control"
-                    placeholder="{{contactForm.inputs.content.placeholder}}">
-            </div>
-
-            <input type="submit" class="btn btn-success">
-        </form>
-    </div>
-</section>
-
+        <input type="submit" class="btn btn-success">
+    </form>
+</div>
 {% endblock %}

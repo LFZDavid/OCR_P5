@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* GLOBAL */
 *{
     font-size: large;
@@ -45,6 +46,8 @@
 }
 
 /* BLOG */
+=======
+>>>>>>> parent of 1f4b1c6... add font-awesom
 .title-block{
     background: url("https://picsum.photos/900/300") no-repeat;
     background-size: cover;
