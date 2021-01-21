@@ -17,7 +17,63 @@
 		{{message.content}}
 	</div>
 	{% endfor %}
-	HOME
+	<section class="last-posts">
+		<h3>Derniers articles</h3>
+		<div class="divider"></div>
+		<div class="row">
+			{% for post in last_posts %}
+			<div class="col-sm-12 col-md-4">
+				<div class="card mini-post">
+					<img src="https://picsum.photos/150/150?random={{post.id}}" alt="{{post.title}}"
+						class="card-img-top">
+					<div class="card-body">
+						<a href="index.php?post={{post.id}}">
+							<h3 class="mini-post-title">
+								{{post.title}}
+							</h3>
+							<h4 class="mini-post-chapo">
+								{{post.chapo}}
+							</h4>
+						</a>
+						<br>
+						<em>
+							{% if post.updatedAt !="" %}
+							Dernière mise à jour le :
+							{{post.updatedAt|date('d-m-Y')}}
+							{% else %}
+							Créé le :
+							{{post.createdAt|date('d-m-Y')}}
+							{% endif %}
+						</em>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</section>
+	<section class="last-posts">
+		<h3>Derniers commentaires</h3>
+		<div class="divider"></div>
+		{% for comment in last_comments %}
+		<div class="comment card">
+			<div class="comment-infos">
+				<strong>{{comment.author_name}}
+					:
+				</strong>
+				<em>
+					{{comment.created_at|date('d-m-Y')}}
+				</em>
+			</div>
+			<div class="comment-content">
+				<a href="index.php?post={{comment.id_post}}" target="_blank">
+					{{comment.post_title}}
+				</a>
+				<br>
+				<em>"{{comment.content}}"</em>
+			</div>
+		</div>
+		{% endfor %}
+	</section>
 
 	{% include "/includes/contact-form.html.twig" %}
 
