@@ -27,9 +27,14 @@ class PostRepository extends Repository
 		parent::__construct($pdo);
 	}
 
-	public function getList(): array
+	public function getList(?string $limit = null): array
 	{
-		$q = $this->pdo->query('SELECT * FROM ' . $this->table);
+		$request = 'SELECT * FROM ' . $this->table . ' ORDER BY `id` DESC';
+		if ($limit != null) {
+			$request .= ' LIMIT ' . $limit;
+		}
+
+		$q = $this->pdo->query($request);
 		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 
 		$list = $q->fetchAll();

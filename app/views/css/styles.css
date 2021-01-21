@@ -139,6 +139,10 @@
     justify-content: flex-end;
     flex-direction: row;
 }
+.post-cat-btns{
+    display: flex!important;
+    flex-wrap: wrap!important;
+}
 
 /* ADMIN USER */
 .roles-btns{
@@ -183,3 +187,14 @@
 .logs-logo>a{
     margin-right: 20px;
 }
+
+/* CONTACT FORM */
+.contact_form{
+    background: slategray;
+    margin-top:15px;
+    padding-top:15px;
+    padding-bottom:15px;
+    border-radius: 6px;
+    color:white;
+}
+

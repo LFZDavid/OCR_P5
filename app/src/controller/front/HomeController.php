@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Controller\Controller;
 use App\Model\Entity\User;
+use App\Model\Repository\PostRepository;
 use App\Model\Repository\UserRepository;
 use Twig\Environment;
 
@@ -18,11 +19,16 @@ class HomeController extends Controller
         parent::__construct($twig);
     }
 
-    public function homePage($email_dest)
+    public function homePage(string $email_dest, PostRepository $postRepository, $commentRepository)
     {
+        $last_posts = $postRepository->getList(3);
+        $last_comments = $commentRepository->getCompleteList(true, 3);
+
         echo $this->twig->render('front/home.html.twig', [
             "title" => "Accueil",
             "messages" => $this->messages,
+            "last_posts" => $last_posts,
+            "last_comments" => $last_comments,
             "contactForm" => $this->getContactForm($email_dest)
         ]);
     }
