@@ -35,10 +35,9 @@ class CommentRepository extends Repository
     {
         $where = ' WHERE `id_post` = ' . $postId . ' ';
         $where .= $onlyActive ? 'AND comments.active = 1' : '';
-        $request = 'SELECT *, users.name as author_name FROM ' . $this->table . ' INNER JOIN users ON users.id = id_author ' . $where;
+        $request = 'SELECT comments.id, content, id_author id_post, active, comments.created_at, users.name as author_name FROM ' . $this->table . ' INNER JOIN users ON users.id = id_author ' . $where;
         $q = $this->pdo->query($request);
         $q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
-
         return $q->fetchAll();
     }
 }

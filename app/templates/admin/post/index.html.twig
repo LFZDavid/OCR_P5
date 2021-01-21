@@ -40,8 +40,12 @@
 						Inactif
 						{% endif %}
 					</td>
-					<td>{{post.created_at|date('d-m-Y')}}</td>
-					<td>{{post.updated_at|date('d-m-Y')}}</td>
+					<td>{{post.createdAt|date('d-m-Y')}}</td>
+					<td>
+						{% if post.updatedAt is not null %}
+						{{post.updatedAt|date('d-m-Y')}}
+						{% endif %}
+					</td>
 					<td width="250">
 						<div class="row">
 							<a href="index.php?post={{post.id}}" class="btn btn-info">Voir</a>
