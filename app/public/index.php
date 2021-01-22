@@ -119,7 +119,7 @@ try {
         }
     } else {
         $homeController = new HomeController($twig, $userRepository);
-        $homeController->homePage($config['admin_email']);
+        $homeController->homePage($config['admin_email'], $postRepository, $commentRepository);
     }
 
     if ($config['env'] == 'dev') {

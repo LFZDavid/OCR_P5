@@ -10,9 +10,9 @@ class CommentRepository extends Repository
     protected string $table = 'comments';
     protected string $classManaged = '\App\Model\Entity\Comment';
 
-    public function getCompleteList(bool $onlyActive = false): array
+    public function getCompleteList(bool $onlyActive = false, ?string $limit = null): array
     {
-        $where = $onlyActive ? ' WHERE `comments.active` = 1' : '';
+        $where = $onlyActive ? ' WHERE comments.active = 1' : '';
         $request = 'SELECT 
         ' . $this->table . '.id,
         comments.content,
@@ -27,6 +27,11 @@ class CommentRepository extends Repository
         INNER JOIN posts ON posts.id = comments.id_post' . $where .
             ' ORDER BY comments.id
         DESC';
+
+        if ($limit != null) {
+            $request .= ' LIMIT ' . $limit;
+        }
+
         $q = $this->pdo->query($request);
         return $q->fetchAll();
     }

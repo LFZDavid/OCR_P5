@@ -1,6 +1,5 @@
 {% block contact_form %}
 <section id="contact_form">
-
     <div class="container contact_form">
         <h3 class="form-title">{{contactForm.title}}</h3>
         <form action="#" method="POST">
@@ -16,10 +15,12 @@
                 <input type="text" name="{{contactForm.inputs.content.name}}" class="form-control"
                     placeholder="{{contactForm.inputs.content.placeholder}}">
             </div>
-
             <input type="submit" class="btn btn-success">
         </form>
     </div>
 </section>
+<input type="submit" class="btn btn-success">
+</form>
+</div>
 
 {% endblock %}

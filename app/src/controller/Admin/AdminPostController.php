@@ -82,6 +82,7 @@ class AdminPostController extends Controller
                 "type" => 'text',
                 "hidden" => false,
                 "value" => $post->getTitle() ?? "",
+                "required" => true
             ],
             [
                 "label" => 'Chapô',
@@ -89,6 +90,7 @@ class AdminPostController extends Controller
                 "type" => 'text',
                 "hidden" => false,
                 "value" => $post->getChapo() ?? "",
+                "required" => true
             ],
             [
                 "label" => 'Categories',
@@ -104,6 +106,7 @@ class AdminPostController extends Controller
                 "type" => 'textarea',
                 "hidden" => false,
                 "value" => $post->getContent() ?? "",
+                "required" => true
             ],
             [
                 "label" => 'Visible',
@@ -167,7 +170,7 @@ class AdminPostController extends Controller
                     unset($new_post_categories[$old_post_category->getName()]);
                 } else {
                     # Category isn't linked anymore
-                    $this->manager->unlinkCategory($persisted_id, $old_post_category->getId());
+                    $this->postManager->unlinkCategory($persisted_id, $old_post_category->getId());
                 }
             }
             foreach ($new_post_categories as $new_post_category_name => $new_post_category_id) {
