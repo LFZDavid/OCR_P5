@@ -7,61 +7,50 @@
 {% endblock %}
 
 {% block body %}
-{% for message in messages %}
-{% if message.type == "error" %}
-<div class="alert alert-danger">
-	{% elseif message.type == "success" %}
-	<div class="alert alert-success">
-		{% endif %}
-		{{message.content}}
-	</div>
-	{% endfor %}
-	<div class="container">
-		<form action="index.php?admin-post=form&amp;id_post={{id_post}}" method="POST">
-			{% for input in inputs %}
-			<div class="mb-3 form-group">
-				{% if input.hidden == false %}
-				<label for="{{input.field}}" class="form-label">{{input.label}}</label>
-				{% endif %}
-				{% if input.type == 'text' %}
-				<input type="text" class="form-control" name="{{input.field}}" id="{{input.field}}"
-					value="{{input.value}}" {% if input.hidden %} hidden {% endif %} {% if input.required %} required {%
-					endif %}>
-				{% elseif input.type == 'checkbox'%}
-				<div class="btn-group btn-group-toggle post-cat-btns" data-toggle="buttons">
-					{% for category in input.value %}
-					<label class="btn btn-primary">
-						<input type="checkbox" id="categories" name="categories[{{category.name}}]"
-							value="{{category.id}}" {% if input.checked_categories[category.name] %} checked="checked"
-							{% endif %}>
-						{{category.name}}
-					</label>
-					{% endfor %}
-				</div>
-				{% elseif input.type == 'textarea'%}
-				<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30" rows="10" {% if
-					input.required %} required {% endif %}>{{input.value}}</textarea>
-
-				{% elseif input.type == 'switch' %}
-				<div class="form-group">
-					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" name="{{input.field}}" id="{{input.field}}"
-							{% if input.value> 0 %} checked {% endif %}>
-						<label class="custom-control-label" for="{{input.field}}">{{input.field}}</label>
-					</div>
-				</div>
-
-				{% endif %}
+<div class="container">
+	<form action="index.php?admin-post=form&amp;id_post={{id_post}}" method="POST">
+		{% for input in inputs %}
+		<div class="mb-3 form-group">
+			{% if input.hidden == false %}
+			<label for="{{input.field}}" class="form-label">{{input.label}}</label>
+			{% endif %}
+			{% if input.type == 'text' %}
+			<input type="text" class="form-control" name="{{input.field}}" id="{{input.field}}" value="{{input.value}}"
+				{% if input.hidden %} hidden {% endif %} {% if input.required %} required {% endif %}>
+			{% elseif input.type == 'checkbox'%}
+			<div class="btn-group btn-group-toggle post-cat-btns" data-toggle="buttons">
+				{% for category in input.value %}
+				<label class="btn btn-primary">
+					<input type="checkbox" id="categories" name="categories[{{category.name}}]" value="{{category.id}}"
+						{% if input.checked_categories[category.name] %} checked="checked" {% endif %}>
+					{{category.name}}
+				</label>
+				{% endfor %}
 			</div>
-			{% endfor %}
+			{% elseif input.type == 'textarea'%}
+			<textarea class="form-control" name="{{input.field}}" id="{{input.field}}" cols="30" rows="10" {% if
+				input.required %} required {% endif %}>{{input.value}}</textarea>
 
-			<input type="hidden" id="post-form-submit" value="true">
-			<input type="submit" class="btn btn-success">
-		</form>
-		<br>
-		<a href="index.php?admin-post=list">
-			<button class="btn btn-secondary">Retour à la liste</button>
-		</a>
-	</div>
+			{% elseif input.type == 'switch' %}
+			<div class="form-group">
+				<div class="custom-control custom-switch">
+					<input type="checkbox" class="custom-control-input" name="{{input.field}}" id="{{input.field}}" {%
+						if input.value> 0 %} checked {% endif %}>
+					<label class="custom-control-label" for="{{input.field}}">{{input.field}}</label>
+				</div>
+			</div>
 
-	{% endblock %}
+			{% endif %}
+		</div>
+		{% endfor %}
+
+		<input type="hidden" id="post-form-submit" value="true">
+		<input type="submit" class="btn btn-success">
+	</form>
+	<br>
+	<a href="index.php?admin-post=list">
+		<button class="btn btn-secondary">Retour à la liste</button>
+	</a>
+</div>
+
+{% endblock %}

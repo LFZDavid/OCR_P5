@@ -32,7 +32,6 @@ class AdminUserController extends Controller
         echo $this->twig->render('/admin/user/index.html.twig', [
             "title" => "Administration des utilisateurs",
             "users" => $this->userRepository->getList(),
-            "messages" => $this->messages
         ]);
     }
 
@@ -52,9 +51,9 @@ class AdminUserController extends Controller
     {
         if ($this->userRepository->getUniqueById($id_user)) {
             if ($this->userManager->delete($id_user)) {
-                $message = 'Le post n° ' . $id_user . ' a été supprimé';
+                $this->fillMessage('success', 'Le post n° ' . $id_user . ' a été supprimé');
             } else {
-                $message = 'Impossible de supprimer le post n° ' . $id_user . ' !';
+                $this->fillMessage('error', 'Impossible de supprimer le post n° ' . $id_user . ' !');
             }
         }
         header('Location:index.php?admin-user=list');

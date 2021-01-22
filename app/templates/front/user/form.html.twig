@@ -7,38 +7,28 @@
 {% endblock %}
 
 {% block body %}
-{% for message in messages %}
-{% if message.type == "error" %}
-<div class="alert alert-danger">
-    {% elseif message.type == "success" %}
-    <div class="alert alert-success">
+<div class="container">
+    <form action="index.php?user=form" method="POST">
+        {% for key, input in inputs %}
+        <div class="mb-3 form-group">
+            <label for="{{key}}" class="form-label">{{input.label}}</label>
+            <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
+        </div>
+        {% endfor %}
+
+        {% if edit %}
+        <div class="form-group">
+            <a href="{{change_pwd_link}}">Changer de mot de passe ?</a>
+        </div>
         {% endif %}
-        {{message.content}}
-    </div>
-    {% endfor %}
 
-    <div class="container">
-        <form action="index.php?user=form" method="POST">
-            {% for key, input in inputs %}
-            <div class="mb-3 form-group">
-                <label for="{{key}}" class="form-label">{{input.label}}</label>
-                <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
-            </div>
-            {% endfor %}
+        <input type="hidden" id="user-form-submit" value="true">
+        <input type="submit" class="btn btn-success">
+    </form>
+    <br>
+    <a href="index.php">
+        <button class="btn btn-outline-info">Retour à l'acceuil</button>
+    </a>
+</div>
 
-            {% if edit %}
-            <div class="form-group">
-                <a href="{{change_pwd_link}}">Changer de mot de passe ?</a>
-            </div>
-            {% endif %}
-
-            <input type="hidden" id="user-form-submit" value="true">
-            <input type="submit" class="btn btn-success">
-        </form>
-        <br>
-        <a href="index.php">
-            <button class="btn btn-outline-info">Retour à l'acceuil</button>
-        </a>
-    </div>
-
-    {% endblock %}
+{% endblock %}

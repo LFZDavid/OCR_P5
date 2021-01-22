@@ -123,10 +123,6 @@ try {
     }
 
     if ($config['env'] == 'dev') {
-
-
-
-
         /**DEBUG **************************/
         echo '<div style="background-color:black;color:green;">';
 

@@ -38,8 +38,13 @@
 }
 
 .scrollUpBtn{
-    font-size: 50px;
     text-align: center;
+}
+
+
+.scrollUpBtn>a>.fas{
+    font-size: 45px!important;
+    margin-bottom: 25px;
 }
 
 
@@ -202,4 +207,7 @@
     border-radius: 6px;
     color:white;
 }
-
+ /* LOST PWD */
+.backToHomeBtn{
+    margin-top:20px;
+}
