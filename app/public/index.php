@@ -24,9 +24,6 @@ $twig = new \Twig\Environment($loader, [
     'debug' => $config['env'] == 'dev' ? true : false,
 ]);
 
-
-
-
 $config['env'] == 'dev' ? $twig->addExtension(new \Twig\Extension\DebugExtension()) : "";
 
 try {

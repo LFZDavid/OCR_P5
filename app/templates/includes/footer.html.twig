@@ -1,5 +1,5 @@
 <div class="footer bg-primary">
-    {% if session.role_user == 'admin' %}
+    {% if app_user.getRole() == 'admin' %}
     <div class="nav-item dropdown admin-link">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
             aria-expanded="false">

@@ -156,7 +156,7 @@ class UserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'Utilisateur enregistré !');
 
-            $_SESSION['user'] = $user;
+            $_SESSION['app.user'] = $user;
 
             header('Location: index.php');
         }
@@ -216,7 +216,7 @@ class UserController extends Controller
 
         if ($success) {
             $this->fillMessage('success', 'Vous êtes connecté !');
-            $_SESSION['user'] = $user;
+            $_SESSION['app.user'] = $user;
             header('Location: index.php');
         }
     }

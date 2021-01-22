@@ -13,12 +13,10 @@ abstract class Controller
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
-        // $this->twig->addGlobal('session', $_SESSION);
-        $this->twig->addGlobal('app.user', $this->getUser());
-
-        $this->redirectIfNotAllowed();
-        $twig->addGlobal('app.messages', $_SESSION['messages']);
+        $this->twig->addGlobal('app_user', $this->getUser());
+        $this->twig->addGlobal('app_messages', isset($_SESSION['messages']) ? $_SESSION['messages'] : []);
         $_SESSION['messages'] = [];
+        $this->redirectIfNotAllowed();
     }
 
     protected function fillMessage(string $type, string $content): void
@@ -44,7 +42,7 @@ abstract class Controller
 
     protected function getUser(): ?User
     {
-        return isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        return isset($_SESSION['app.user']) ? $_SESSION['app.user'] : null;
     }
 
     protected function getCurrentUrl(): string
