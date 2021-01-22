@@ -6,6 +6,7 @@ use App\Controller\Controller;
 use App\Model\Entity\User;
 use App\Model\Repository\PostRepository;
 use App\Model\Repository\UserRepository;
+use App\Model\Repository\CommentRepository;
 use Twig\Environment;
 
 class HomeController extends Controller
@@ -19,7 +20,7 @@ class HomeController extends Controller
         parent::__construct($twig);
     }
 
-    public function homePage(string $email_dest, PostRepository $postRepository, $commentRepository)
+    public function homePage(string $email_dest, PostRepository $postRepository, CommentRepository $commentRepository)
     {
         $last_posts = $postRepository->getList(3);
         $last_comments = $commentRepository->getCompleteList(true, 3);
