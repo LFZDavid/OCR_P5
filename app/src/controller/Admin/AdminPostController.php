@@ -145,10 +145,10 @@ class AdminPostController extends Controller
                 $post = new Post();
             }
 
-            if (!key_exists('id_user', $_SESSION) || $_SESSION['id_user'] < 1) {
+            $author = $this->getUser();
+            if (!$author) {
                 $this->fillMessage('error', 'Un problème est survenue : L\'auteur n\'est pas identifié');
             }
-            $author = $this->userRepository->getUniqueById($_SESSION['id_user']);
             /** Set post values for saving */
             $post->setTitle($data['title'])
                 ->setChapo($data['chapo'])

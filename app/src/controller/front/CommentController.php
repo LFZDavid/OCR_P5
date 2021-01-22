@@ -35,7 +35,7 @@ class CommentController extends Controller
         if ($success) {
             $comment = new Comment();
             $comment->setContent($post_data['comment_content'])
-                ->setIdAuthor($_SESSION['id_user'])
+                ->setIdAuthor($this->getUser()->getId())
                 ->setIdPost($id_post);
 
             if ($this->commentManager->save($comment)) {

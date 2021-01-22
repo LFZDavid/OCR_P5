@@ -17,7 +17,7 @@
     <div id="main">
         {% include "/includes/header.html.twig" %}
         <div id="content" class="container">
-            {% for message in session.messages %}
+            {% for message in messages %}
             {% if message.type == "error" %}
             <div class="alert alert-danger">
                 {% elseif message.type == "success" %}

@@ -23,7 +23,10 @@ $twig = new \Twig\Environment($loader, [
     'cache' => $config['env'] == 'prod' ? __DIR__ . '/app/tmp' : false,
     'debug' => $config['env'] == 'dev' ? true : false,
 ]);
-$twig->addGlobal('links', $links);
+
+
+
+
 $config['env'] == 'dev' ? $twig->addExtension(new \Twig\Extension\DebugExtension()) : "";
 
 try {
@@ -122,9 +125,14 @@ try {
         $homeController->homePage($config['admin_email'], $postRepository, $commentRepository);
     }
 
+
     if ($config['env'] == 'dev') {
         /**DEBUG **************************/
         echo '<div style="background-color:black;color:green;">';
+
+        var_dump($_SERVER['REQUEST_URI']);
+        echo '<br>';
+
 
         echo 'SESSION';
         echo '<br>';

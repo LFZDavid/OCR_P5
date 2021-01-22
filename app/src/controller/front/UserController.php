@@ -24,16 +24,14 @@ class UserController extends Controller
 
     public function getForm(): void
     {
-        $id_user = $_SESSION['id_user'] ?? false;
 
-        if (!$id_user) {
-            // Create user
+        $user = $this->getUser();
+
+        if (!$user) {
             $user = new User();
             $title = "Inscription";
             $edit = false;
         } else {
-            // Edit user
-            $user = $this->userRepository->getUniqueById($id_user);
             $title = "Modification";
             $edit = true;
             $change_pwd_link = 'index.php?user=reset-pwd&hash=' . $user->getPwd() . '&id_user=' . $user->getId();
@@ -158,16 +156,15 @@ class UserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'Utilisateur enregistré !');
 
-            $_SESSION['id_user'] = $user->getId();
-            $_SESSION['name_user'] = $user->getName();
-            $_SESSION['role_user'] = $user->getRole();
+            $_SESSION['user'] = $user;
+
             header('Location: index.php');
         }
     }
 
     public function getLogInForm(): void
     {
-        if (isset($_SESSION['id_user'])) {
+        if ($this->getUser()) {
             header('Location:index.php');
         }
 
@@ -219,9 +216,7 @@ class UserController extends Controller
 
         if ($success) {
             $this->fillMessage('success', 'Vous êtes connecté !');
-            $_SESSION['id_user'] = $user->getId();
-            $_SESSION['name_user'] = $user->getName();
-            $_SESSION['role_user'] = $user->getRole();
+            $_SESSION['user'] = $user;
             header('Location: index.php');
         }
     }
@@ -315,9 +310,6 @@ class UserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
 
-            $_SESSION['id_user'] = $user->getId();
-            $_SESSION['name_user'] = $user->getName();
-            $_SESSION['role_user'] = $user->getRole();
             header('Location:index.php?user=form');
         } else {
             header('Refresh:0');
@@ -347,16 +339,5 @@ class UserController extends Controller
             'X-Mailer: PHP/' . phpversion();
 
         return mail($to, $subject, $message, $headers);
-    }
-
-    protected function getCurrentUrl(): string
-    {
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            $url = "https";
-        } else {
-            $url = "http";
-        }
-        $url .= "://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
-        return $url;
     }
 }

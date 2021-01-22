@@ -27,21 +27,19 @@ class HomeController extends Controller
 
         echo $this->twig->render('front/home.html.twig', [
             "title" => "Accueil",
-            "messages" => $this->messages,
             "last_posts" => $last_posts,
             "last_comments" => $last_comments,
             "contactForm" => $this->getContactForm($email_dest)
         ]);
     }
 
-    protected function getContactForm(string $admin_email)
+    protected function getContactForm(string $adminEmail)
     {
         $title = "Me contacter";
-        $userId = $_SESSION['id_user'] ?? false;
-        $user = $userId ? $this->userRepository->getUniqueById($userId) : null;
+        $user = $this->getUser();
 
         if (!empty($_POST)) {
-            $this->postProcess($_POST, $user, $admin_email);
+            $this->postProcess($_POST, $user, $adminEmail);
         }
 
         $inputs = [
@@ -70,9 +68,7 @@ class HomeController extends Controller
 
         return [
             "title" => $title,
-            "inputs" => $inputs,
-            "user_logged" => $userId > 0,
-            "messages" => $this->messages
+            "inputs" => $inputs
         ];
     }
 

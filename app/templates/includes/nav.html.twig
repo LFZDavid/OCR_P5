@@ -14,7 +14,7 @@
 			<li class="nav-item">
 				<a class="nav-link" href="index.php?post">Articles</a>
 			</li>
-			{% if session.id_user is not null %}
+			{% if app.user is not null %}
 			<li>
 				<a class="nav-link" href="index.php?user=form">
 					Mon profil
@@ -22,7 +22,7 @@
 			</li>
 			{% endif %}
 			<div class="logs-logo">
-				{% if session.id_user is null %}
+				{% if app.user is null %}
 				<a class="nav-item" href="index.php?user=login">
 					<i style="font-size:25px;" class="fas fa-sign-in-alt"></i>
 				</a>
