@@ -1,7 +1,9 @@
+
 /* GLOBAL */
 *{
     font-size: large;
 }
+
 
 #main{
 	min-height: 100vh;
@@ -17,8 +19,10 @@
 .footer{
     display:flex;
     flex-direction: column;
+
     margin: 40px 0px 0px 0px;
     padding-top:10px;
+
 }
 
 .social-logo-block{
@@ -37,10 +41,12 @@
     text-align: center;
 }
 
+
 .scrollUpBtn>a>.fas{
     font-size: 45px!important;
     margin-bottom: 25px;
 }
+
 
 .footer-bottom{
     margin-top:20px;
@@ -48,7 +54,9 @@
     justify-content: center;
 }
 
+
 /* BLOG */
+
 .title-block{
     background: url("https://picsum.photos/900/300") no-repeat;
     background-size: cover;
@@ -70,6 +78,7 @@
     display:flex;
     justify-content: center;
     margin-bottom: 20px;
+
 }
 
 .mini-post{
