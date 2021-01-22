@@ -127,7 +127,7 @@ try {
         /**DEBUG **************************/
         echo '<div style="background-color:black;color:green;">';
 
-        var_dump($_SERVER['REQUEST_URI']);
+        print_r($_SERVER['REQUEST_URI']);
         echo '<br>';
 
 
