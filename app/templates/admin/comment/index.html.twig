@@ -38,16 +38,18 @@
                         <em>{{comment.created_at|date('d-m-Y')}}</em>
                         {{comment.content}}
                     </td>
-                    <td width="120">
-                        <div class="row admin-comm-btns">
-                            <form action="index.php?admin-comment=toggle" method="POST">
-                                <input type="hidden" name="id_comment" value="{{comment.id}}">
-                                <div class="btn-group-toggle" data-toggle="buttons">
-                                    <input type="submit" class="btn btn-secondary 
-                                        {% if comment.active %} active" value="On" {% else %} " value=" Off" {% endif
-                                        %}>
-                                </div>
-                            </form>
+                    <td>{{comment.created_at|date('d-m-Y')}}</td>
+                    <td>
+                        <form action="index.php?admin-comment=toggle" method="POST">
+                            <input type="hidden" name="id_comment" value="{{comment.id}}">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <input type="submit" class="btn btn-secondary 
+                                {% if comment.active %} active" value="Oui" {% else %} " value=" Non" {% endif %}>
+                            </div>
+                        </form>
+                    </td>
+                    <td width="250">
+                        <div class="row">
                             <form action="index.php?admin-comment=delete&amp;id_comment={{comment.id}}" method="POST"
                                 onclick="return confirm('Êtes-vous sûre ?')">
                                 <input type="hidden" name="_method" value="DELETE">

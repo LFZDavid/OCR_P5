@@ -1,8 +1,9 @@
-<<<<<<< HEAD
+
 /* GLOBAL */
 *{
     font-size: large;
 }
+
 
 #main{
 	min-height: 100vh;
@@ -18,8 +19,10 @@
 .footer{
     display:flex;
     flex-direction: column;
+
     margin: 40px 0px 0px 0px;
     padding-top:10px;
+
 }
 
 .social-logo-block{
@@ -39,15 +42,16 @@
     text-align: center;
 }
 
+
 .footer-bottom{
     margin-top:20px;
     display:flex;
     justify-content: center;
 }
 
+
 /* BLOG */
-=======
->>>>>>> parent of 1f4b1c6... add font-awesom
+
 .title-block{
     background: url("https://picsum.photos/900/300") no-repeat;
     background-size: cover;
@@ -69,6 +73,7 @@
     display:flex;
     justify-content: center;
     margin-bottom: 20px;
+
 }
 
 .mini-post{
