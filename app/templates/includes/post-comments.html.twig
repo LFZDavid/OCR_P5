@@ -20,10 +20,10 @@
 			{% if app_user is null %}
 			<p>
 				Vous devez être connecté pour poster un commentaire.
-				<a href="index.php?user=login">Se connecter/S'inscrire</a>
+				<a href="/user/login">Se connecter/S'inscrire</a>
 			</p>
 			{% else %}
-			<form action="index.php?comment=add&amp;id_post={{post.id}}" method="post">
+			<form action="/comment/add/id_post/{{post.id}}" method="post">
 				<div class=" mb-3 form-group">
 					<textarea class="form-control" id="comment_content" name="comment_content" rows="3"
 						placeholder="Votre commentaire..." required></textarea>

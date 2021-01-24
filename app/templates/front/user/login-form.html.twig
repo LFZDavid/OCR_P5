@@ -9,7 +9,7 @@
 {% block body %}
 <div div class="container">
     <div class="login-form">
-        <form action="index.php?user=login" method="POST">
+        <form action="/user/login" method="POST">
             {% for key, input in inputs %}
             <div class="mb-3 form-group">
                 <label for="{{key}}" class="form-label">{{input.label}}</label>
@@ -19,13 +19,13 @@
             <input type="hidden" id="user-form-submit" value="true">
             <input type="submit" class="btn btn-success">
         </form>
-        <p>Pas encore inscrit ? <a href="index.php?user=form">Inscription</a></p>
+        <p>Pas encore inscrit ? <a href="/user/form">Inscription</a></p>
     </div>
     <div>
 
         <a id="lost-pwd-btn" href="">Mot de passe oublié ?</a>
         <div class="lost-pwd-form">
-            <form action="index.php?user=lost-pwd" method="POST">
+            <form action="/user/lost-pwd" method="POST">
                 <div class="input-group mb-3">
                     <input type="{{lost_pwd_form.type}}" class="form-control" name="{{lost_pwd_form.name}}"
                         id="{{lost_pwd_form.name}}" placeholder="Saisissez votre email">
@@ -34,7 +34,7 @@
             </form>
         </div>
     </div>
-    <a href="index.php">
+    <a href="/">
         <button class="btn btn-outline-info backToHomeBtn">Retour à l'acceuil</button>
     </a>
 

@@ -12,24 +12,23 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="index.php?post">Articles</a>
+				<a class="nav-link" href="/post/list">Tous les articles</a>
 			</li>
 
 			{% if app_user %}
 			<li>
-				<a class="nav-link" href="index.php?user=form">
+				<a class="nav-link" href="/user/form">
 					Mon profil
 				</a>
 			</li>
 			{% endif %}
 			<div class="logs-logo">
 				{% if app_user is null %}
-				<a class="nav-item" href="index.php?user=login">
+				<a class="nav-item" href="/user/login">
 					<i style="font-size:25px;" class="fas fa-sign-in-alt"></i>
 				</a>
 				{% else %}
-
-				<a class="nav-item" href="index.php?user=logout">
+				<a class="nav-item" href="/user/logout">
 					<i style="font-size:25px; color:red;" class="fas fa-power-off">
 					</i>
 				</a>

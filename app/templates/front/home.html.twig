@@ -16,7 +16,7 @@
 			<div class="card mini-post">
 				<img src="https://picsum.photos/150/150?random={{post.id}}" alt="{{post.title}}" class="card-img-top">
 				<div class="card-body">
-					<a href="index.php?post={{post.id}}">
+					<a href="/post/{{post.id}}">
 						<h3 class="mini-post-title">
 							{{post.title}}
 						</h3>
@@ -54,7 +54,7 @@
 			</em>
 		</div>
 		<div class="comment-content">
-			<a href="index.php?post={{comment.id_post}}" target="_blank">
+			<a href="/post/{{comment.id_post}}" target="_blank">
 				{{comment.post_title}}
 			</a>
 			<br>
