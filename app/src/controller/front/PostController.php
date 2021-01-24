@@ -26,7 +26,7 @@ class PostController extends Controller
         $post = $this->postRepository->getUniqueById($id_post);
 
         if (!$post || !$post->getActive()) {
-            header('location: index.php');
+            header('location: /');
         }
 
         echo $this->twig->render('/front/post/show.html.twig', [

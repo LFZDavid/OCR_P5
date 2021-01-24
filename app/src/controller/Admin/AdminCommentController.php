@@ -41,7 +41,7 @@ class AdminCommentController extends Controller
         $comment->setActive($toggle);
         $this->commentManager->save($comment);
         $this->fillMessage('success', 'Le comment est mis à jour !');
-        header('Location:index.php?admin-comment=list');
+        header('Location:/admin-comment/list');
     }
 
     public function delete(int $id_comment): void
@@ -53,6 +53,6 @@ class AdminCommentController extends Controller
                 $this->fillMessage('success', 'Impossible de supprimer le commentaire n° ' . $id_comment . ' !');
             }
         }
-        header('Location:index.php?admin-comment=list');
+        header('Location:/admin-comment/list');
     }
 }

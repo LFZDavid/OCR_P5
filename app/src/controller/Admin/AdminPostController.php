@@ -182,7 +182,7 @@ class AdminPostController extends Controller
             } else {
                 $this->fillMessage('error', "Erreur : un problème est survenu lors de l'enregistrement !");
             }
-            header('Location:index.php?admin-post=list');
+            header('Location:/admin-post/list');
         }
     }
 
@@ -196,6 +196,6 @@ class AdminPostController extends Controller
                 $this->fillMessage('error', 'Impossible de supprimer le post n° ' . $postID . ' !');
             }
         }
-        header('Location:index.php?admin-post=list');
+        header('Location:/admin-post/list');
     }
 }

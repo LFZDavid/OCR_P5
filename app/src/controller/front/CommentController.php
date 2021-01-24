@@ -43,6 +43,6 @@ class CommentController extends Controller
             }
         }
 
-        header('Location: index.php?post=' . $id_post);
+        header('Location: /post/' . $id_post);
     }
 }
