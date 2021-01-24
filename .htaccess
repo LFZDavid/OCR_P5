@@ -1,0 +1,7 @@
+RewriteEngine On
+
+RewriteRule /([a-z-]+)\/([0-9a-z-]+)$     app/public/index.php?$1=$2
+
+#RewriteRule /([a-z-]+)\/(.+)\/([a-z-]+)\/([0-9]+)$ app/public/index.php?$1=$2&$3=$4
+
+RewriteRule .* app/public/index.php
