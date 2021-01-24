@@ -280,8 +280,7 @@ class UserController extends Controller
             ];
             echo $this->twig->render('/front/user/reset-pwd-form.html.twig', [
                 "title" => "Réinitialisation du mot de passe",
-                "inputs" => $inputs,
-                "messages" => $this->messages
+                "inputs" => $inputs
             ]);
         }
     }
