@@ -1,11 +1,12 @@
 RewriteEngine On
 
 
+#RewriteRule /fontawesome-free-5.15.1-web/css/all.css$ /fontawesome-free-5.15.1-web/css/all.css 
+#RewriteRule /css/styles.css$ /css/styles.css 
+
 RewriteRule /([a-z-]+)\/([0-9a-z-]+)\/hash\/(.{60,})\/id_user\/([0-9]+)$     app/public/index.php?$1=$2&hash=$3&id_user=$4
 
 RewriteRule /([a-z-]+)\/([0-9a-z-]+)\/([a-z_]+)\/([0-9]+)$  app/public/index.php?$1=$2&$3=$4
 
 RewriteRule /([a-z-]+)\/([0-9a-z-]+)$     app/public/index.php?$1=$2
 
-
-RewriteRule /.* app/public/index.php
