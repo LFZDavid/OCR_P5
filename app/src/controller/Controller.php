@@ -36,7 +36,7 @@ abstract class Controller
             && $this->required_role != ""
             && $this->getUser()->getRole() != $this->required_role
         ) {
-            header('Location: index.php');
+            header('Location: /');
         }
     }
 

@@ -22,7 +22,7 @@
                 <td>
                     <strong>
                         {{comment.author_name}} : </strong>
-                    <a href="index.php?post={{comment.id_post}}" target="_blank">
+                    <a href="/post/{{comment.id_post}}" target="_blank">
                         {{comment.post_title}}
                     </a>
                     <br>
@@ -32,7 +32,7 @@
                 <td width="120">
                     <div class="row admin-comm-btns">
 
-                        <form action="index.php?admin-comment=toggle" method="POST">
+                        <form action="/admin-comment/toggle" method="POST">
                             <input type="hidden" name="id_comment" value="{{comment.id}}">
                             <div class="btn-group-toggle" data-toggle="buttons">
                                 <input type="submit" class="btn btn-secondary 
@@ -40,7 +40,7 @@
                                     %}>
                             </div>
                         </form>
-                        <form action="index.php?admin-comment=delete&amp;id_comment={{comment.id}}" method="POST"
+                        <form action="/admin-comment/delete/id_comment/{{comment.id}}" method="POST"
                             onclick="return confirm('Êtes-vous sûre ?')">
                             <input type="hidden" name="_method" value="DELETE">
                             <button class="btn btn-danger">
@@ -55,4 +55,3 @@
     </table>
 </div>
 {% endblock %}
-

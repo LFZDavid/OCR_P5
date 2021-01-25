@@ -63,8 +63,10 @@ try {
             if ($id_user = $_GET['id_user'] > 0) {
                 $userController->getResetPwdForm($_GET['id_user'], $_GET['hash']);
             } else {
-                header('Location:index.php?user=login');
+                header('Location:/user/login');
             }
+        } else {
+            header('Location: /');
         }
     } elseif (key_exists('comment', $_GET)) {
         $commentController = new CommentController($twig, $commentManager);

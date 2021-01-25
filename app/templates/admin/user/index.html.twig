@@ -1,9 +1,9 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-	{{parent()}}
-	-
-	{{title}}
+{{parent()}}
+-
+{{title}}
 {% endblock %}
 
 {% block body %}
@@ -26,7 +26,7 @@
 				</td>
 				<td width="300">
 					<div class="row roles-btns">
-						<form action="index.php?admin-user=role" method="POST">
+						<form action="/admin-user/role" method="POST">
 							<div class="btn-group-toggle" data-toggle="buttons">
 								<input type="submit" {% if user.role=="user" %} class="btn btn-secondary active"
 									value="user" {% else %} class="btn btn-secondary" value="user" {% endif %}
@@ -34,7 +34,7 @@
 							</div>
 							<input type="hidden" name="id_user" value="{{user.id}}">
 						</form>
-						<form action="index.php?admin-user=role" method="POST">
+						<form action="/admin-user/role" method="POST">
 							<div class="btn-group-toggle" data-toggle="buttons">
 								<input type="submit" {% if user.role=="editor" %} class="btn btn-secondary active"
 									value="editor" {% else %} class="btn btn-secondary" value="editor" {% endif %}
@@ -42,7 +42,7 @@
 							</div>
 							<input type="hidden" name="id_user" value="{{user.id}}">
 						</form>
-						<form action="index.php?admin-user=role" method="POST">
+						<form action="/admin-user/role" method="POST">
 							<div class="btn-group-toggle" data-toggle="buttons">
 								<input type="submit" {% if user.role=="admin" %} class="btn btn-secondary active"
 									value="admin" {% else %} class="btn btn-secondary" value="admin" {% endif %}
@@ -54,7 +54,7 @@
 				</td>
 				<td width="150">
 					<div class="row delete-user-btn">
-						<form action="index.php?admin-user=delete&amp;id_user={{user.id}}" method="POST"
+						<form action="/admin-user/delete/id_user/{{user.id}}" method="POST"
 							onclick="return confirm('Êtes-vous sûre ?')">
 							<input type="hidden" name="_method" value="DELETE">
 							<button class="btn btn-danger">
@@ -71,4 +71,3 @@
 	</table>
 </div>
 {% endblock %}
-

@@ -9,7 +9,7 @@
 {% block body %}
 <div class="container-fluid">
 	<div class="add-btn-block">
-		<a href="index.php?admin-post=form" class="btn btn-primary" style="margin-bottom:20px;"><i
+		<a href="/admin-post/form" class="btn btn-primary" style="margin-bottom:20px;"><i
 				class="fas fa-plus-circle"></i>
 		</a>
 	</div>
@@ -26,7 +26,7 @@
 			<tr>
 				<td>
 					{% if post.active %}
-					<a href="index.php?post={{post.id}}">
+					<a href="/post/{{post.id}}">
 						<h5 class="admin-list-post-title">{{post.title}}</h5>
 					</a>
 					{% else %}
@@ -48,9 +48,9 @@
 				</td>
 				<td>
 					<div class="row action-btns">
-						<a href="index.php?admin-post=form&amp;id_post={{post.id}}" class="btn btn-info"><i
+						<a href="/admin-post/form/id_post/{{post.id}}" class="btn btn-info"><i
 								class="fas fa-pen"></i></a>
-						<form action="index.php?admin-post=delete&amp;id_post={{post.id}}" method="POST"
+						<form action="/admin-post/delete/id_post/{{post.id}}" method="POST"
 							onclick="return confirm('Êtes-vous sûre ?')">
 							<input type="hidden" name="_method" value="DELETE">
 							<button class="btn btn-danger">

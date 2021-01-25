@@ -8,7 +8,7 @@
 
 {% block body %}
 <div class="container">
-    <form action="index.php?user=form" method="POST">
+    <form action="/user/form" method="POST">
         {% for key, input in inputs %}
         <div class="mb-3 form-group">
             <label for="{{key}}" class="form-label">{{input.label}}</label>
@@ -26,7 +26,7 @@
         <input type="submit" class="btn btn-success">
     </form>
     <br>
-    <a href="index.php">
+    <a href="/">
         <button class="btn btn-outline-info">Retour à l'acceuil</button>
     </a>
 </div>

@@ -34,7 +34,7 @@ class UserController extends Controller
         } else {
             $title = "Modification";
             $edit = true;
-            $change_pwd_link = 'index.php?user=reset-pwd&hash=' . $user->getPwd() . '&id_user=' . $user->getId();
+            $change_pwd_link = '/user/reset-pwd/hash/' . $user->getPwd() . '/id_user/' . $user->getId();
         }
 
         if (!empty($_POST)) {
@@ -158,14 +158,14 @@ class UserController extends Controller
 
             $_SESSION['app.user'] = $user;
 
-            header('Location: index.php');
+            header('Location: /');
         }
     }
 
     public function getLogInForm(): void
     {
         if ($this->getUser()) {
-            header('Location:index.php');
+            header('Location: /');
         }
 
         if (isset($_POST) && !empty($_POST)) {
@@ -217,14 +217,14 @@ class UserController extends Controller
         if ($success) {
             $this->fillMessage('success', 'Vous êtes connecté !');
             $_SESSION['app.user'] = $user;
-            header('Location: index.php');
+            header('Location: /');
         }
     }
 
     public function logOut(): void
     {
         session_destroy();
-        header('Location: index.php');
+        header('Location: /');
     }
 
     public function lostPwdProcess(): void
@@ -240,7 +240,7 @@ class UserController extends Controller
         } else {
             $this->fillMessage('error', 'C\'est pas un email ça ?!');
         }
-        header('Location: index.php?user=login');
+        header('Location: /user/login');
     }
 
     public function getResetPwdForm(int $id_user, string $hash): void
@@ -252,7 +252,7 @@ class UserController extends Controller
                 } else {
                     $this->fillMessage('error', 'Lien corrompu !');
                     $access = false;
-                    header('Location: index.php');
+                    header('Location: /');
                 }
             } else {
                 $this->fillMessage('error', 'Utilisateur introuvable !');
@@ -280,8 +280,7 @@ class UserController extends Controller
             ];
             echo $this->twig->render('/front/user/reset-pwd-form.html.twig', [
                 "title" => "Réinitialisation du mot de passe",
-                "inputs" => $inputs,
-                "messages" => $this->messages
+                "inputs" => $inputs
             ]);
         }
     }
@@ -310,7 +309,7 @@ class UserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
 
-            header('Location:index.php?user=form');
+            header('Location: /user/form');
         } else {
             header('Refresh:0');
         }
@@ -333,7 +332,7 @@ class UserController extends Controller
     {
         $to      = $user->getEmail();
         $subject = 'Réinitialisation de votre mot de passe';
-        $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $this->getCurrentUrl() . '?user=reset-pwd&hash=' . $user->getPwd() . '&id_user=' . $user->getId();
+        $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $_SERVER['SERVER_NAME'] . '/user/reset-pwd/hash/' . $user->getPwd() . '/id_user/' . $user->getId();
         $headers = 'From: no-reply@sitez-vous.com' . "\r\n" .
             'Reply-To: contact@sitez-vous.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();

@@ -8,7 +8,7 @@
 
 {% block body %}
 <div class="container">
-	<form action="index.php?admin-post=form&amp;id_post={{id_post}}" method="POST">
+	<form action="/admin-post/form/id_post/{{id_post}}" method="POST">
 		{% for input in inputs %}
 		<div class="mb-3 form-group">
 			{% if input.hidden == false %}
@@ -48,7 +48,7 @@
 		<input type="submit" class="btn btn-success">
 	</form>
 	<br>
-	<a href="index.php?admin-post=list">
+	<a href="/admin-post/list">
 		<button class="btn btn-secondary">Retour à la liste</button>
 	</a>
 </div>

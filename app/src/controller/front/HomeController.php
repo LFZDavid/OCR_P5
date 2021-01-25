@@ -74,6 +74,20 @@ class HomeController extends Controller
 
     protected function postProcess(array $postData, User $user = null, string $admin_email)
     {
+
+        foreach ($postData as $key => $value) {
+            if (trim($value) == '') {
+                $this->fillMessage('error', 'Le champ ' . $key . ' ne doit pas être vide');
+                $success = false;
+            } else {
+                $success = true;
+            }
+        }
+
+        if (!$success) {
+            return;
+        }
+
         $name = $user ? $user->getName() : $postData['name'];
         $email = $user ? $user->getEmail() : $postData['email'];
 
