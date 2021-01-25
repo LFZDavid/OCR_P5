@@ -14,22 +14,23 @@
 		<div class="comment-content">
 			<p>{{comment.content}}</p>
 		</div>
-		{% endif %}
-		{% endfor %}
-		<div class="comment-form-block">
-			{% if app_user is null %}
-			<p>
-				Vous devez être connecté pour poster un commentaire.
-				<a href="/user/login">Se connecter/S'inscrire</a>
-			</p>
-			{% else %}
-			<form action="/comment/add/id_post/{{post.id}}" method="post">
-				<div class=" mb-3 form-group">
-					<textarea class="form-control" id="comment_content" name="comment_content" rows="3"
-						placeholder="Votre commentaire..." required></textarea>
-				</div>
-				<input type="submit" class="btn btn-primary">
-			</form>
-			{% endif %}
-		</div>
 	</div>
+	{% endif %}
+	{% endfor %}
+	<div class="comment-form-block">
+		{% if app_user is null %}
+		<p>
+			Vous devez être connecté pour poster un commentaire.
+			<a href="/user/login">Se connecter/S'inscrire</a>
+		</p>
+		{% else %}
+		<form action="/comment/add/id_post/{{post.id}}" method="post">
+			<div class=" mb-3 form-group">
+				<textarea class="form-control" id="comment_content" name="comment_content" rows="3"
+					placeholder="Votre commentaire..." required></textarea>
+			</div>
+			<input type="submit" class="btn btn-primary">
+		</form>
+		{% endif %}
+	</div>
+</div>
