@@ -159,6 +159,8 @@ class UserController extends Controller
             $_SESSION['app.user'] = $user;
 
             header('Location: /');
+        } else {
+            header('Refresh:0');
         }
     }
 

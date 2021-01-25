@@ -44,7 +44,7 @@ class AdminUserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'l\'utilisateur n°' . $user->getId() . ' a été passé au niveau ' . $user->getRole() . ' !');
         }
-        header('Location:/admin-user/list');
+        header('Location: /admin-user/list');
     }
 
     public function delete(int $id_user): void
@@ -56,6 +56,6 @@ class AdminUserController extends Controller
                 $this->fillMessage('error', 'Impossible de supprimer le post n° ' . $id_user . ' !');
             }
         }
-        header('Location:/admin-user/list');
+        header('Location: /admin-user/list');
     }
 }
