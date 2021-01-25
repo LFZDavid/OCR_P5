@@ -311,7 +311,7 @@ class UserController extends Controller
             $this->userManager->save($user);
             $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
 
-            header('Location: /user/form');
+            header('Location: /user/login');
         } else {
             header('Refresh:0');
         }
