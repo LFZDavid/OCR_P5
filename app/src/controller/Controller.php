@@ -47,10 +47,9 @@ abstract class Controller
 
     protected function getCurrentUrl(): string
     {
+        $url = "http";
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            $url = "https";
-        } else {
-            $url = "http";
+            $url .= "s";
         }
         $url .= "://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
         return $url;

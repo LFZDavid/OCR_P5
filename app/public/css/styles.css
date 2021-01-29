@@ -1,213 +1,210 @@
 
 /* GLOBAL */
-*{
+* {
     font-size: large;
 }
 
 
 #main{
-	min-height: 100vh;
-	margin: 0 auto;
-	display: flex;
-	flex-direction: column;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 	
 }
 #content{
-	flex-grow: 1;
+  flex-grow: 1;
 }
 
 .footer{
-    display:flex;
-    flex-direction: column;
-
-    margin: 40px 0px 0px 0px;
-    padding-top:10px;
+  display:flex;
+  flex-direction: column;
+  margin: 40px 0px 0px 0px;
+  padding-top:10px;
 
 }
 
 .social-logo-block{
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    justify-content: space-around;
-    margin:0px auto;
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  justify-content: space-around;
+  margin:0px auto;
 }
 
 .social-logo{
-    height: 45px;
+  height: 45px;
 }
 
 .scrollUpBtn{
-    text-align: center;
+  text-align: center;
 }
 
-
 .scrollUpBtn>a>.fas{
-    font-size: 45px!important;
-    margin-bottom: 25px;
+  font-size: 45px!important;
+  margin-bottom: 25px;
 }
 
 
 .footer-bottom{
-    margin-top:20px;
-    display:flex;
-    justify-content: center;
+  margin-top:20px;
+  display:flex;
+  justify-content: center;
 }
 
-
 /* BLOG */
-
 .title-block{
-    background: url("https://picsum.photos/900/300") no-repeat;
-    background-size: cover;
-    padding:20% 0px;
+  background: url("https://picsum.photos/900/300") no-repeat;
+  background-size: cover;
+  padding:20% 0px;
 }
 
 .title-band{
-    position: relative;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
+  position: relative;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(5px);
 }
 
 .title{
-    color: white;
-    text-align: center;
+  color: white;
+  text-align: center;
 }
 
 .post-link-btn{
-    display:flex;
-    justify-content: center;
-    margin-bottom: 20px;
-
+  display:flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .mini-post{
-    margin-bottom: 30px !important;
-    border-radius: 6px;
+  margin-bottom: 30px !important;
+  border-radius: 6px;
 }
 
 .mini-post>img{
-    height: 200px;
+  height: 200px;
 }
 .mini-post-title,
 .mini-post-chapo{
-    text-align: center;
+  text-align: center;
 }
 
 .divider{
-    height: 2px;
-    width: 50%;
-    display:flex;
-    margin:15px auto;
+  height: 2px;
+  width: 50%;
+  display:flex;
+  margin:15px auto;
 }
 
 /* POST COMMENTS */
 .post-comments{
-    border: 1px solid black;
-    border-radius: 3px;
-    box-shadow: 3px 3px 5px black;
-    padding: 15px 15px; 
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px black;
+  padding: 15px 15px; 
 }
 
 .comment{
-    border: 1px solid black;
-    border-radius: 3px;
-    margin: 5px;
+  border: 1px solid black;
+  border-radius: 3px;
+  margin: 5px;
 }
 
 .comment-infos{
-    background:grey;
-    color:white;
-    display:flex;
-    flex-direction:row;
-    justify-content: space-between;
-    padding: 5px 0 0 5px;
-    
+  background:grey;
+  color:white;
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
+  padding: 5px 0 0 5px;
 }
+
 .comment-content{
-    padding: 5px 0 0 5px;
+  padding: 5px 0 0 5px;
 }
 
 .comment-form-block>p{
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
-    text-align: center;
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  text-align: center;
 }
 
 .comment-form-block>form>input{
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 /* ADMIN POST */
 .action-btns{
-    display:flex;
-    justify-content: space-evenly;
+  display:flex;
+  justify-content: space-evenly;
 }
 .add-btn-block{
-    display:flex;
-    justify-content: flex-end;
-    flex-direction: row;
+  display:flex;
+  justify-content: flex-end;
+  flex-direction: row;
 }
 .post-cat-btns{
-    display: flex!important;
-    flex-wrap: wrap!important;
+  display: flex!important;
+  flex-wrap: wrap!important;
 }
 
 /* ADMIN USER */
 .roles-btns{
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
 .roles-btns>form{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .delete-user-btn{
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
 }
 .admin-comm-btns{
-    display:flex;
-    flex-direction:row;
-    justify-content: space-evenly;
+  display:flex;
+  flex-direction:row;
+  justify-content: space-evenly;
 }
 
 /* ADMIN LINK */
 .admin-link{
-    font-size:24px;
+  font-size:24px;
 }
+
 .admin-link>div>a{
-    font-size: 24px;
+  font-size: 24px;
 }
 
 /* NAV */
 .nav-link{
-    font-size:large;
+  font-size:large;
 }
 
 /*LOG*/
 .logs-logo{
-    position: absolute;
-    right: 20px;
+  position: absolute;
+  right: 20px;
 }
 .logs-logo>a{
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 /* CONTACT FORM */
 .contact_form{
-    background: slategray;
-    margin-top:15px;
-    padding-top:15px;
-    padding-bottom:15px;
-    border-radius: 6px;
-    color:white;
+  background: slategray;
+  margin-top:15px;
+  padding-top:15px;
+  padding-bottom:15px;
+  border-radius: 6px;
+  color:white;
 }
  /* LOST PWD */
 .backToHomeBtn{
-    margin-top:20px;
+  margin-top:20px;
 }
