@@ -66,60 +66,11 @@ class AdminPostController extends Controller
             $checked_categories[$post_category->getName()] = true;
         }
 
-        $inputs = [
-            [
-                "label" => 'id_post',
-                "field" => 'id',
-                "type" => 'text',
-                "hidden" => true,
-                "value" => $post->getId() ?? 0,
-
-            ],
-            [
-                "label" => 'Titre',
-                "field" => 'title',
-                "type" => 'text',
-                "hidden" => false,
-                "value" => $post->getTitle() ?? "",
-                "required" => true
-            ],
-            [
-                "label" => 'Chapô',
-                "field" => 'chapo',
-                "type" => 'text',
-                "hidden" => false,
-                "value" => $post->getChapo() ?? "",
-                "required" => true
-            ],
-            [
-                "label" => 'Categories',
-                "field" => 'categories',
-                "type" => 'checkbox',
-                "hidden" => false,
-                "value" => $categories,
-                "checked_categories" => $checked_categories ?? []
-            ],
-            [
-                "label" => 'Contenu',
-                "field" => 'content',
-                "type" => 'textarea',
-                "hidden" => false,
-                "value" => $post->getContent() ?? "",
-                "required" => true
-            ],
-            [
-                "label" => 'Visible',
-                "field" => 'active',
-                "type" => 'switch',
-                "hidden" => false,
-                "value" => $post->getActive(),
-            ],
-        ];
-
         echo $this->twig->render('/admin/post/form.html.twig', [
             "title" => $title . " d'un post",
-            "inputs" => $inputs,
-            "id_post" => $post->getId() ?? 0
+            "post" => $post,
+            "categories" => $categories,
+            "checked_categories" => $checked_categories ?? []
         ]);
     }
 

@@ -100,14 +100,11 @@ class UserController extends Controller
 
     protected function logIn(array $post_data, bool $force = false): ?array
     {
-
         $validationReturns = $this->userValidator->validLoginForm($post_data, $force);
-
         if (isset($validationReturns['errors'])) {
             var_dump($validationReturns);
             return $validationReturns['errors'];
         }
-
         $this->fillMessage('success', 'Vous êtes connecté !');
         $_SESSION['app.user'] = $validationReturns['user'];
 
