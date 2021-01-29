@@ -65,7 +65,6 @@ class HomeController extends Controller
             ]
         ];
 
-
         return [
             "title" => $title,
             "inputs" => $inputs

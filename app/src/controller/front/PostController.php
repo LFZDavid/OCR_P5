@@ -21,17 +21,19 @@ class PostController extends Controller
         parent::__construct($twig);
     }
 
-    public function show(int $id_post): void
+    public function show(int $id): void
     {
-        $post = $this->postRepository->getUniqueById($id_post);
+        $post = $this->postRepository->getUniqueById($id);
 
         if (!$post || !$post->getActive()) {
-            header('location: /');
+            header('location: /'); // Remplacer par redirect to 404
         }
+
+        $comments = $this->commentRepository->getListByPost($post->getId(), true);
 
         echo $this->twig->render('/front/post/show.html.twig', [
             "post" => $post,
-            'comments' => $this->commentRepository->getListByPost($post->getId(), true),
+            'comments' => $comments,
             "title" => $post->getTitle()
         ]);
     }

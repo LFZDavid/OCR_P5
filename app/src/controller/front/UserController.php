@@ -38,7 +38,7 @@ class UserController extends Controller
         }
 
         if (!empty($_POST)) {
-            $this->postProcess($edit, $_POST, $user);
+            $this->postProcess($edit, $_POST, $user); //return erros array
         }
 
         if (!$edit) {
@@ -90,11 +90,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function postProcess(bool $edit, array $data, User $user = null): void
+    private function postProcess(bool $edit, array $data, User $user = null): void
     {
         $user_data = [];
         $success = true;
-        // Validation
         foreach ($data as $key => $value) {
             if ($key == 'name') {
                 if (strlen($value) > 4) {
@@ -146,6 +145,10 @@ class UserController extends Controller
             }
         }
 
+
+        // todo : If erros array !empty ? Return array $erros
+
+
         if ($success && !empty($user_data)) {
             $user->setName($user_data['name'])->setEmail($user_data['email']);
 
@@ -160,7 +163,7 @@ class UserController extends Controller
 
             header('Location: /');
         } else {
-            header('Refresh:0');
+            header('Refresh:0'); // todo : Ne pas rediriger et return erros array
         }
     }
 

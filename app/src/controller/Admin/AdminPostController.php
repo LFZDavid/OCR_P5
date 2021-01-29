@@ -127,41 +127,27 @@ class AdminPostController extends Controller
     {
         if ($data != []) {
 
-            /**Check post values */
             $categories = key_exists('categories', $data) ? $data['categories'] : [];
 
-            /**active */
-            if (isset($data['active'])) {
-                $active = 1;
-            } else {
-                $active = 0;
-            }
+            $active = isset($data['active']) ? 1 : 0;
 
-            if ($data['id'] > 0) {
-                /** Edit */
-                $post = $this->postRepository->getUniqueById($data['id']);
-            } else {
-                /** Create */
-                $post = new Post();
-            }
+            $post = $data['id'] > 0 ? $this->postRepository->getUniqueById($data['id']) : new Post();
 
             $author = $this->getUser();
             if (!$author) {
                 $this->fillMessage('error', 'Un problème est survenue : L\'auteur n\'est pas identifié');
             }
-            /** Set post values for saving */
+
             $post->setTitle($data['title'])
                 ->setChapo($data['chapo'])
                 ->setContent($data['content'])
                 ->setActive($active)
                 ->setAuthor($author);
-            /** Get id_post from database (auto-incremented) */
             $persisted_id = $this->postManager->save($post);
 
             $old_post_categories = $this->categoryRepository->getListByPost($persisted_id);
             $new_post_categories = $categories;
 
-            /** Compare old linked  categories */
             foreach ($old_post_categories as $old_post_category) {
                 if (isset($new_post_categories[$old_post_category->getName()])) {
                     # Category's already linked
@@ -175,7 +161,6 @@ class AdminPostController extends Controller
                 # Category has to be linked
                 $this->postManager->linkCategory($persisted_id, $new_post_category_id);
             }
-            /**--- */
 
             if ($persisted_id > 0) {
                 $this->fillMessage('success', "Post n° $persisted_id sauvegardé !");
