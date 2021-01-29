@@ -5,18 +5,18 @@
 }
 
 
-#main{
+#main {
   min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
 	
 }
-#content{
+#content {
   flex-grow: 1;
 }
 
-.footer{
+.footer {
   display:flex;
   flex-direction: column;
   margin: 40px 0px 0px 0px;
@@ -24,72 +24,72 @@
 
 }
 
-.social-logo-block{
+.social-logo-block {
   display: flex;
   flex-direction: row;
   width: 50%;
   justify-content: space-around;
-  margin:0px auto;
+  margin: 0px auto;
 }
 
-.social-logo{
+.social-logo {
   height: 45px;
 }
 
-.scrollUpBtn{
+.scrollUpBtn {
   text-align: center;
 }
 
-.scrollUpBtn>a>.fas{
+.scrollUpBtn >a >.fas {
   font-size: 45px!important;
   margin-bottom: 25px;
 }
 
 
-.footer-bottom{
+.footer-bottom {
   margin-top:20px;
   display:flex;
   justify-content: center;
 }
 
 /* BLOG */
-.title-block{
+.title-block {
   background: url("https://picsum.photos/900/300") no-repeat;
   background-size: cover;
   padding:20% 0px;
 }
 
-.title-band{
+.title-band {
   position: relative;
   background: rgba(0,0,0,0.5);
   backdrop-filter: blur(5px);
 }
 
-.title{
+.title {
   color: white;
   text-align: center;
 }
 
-.post-link-btn{
+.post-link-btn {
   display:flex;
   justify-content: center;
   margin-bottom: 20px;
 }
 
-.mini-post{
+.mini-post {
   margin-bottom: 30px !important;
   border-radius: 6px;
 }
 
-.mini-post>img{
+.mini-post >img {
   height: 200px;
 }
 .mini-post-title,
-.mini-post-chapo{
+.mini-post-chapo {
   text-align: center;
 }
 
-.divider{
+.divider {
   height: 2px;
   width: 50%;
   display:flex;
@@ -97,20 +97,20 @@
 }
 
 /* POST COMMENTS */
-.post-comments{
+.post-comments {
   border: 1px solid black;
   border-radius: 3px;
   box-shadow: 3px 3px 5px black;
   padding: 15px 15px; 
 }
 
-.comment{
+.comment {
   border: 1px solid black;
   border-radius: 3px;
   margin: 5px;
 }
 
-.comment-infos{
+.comment-infos {
   background:grey;
   color:white;
   display:flex;
@@ -119,84 +119,84 @@
   padding: 5px 0 0 5px;
 }
 
-.comment-content{
+.comment-content {
   padding: 5px 0 0 5px;
 }
 
-.comment-form-block>p{
+.comment-form-block >p {
   display:flex;
   flex-direction:column;
   justify-content: center;
   text-align: center;
 }
 
-.comment-form-block>form>input{
+.comment-form-block >form >input {
   margin: 0 auto;
 }
 
 /* ADMIN POST */
-.action-btns{
+.action-btns {
   display:flex;
   justify-content: space-evenly;
 }
-.add-btn-block{
+.add-btn-block {
   display:flex;
   justify-content: flex-end;
   flex-direction: row;
 }
-.post-cat-btns{
+.post-cat-btns {
   display: flex!important;
   flex-wrap: wrap!important;
 }
 
 /* ADMIN USER */
-.roles-btns{
+.roles-btns {
   display:flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.roles-btns>form{
+.roles-btns >form {
   display:flex;
   flex-direction: row;
   justify-content: center;
 }
-.delete-user-btn{
+.delete-user-btn {
   display:flex;
   flex-direction: row;
   justify-content: center;
 }
-.admin-comm-btns{
+.admin-comm-btns {
   display:flex;
   flex-direction:row;
   justify-content: space-evenly;
 }
 
 /* ADMIN LINK */
-.admin-link{
+.admin-link {
   font-size:24px;
 }
 
-.admin-link>div>a{
+.admin-link >div >a {
   font-size: 24px;
 }
 
 /* NAV */
-.nav-link{
+.nav-link {
   font-size:large;
 }
 
 /*LOG*/
-.logs-logo{
+.logs-logo {
   position: absolute;
   right: 20px;
 }
-.logs-logo>a{
+.logs-logo >a {
   margin-right: 20px;
 }
 
 /* CONTACT FORM */
-.contact_form{
+.contact_form {
   background: slategray;
   margin-top:15px;
   padding-top:15px;
@@ -205,6 +205,6 @@
   color:white;
 }
  /* LOST PWD */
-.backToHomeBtn{
+.backToHomeBtn {
   margin-top:20px;
 }
