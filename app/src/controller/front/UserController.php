@@ -42,52 +42,11 @@ class UserController extends Controller
             $this->postProcess($edit, $data, $user); //return erros array
         }
 
-        if (!$edit) {
-
-            $inputs = [
-
-                'name' => [
-                    'label' => 'Pseudo',
-                    'type' => 'text',
-                    'value' => $edit ? $user->getName() : ""
-                ],
-                'email' => [
-                    'label' => 'Email',
-                    'type' => 'email',
-                    'value' => $edit ? $user->getEmail() : ""
-                ],
-                'pwd' => [
-                    'label' => 'Mot de passe',
-                    'type' => 'password',
-                    'value' => ""
-                ],
-                'confirm' => [
-                    'label' => 'Confirmation',
-                    'type' => 'password',
-                    'value' => ""
-                ]
-            ];
-        } else {
-            $inputs = [
-                'name' => [
-                    'label' => 'Pseudo',
-                    'type' => 'text',
-                    'value' => $edit ? $user->getName() : ""
-                ],
-                'email' => [
-                    'label' => 'Email',
-                    'type' => 'email',
-                    'value' => $edit ? $user->getEmail() : ""
-                ]
-            ];
-        }
-
         echo $this->twig->render('/front/user/form.html.twig', [
             "title" => $title,
-            "inputs" => $inputs,
             "edit" => $edit,
-            "id_user" => $user->getId(),
-            "change_pwd_link" => $edit ? $change_pwd_link : "#"
+            "user" => $user,
+            "change_pwd_link" => $change_pwd_link ?? "#"
         ]);
     }
 

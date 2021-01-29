@@ -9,14 +9,24 @@
 {% block body %}
 <div class="container">
     <form action="/user/form" method="POST">
-        {% for key, input in inputs %}
         <div class="mb-3 form-group">
-            <label for="{{key}}" class="form-label">{{input.label}}</label>
-            <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
+            <label for="name" class="form-label">Pseudo</label>
+            <input type="text" class="form-control" name="name" id="name" value="{{user.getName}}">
         </div>
-        {% endfor %}
-
-        {% if edit %}
+        <div class="mb-3 form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="email" value="{{user.getEmail}}">
+        </div>
+        {% if edit == false %}
+        <div class="mb-3 form-group">
+            <label for="pwd" class="form-label">Mot de passe</label>
+            <input type="password" class="form-control" name="pwd" id="pwd">
+        </div>
+        <div class="mb-3 form-group">
+            <label for="confirm" class="form-label">Confirmation</label>
+            <input type="password" class="form-control" name="confirm" id="confirm">
+        </div>
+        {% else %}
         <div class="form-group">
             <a href="{{change_pwd_link}}">Changer de mot de passe ?</a>
         </div>
@@ -30,5 +40,4 @@
         <button class="btn btn-outline-info">Retour à l'acceuil</button>
     </a>
 </div>
-
 {% endblock %}
