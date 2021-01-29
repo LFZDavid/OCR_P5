@@ -27,7 +27,6 @@ class UserController extends Controller
 
     public function getForm(): void
     {
-
         $user = $this->getUser();
 
         if (!$user) {
