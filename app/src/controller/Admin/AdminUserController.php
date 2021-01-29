@@ -37,9 +37,9 @@ class AdminUserController extends Controller
 
     public function changeRole(): void
     {
-        if (isset($_POST['id_user']) && isset($_POST['role'])) {
+        if (isset($_POST['userId']) && isset($_POST['role'])) {
 
-            $user = $this->userRepository->getUniqueById((int) $_POST['id_user']);
+            $user = $this->userRepository->getUniqueById((int) $_POST['userId']);
             $user->setRole($_POST['role']);
             $this->userManager->save($user);
             $this->fillMessage('success', 'l\'utilisateur n°' . $user->getId() . ' a été passé au niveau ' . $user->getRole() . ' !');
@@ -47,13 +47,13 @@ class AdminUserController extends Controller
         header('Location: /admin-user/list');
     }
 
-    public function delete(int $id_user): void
+    public function delete(int $userId): void
     {
-        if ($this->userRepository->getUniqueById($id_user)) {
-            if ($this->userManager->delete($id_user)) {
-                $this->fillMessage('success', 'Le post n° ' . $id_user . ' a été supprimé');
+        if ($this->userRepository->getUniqueById($userId)) {
+            if ($this->userManager->delete($userId)) {
+                $this->fillMessage('success', 'Le post n° ' . $userId . ' a été supprimé');
             } else {
-                $this->fillMessage('error', 'Impossible de supprimer le post n° ' . $id_user . ' !');
+                $this->fillMessage('error', 'Impossible de supprimer le post n° ' . $userId . ' !');
             }
         }
         header('Location: /admin-user/list');

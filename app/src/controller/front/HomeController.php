@@ -22,13 +22,13 @@ class HomeController extends Controller
 
     public function homePage(string $email_dest, PostRepository $postRepository, CommentRepository $commentRepository)
     {
-        $last_posts = $postRepository->getList(3);
-        $last_comments = $commentRepository->getCompleteList(true, 3);
+        $lastPosts = $postRepository->getList(3);
+        $lastComments = $commentRepository->getCompleteList(true, 3);
 
         echo $this->twig->render('front/home.html.twig', [
             "title" => "Accueil",
-            "last_posts" => $last_posts,
-            "last_comments" => $last_comments,
+            "last_posts" => $lastPosts,
+            "last_comments" => $lastComments,
             "contactForm" => $this->getContactForm($email_dest)
         ]);
     }
@@ -71,7 +71,7 @@ class HomeController extends Controller
         ];
     }
 
-    protected function postProcess(array $postData, User $user = null, string $admin_email)
+    protected function postProcess(array $postData, User $user = null, string $adminEmail)
     {
 
         foreach ($postData as $key => $value) {
@@ -93,6 +93,6 @@ class HomeController extends Controller
         $headers = 'From:' . $email . "\r\n" .
             'Reply-To: ' . $email . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
-        mail($admin_email, 'Un message de la part de ' . $name, $postData['content'], $headers);
+        mail($adminEmail, 'Un message de la part de ' . $name, $postData['content'], $headers);
     }
 }

@@ -8,7 +8,7 @@ use App\Model\Entity\User;
 abstract class Controller
 {
     protected Environment $twig;
-    protected string $required_role = "";
+    protected string $requiredRole = "";
 
     public function __construct(Environment $twig)
     {
@@ -33,8 +33,8 @@ abstract class Controller
     {
         if (
             $this->getUser() == null
-            && $this->required_role != ""
-            && $this->getUser()->getRole() != $this->required_role
+            && $this->requiredRole != ""
+            && $this->getUser()->getRole() != $this->requiredRole
         ) {
             header('Location: /');
         }

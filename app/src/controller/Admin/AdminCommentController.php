@@ -34,7 +34,7 @@ class AdminCommentController extends Controller
 
     public function toggle(): void
     {
-        $comment = $this->commentRepository->getUniqueById($_POST['id_comment']);
+        $comment = $this->commentRepository->getUniqueById($_POST['commentId']);
 
         $toggle = $comment->getActive() ? false : true;
 
@@ -44,13 +44,13 @@ class AdminCommentController extends Controller
         header('Location:/admin-comment/list');
     }
 
-    public function delete(int $id_comment): void
+    public function delete(int $commentId): void
     {
-        if ($this->commentRepository->getUniqueById($id_comment)) {
-            if ($this->commentManager->delete($id_comment)) {
-                $this->fillMessage('success', 'Le commentaire n° ' . $id_comment . ' a été supprimé');
+        if ($this->commentRepository->getUniqueById($commentId)) {
+            if ($this->commentManager->delete($commentId)) {
+                $this->fillMessage('success', 'Le commentaire n° ' . $commentId . ' a été supprimé');
             } else {
-                $this->fillMessage('success', 'Impossible de supprimer le commentaire n° ' . $id_comment . ' !');
+                $this->fillMessage('success', 'Impossible de supprimer le commentaire n° ' . $commentId . ' !');
             }
         }
         header('Location:/admin-comment/list');

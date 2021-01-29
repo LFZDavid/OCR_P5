@@ -26,7 +26,7 @@ class PostController extends Controller
         $post = $this->postRepository->getUniqueById($id);
 
         if (!$post || !$post->getActive()) {
-            header('location: /'); // Remplacer par redirect to 404
+            header('location: /'); // todo : Remplacer par redirect to 404
         }
 
         $comments = $this->commentRepository->getListByPost($post->getId(), true);

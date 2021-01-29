@@ -24,9 +24,9 @@
 			<a href="/user/login">Se connecter/S'inscrire</a>
 		</p>
 		{% else %}
-		<form action="/comment/add/id_post/{{post.id}}" method="post">
+		<form action="/comment/add/postId/{{post.id}}" method="post">
 			<div class=" mb-3 form-group">
-				<textarea class="form-control" id="comment_content" name="comment_content" rows="3"
+				<textarea class="form-control" id="commentContent" name="commentContent" rows="3"
 					placeholder="Votre commentaire..." required></textarea>
 			</div>
 			<input type="submit" class="btn btn-primary">

@@ -36,7 +36,7 @@ class UserController extends Controller
         } else {
             $title = "Modification";
             $edit = true;
-            $change_pwd_link = '/user/reset-pwd/hash/' . $user->getPwd() . '/id_user/' . $user->getId();
+            $changePwdLink = '/user/reset-pwd/hash/' . $user->getPwd() . '/id_user/' . $user->getId();
         }
 
         if (!empty($_POST)) {
@@ -49,7 +49,7 @@ class UserController extends Controller
             "edit" => $edit,
             "user" => $user,
             "errors" => $errors ?? [],
-            "change_pwd_link" => $change_pwd_link ?? "#"
+            "change_pwd_link" => $changePwdLink ?? "#"
         ]);
     }
 
@@ -83,7 +83,7 @@ class UserController extends Controller
             $errors = $this->logIn($data);
         }
 
-        $lost_pwd_form = [
+        $lostPwdForm = [
             'name' => 'email_user',
             'label' => 'Email',
             'type' => 'email',
@@ -93,13 +93,13 @@ class UserController extends Controller
         echo $this->twig->render('/front/user/login-form.html.twig', [
             "title" => "Connexion",
             "errors" => $errors ?? [],
-            "lost_pwd_form" => $lost_pwd_form
+            "lost_pwd_form" => $lostPwdForm
         ]);
     }
 
-    protected function logIn(array $post_data, bool $force = false): ?array
+    protected function logIn(array $postData, bool $force = false): ?array
     {
-        $validationReturns = $this->userValidator->validLoginForm($post_data, $force);
+        $validationReturns = $this->userValidator->validLoginForm($postData, $force);
         if (isset($validationReturns['errors'])) {
             var_dump($validationReturns);
             return $validationReturns['errors'];
@@ -118,9 +118,9 @@ class UserController extends Controller
 
     public function lostPwdProcess(): void
     {
-        if (isset($_POST['email_user'])) {
-            $email_user = $_POST['email_user'];
-            if ($user = $this->userRepository->getUniqueByEmail($email_user)) {
+        if (isset($_POST['userEmail'])) {
+            $userEmail = $_POST['userEmail'];
+            if ($user = $this->userRepository->getUniqueByEmail($userEmail)) {
                 $this->sendResetPwdEmail($user);
                 $this->fillMessage('success', 'Un email vient de vous être envoyé !');
             } else {
@@ -132,10 +132,10 @@ class UserController extends Controller
         header('Location: /user/login');
     }
 
-    public function getResetPwdForm(int $id_user, string $hash): void
+    public function getResetPwdForm(int $userId, string $hash): void
     {
-        if ($id_user > 0 && $hash != "") {
-            if ($user = $this->userRepository->getUniqueById($id_user)) {
+        if ($userId > 0 && $hash != "") {
+            if ($user = $this->userRepository->getUniqueById($userId)) {
                 if ($user->getPwd() == $hash) {
                     $access = true;
                 } else {
@@ -174,17 +174,17 @@ class UserController extends Controller
         }
     }
 
-    protected function resetPwdpostProcess(User $user, array $post_data): void
+    protected function resetPwdpostProcess(User $user, array $postData): void
     {
         $success = true;
-        if (!empty($post_data['pwd'])) {
-            if (strlen($post_data['pwd']) >= 5) {
-                $new_pwd = password_hash($post_data['pwd'], PASSWORD_DEFAULT);
+        if (!empty($postData['pwd'])) {
+            if (strlen($postData['pwd']) >= 5) {
+                $new_pwd = password_hash($postData['pwd'], PASSWORD_DEFAULT);
             } else {
                 $this->fillMessage('error', 'Mot de passe trop court : 5 caractère minimum');
                 $success = false;
             }
-            if ($post_data['confirm'] !== $post_data['pwd']) {
+            if ($postData['confirm'] !== $postData['pwd']) {
                 $this->fillMessage('error', 'La confirmation et le mot de passe ne correspondent pas !');
                 $success = false;
             }
@@ -213,7 +213,7 @@ class UserController extends Controller
     {
         $to      = $user->getEmail();
         $subject = 'Réinitialisation de votre mot de passe';
-        $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $_SERVER['SERVER_NAME'] . '/user/reset-pwd/hash/' . $user->getPwd() . '/id_user/' . $user->getId();
+        $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $_SERVER['SERVER_NAME'] . '/user/reset-pwd/hash/' . $user->getPwd() . '/userId/' . $user->getId();
         $headers = 'From: no-reply@sitez-vous.com' . "\r\n" .
             'Reply-To: contact@sitez-vous.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();

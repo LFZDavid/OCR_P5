@@ -62,15 +62,15 @@ class AdminPostController extends Controller
         }
 
         $categories = $this->categoryRepository->getList();
-        foreach ($post->getCategories() as $post_category) {
-            $checked_categories[$post_category->getName()] = true;
+        foreach ($post->getCategories() as $postCategory) {
+            $checkedCategories[$postCategory->getName()] = true;
         }
 
         echo $this->twig->render('/admin/post/form.html.twig', [
             "title" => $title,
             "post" => $post,
             "categories" => $categories,
-            "checked_categories" => $checked_categories ?? []
+            "checked_categories" => $checkedCategories ?? []
         ]);
     }
 
@@ -88,26 +88,26 @@ class AdminPostController extends Controller
             ->setContent($data['content'])
             ->setActive($active)
             ->setAuthor($author);
-        $persisted_id = $this->postManager->save($post);
+        $persistedId = $this->postManager->save($post);
 
-        $old_post_categories = $this->categoryRepository->getListByPost($persisted_id);
-        $new_post_categories = $categories;
+        $oldPostCategories = $this->categoryRepository->getListByPost($persistedId);
+        $newPostCategories = $categories;
 
-        foreach ($old_post_categories as $old_post_category) {
-            if (isset($new_post_categories[$old_post_category->getName()])) {
+        foreach ($oldPostCategories as $oldPostCategory) {
+            if (isset($newPostCategories[$oldPostCategory->getName()])) {
                 # Category's already linked
-                unset($new_post_categories[$old_post_category->getName()]);
+                unset($newPostCategories[$oldPostCategory->getName()]);
             } else {
                 # Category isn't linked anymore
-                $this->postManager->unlinkCategory($persisted_id, $old_post_category->getId());
+                $this->postManager->unlinkCategory($persistedId, $oldPostCategory->getId());
             }
         }
-        foreach ($new_post_categories as $new_post_category_id) {
+        foreach ($newPostCategories as $categoryId) {
             # Category has to be linked
-            $this->postManager->linkCategory($persisted_id, $new_post_category_id);
+            $this->postManager->linkCategory($persistedId, $categoryId);
         }
 
-        $this->fillMessage('success', "Post n° $persisted_id sauvegardé !");
+        $this->fillMessage('success', "Post n° $persistedId sauvegardé !");
         header('Location:/admin-post/list');
     }
 

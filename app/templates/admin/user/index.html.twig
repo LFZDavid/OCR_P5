@@ -32,7 +32,7 @@
 									value="user" {% else %} class="btn btn-secondary" value="user" {% endif %}
 									name="role">
 							</div>
-							<input type="hidden" name="id_user" value="{{user.id}}">
+							<input type="hidden" name="userId" value="{{user.id}}">
 						</form>
 						<form action="/admin-user/role" method="POST">
 							<div class="btn-group-toggle" data-toggle="buttons">
@@ -40,7 +40,7 @@
 									value="editor" {% else %} class="btn btn-secondary" value="editor" {% endif %}
 									name="role">
 							</div>
-							<input type="hidden" name="id_user" value="{{user.id}}">
+							<input type="hidden" name="userId" value="{{user.id}}">
 						</form>
 						<form action="/admin-user/role" method="POST">
 							<div class="btn-group-toggle" data-toggle="buttons">
@@ -48,13 +48,13 @@
 									value="admin" {% else %} class="btn btn-secondary" value="admin" {% endif %}
 									name="role">
 							</div>
-							<input type="hidden" name="id_user" value="{{user.id}}">
+							<input type="hidden" name="userId" value="{{user.id}}">
 						</form>
 					</div>
 				</td>
 				<td width="150">
 					<div class="row delete-user-btn">
-						<form action="/admin-user/delete/id_user/{{user.id}}" method="POST"
+						<form action="/admin-user/delete/userId/{{user.id}}" method="POST"
 							onclick="return confirm('Êtes-vous sûre ?')">
 							<input type="hidden" name="_method" value="DELETE">
 							<button class="btn btn-danger">
