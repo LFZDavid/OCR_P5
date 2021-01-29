@@ -79,22 +79,10 @@ class UserController extends Controller
             header('Location: /');
         }
 
-        if (isset($_POST) && !empty($_POST)) {
-            $this->logIn($_POST);
+        if (!empty($_POST)) {
+            $data = $_POST;
+            $errors = $this->logIn($data);
         }
-
-        $inputs = [
-            'name' => [
-                'label' => 'Pseudo',
-                'type' => 'text',
-                'value' => ""
-            ],
-            'pwd' => [
-                'label' => 'Mot de passe',
-                'type' => 'password',
-                'value' => ""
-            ]
-        ];
 
         $lost_pwd_form = [
             'name' => 'email_user',
@@ -103,33 +91,27 @@ class UserController extends Controller
             'value' => ""
         ];
 
-
         echo $this->twig->render('/front/user/login-form.html.twig', [
             "title" => "Connexion",
-            "inputs" => $inputs,
+            "errors" => $errors ?? [],
             "lost_pwd_form" => $lost_pwd_form
         ]);
     }
 
-    protected function logIn(array $post_data, bool $force = false): void
+    protected function logIn(array $post_data, bool $force = false): ?array
     {
-        $success = !empty($post_data) ? true : false;
 
-        if ($user = $this->userRepository->getUniqueByName($post_data['name'])) {
-            if (!password_verify($post_data['pwd'], $user->getPwd()) && !$force) {
-                $this->fillMessage('error', 'Pseudo ou mot de passe incorrect !');
-                $success = false;
-            }
-        } else {
-            $this->fillMessage('error', 'Pseudo ou mot de passe incorrect !');
-            $success = false;
+        $validationReturns = $this->userValidator->validLoginForm($post_data, $force);
+
+        if (isset($validationReturns['errors'])) {
+            var_dump($validationReturns);
+            return $validationReturns['errors'];
         }
 
-        if ($success) {
-            $this->fillMessage('success', 'Vous êtes connecté !');
-            $_SESSION['app.user'] = $user;
-            header('Location: /');
-        }
+        $this->fillMessage('success', 'Vous êtes connecté !');
+        $_SESSION['app.user'] = $validationReturns['user'];
+
+        header('Location: /');
     }
 
     public function logOut(): void

@@ -10,19 +10,31 @@
 <div div class="container">
     <div class="login-form">
         <form action="/user/login" method="POST">
-            {% for key, input in inputs %}
             <div class="mb-3 form-group">
-                <label for="{{key}}" class="form-label">{{input.label}}</label>
-                <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
+                <label for="name" class="form-label">Pseudo</label>
+                <input type="text" class="form-control {{errors.name ? 'is-invalid':''}}" name="name" id="name"
+                    value="{{user.getName}}">
+                {% if errors.name %}
+                <div class="invalid-feedback">
+                    {{errors.name|raw}}
+                </div>
+                {% endif %}
             </div>
-            {% endfor %}
+            <div class="mb-3 form-group">
+                <label for="pwd" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control {{errors.pwd ? 'is-invalid':''}}" name="pwd" id="pwd">
+                {% if errors.pwd %}
+                <div class="invalid-feedback">
+                    {{errors.pwd|raw}}
+                </div>
+                {% endif %}
+            </div>
             <input type="hidden" id="user-form-submit" value="true">
             <input type="submit" class="btn btn-success">
         </form>
         <p>Pas encore inscrit ? <a href="/user/form">Inscription</a></p>
     </div>
     <div>
-
         <a id="lost-pwd-btn" href="">Mot de passe oublié ?</a>
         <div class="lost-pwd-form">
             <form action="/user/lost-pwd" method="POST">

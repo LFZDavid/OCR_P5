@@ -37,6 +37,26 @@ class UserValidator extends Validator
         return $this->errorMessages;
     }
 
+    public function validLoginForm(array $formData, bool $force): array
+    {
+        $message = 'Pseudo ou mot de passe incorrect !';
+        $user = $this->userRepository->getUniqueByName($formData['name']);
+        if (!$user) {
+            $this->fillMessage('name', $message);
+            $this->fillMessage('pwd', $message);
+            $return['errors'] = $this->errorMessages;
+            return $return;
+        }
+        if (!password_verify($formData['pwd'], $user->getPwd()) && !$force) {
+            $this->fillMessage('name', $message);
+            $this->fillMessage('pwd', $message);
+            $return['errors'] = $this->errorMessages;
+            return $return;
+        }
+        $return['user'] = $user;
+        return $return;
+    }
+
     private function validName(string $value): void
     {
         $messages = '';
