@@ -17,6 +17,7 @@ use App\Model\Manager\PostManager;
 use App\Model\Manager\UserManager;
 use App\Model\Manager\CommentManager;
 use App\Model\Repository\CategoryRepository;
+use App\Model\Validator\UserValidator;
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates/');
 $twig = new \Twig\Environment($loader, [
@@ -45,7 +46,8 @@ try {
             $postController->show($id_post);
         }
     } elseif (key_exists('user', $_GET)) {
-        $userController = new UserController($twig, $userRepository, $userManager);
+        $userValidator = new UserValidator($userRepository);
+        $userController = new UserController($twig, $userRepository, $userManager, $userValidator);
         $request = $_GET['user'];
         if ($request == 'form') {
             $userController->getForm();

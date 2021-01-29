@@ -54,4 +54,10 @@ abstract class Controller
         $url .= "://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
         return $url;
     }
+
+    protected function cleanValue(string $value): string
+    {
+        $result = htmlspecialchars(trim($value));
+        return $result;
+    }
 }

@@ -7,17 +7,20 @@ use App\Model\Entity\User;
 use Twig\Environment;
 use App\Model\Repository\UserRepository;
 use App\Model\Manager\UserManager;
+use App\Model\Validator\UserValidator;
 
 class UserController extends Controller
 {
 
     private UserRepository $userRepository;
     private UserManager $userManager;
+    private UserValidator $userValidator;
 
-    public function __construct(Environment $twig, UserRepository $userRepository, UserManager $userManager)
+    public function __construct(Environment $twig, UserRepository $userRepository, UserManager $userManager, UserValidator $userValidator)
     {
         $this->userRepository = $userRepository;
         $this->userManager = $userManager;
+        $this->userValidator = $userValidator;
 
         parent::__construct($twig);
     }
@@ -39,92 +42,35 @@ class UserController extends Controller
 
         if (!empty($_POST)) {
             $data = $_POST;
-            $this->postProcess($edit, $data, $user); //return erros array
+            $errors = $this->postProcess($edit, $data, $user);
         }
 
         echo $this->twig->render('/front/user/form.html.twig', [
             "title" => $title,
             "edit" => $edit,
             "user" => $user,
+            "errors" => $errors ?? [],
             "change_pwd_link" => $change_pwd_link ?? "#"
         ]);
     }
 
-    private function postProcess(bool $edit, array $data, User $user = null): void
+    private function postProcess(bool $edit, array $data, User $user = null): array
     {
-        $user_data = [];
-        $success = true;
-        foreach ($data as $key => $value) {
-            if ($key == 'name') {
-                if (strlen($value) > 4) {
-                    if (!$edit || $user->getName() != $value) {
-                        if ($this->isNameAvailable($value)) {
-                            $user_data['name'] = $value;
-                        } else {
-                            $this->fillMessage('error', 'Ce pseudo n\'est pas disponible!');
-                            $success = false;
-                        }
-                    } else {
-                        $user_data['name'] = $user->getName();
-                    }
-                } else {
-                    $this->fillMessage('error', 'Pseudo trop court : 5 caractère minimum.');
-                    $success = false;
-                }
-            } elseif ($key == 'email') {
-                if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    if (!$edit || $user->getEmail() != $value) {
-                        if ($this->isEmailAvailable($value)) {
-                            $user_data['email'] = $value;
-                        } else {
-                            $this->fillMessage('error', 'Cet email est déjà utilisé !');
-                            $success = false;
-                        }
-                    } else {
-                        $user_data['email'] = $user->getEmail();
-                    }
-                } else {
-                    $this->fillMessage('error', "L'adresse email '$value' n'est pas valide.");
-                    $success = false;
-                }
-            } elseif ($key == 'pwd' && !$edit) {
-                if (strlen($value) >= 5) {
-                    $user_data['pwd'] = password_hash($value, PASSWORD_DEFAULT);
-                } else {
-                    $this->fillMessage('error', 'Mot de passe trop court : 5 caractère minimum');
-                    $success = false;
-                }
-            } elseif ($key == 'confirm' && !$edit) {
-                if ($value !== $data['pwd']) {
-                    $this->fillMessage('error', 'La confirmation et le mot de passe ne correspondent pas !');
-                    $success = false;
-                }
-            } elseif (!$edit) {
-                $this->fillMessage('error', 'Le champ ' . $key . ' est inconnu !');
-                $success = false;
-            }
+        $errors = $this->userValidator->validFormData($user, $data);
+        if (!empty($errors)) {
+            return $errors;
         }
-
-
-        // todo : If erros array !empty ? Return array $erros
-
-
-        if ($success && !empty($user_data)) {
-            $user->setName($user_data['name'])->setEmail($user_data['email']);
-
-            if (!$edit) {
-                $user->setPwd($user_data['pwd']);
-            }
-
-            $this->userManager->save($user);
-            $this->fillMessage('success', 'Utilisateur enregistré !');
-
-            $_SESSION['app.user'] = $user;
-
-            header('Location: /');
-        } else {
-            header('Refresh:0'); // todo : Ne pas rediriger et return erros array
+        $user->setName($this->cleanValue($data['name']))
+            ->setEmail($this->cleanValue($data['email']));
+        if (!$edit) {
+            $hashedPwd = password_hash($data['pwd'], PASSWORD_DEFAULT);
+            $user->setPwd($hashedPwd);
         }
+        $this->userManager->save($user);
+        $_SESSION['app.user'] = $user;
+
+        $this->fillMessage('success', 'Utilisateur enregistré !');
+        header('Location: /');
     }
 
     public function getLogInForm(): void
@@ -280,17 +226,9 @@ class UserController extends Controller
         }
     }
 
-    protected function isNameAvailable(string $name): bool
-    {
-        $user = $this->userRepository->getUniqueByName($name);
-        return $user ? false : true;
-    }
 
-    protected function isEmailAvailable(string $email): bool
-    {
-        $user = $this->userRepository->getUniqueByEmail($email);
-        return $user ? false : true;
-    }
+
+
 
 
     protected function sendResetPwdEmail(User $user): bool
