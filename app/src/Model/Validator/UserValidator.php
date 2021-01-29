@@ -77,6 +77,7 @@ class UserValidator extends Validator
         if ($value !== $pwd) {
             $messages .= 'La confirmation et le mot de passe ne correspondent pas ! <br>';
         }
+        $this->fillMessage('confirm', $messages);
     }
 
     private function isNameAvailable(string $name): bool

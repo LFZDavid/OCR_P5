@@ -21,16 +21,33 @@
         </div>
         <div class="mb-3 form-group">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" id="email" value="{{user.getEmail}}">
+            <input type="email" class="form-control {{errors.email ? 'is-invalid':''}}" name="email" id="email"
+                value="{{user.getEmail}}">
+            {% if errors.email %}
+            <div class="invalid-feedback">
+                {{errors.email|raw}}
+            </div>
+            {% endif %}
         </div>
         {% if edit == false %}
         <div class="mb-3 form-group">
             <label for="pwd" class="form-label">Mot de passe</label>
-            <input type="password" class="form-control" name="pwd" id="pwd">
+            <input type="password" class="form-control {{errors.pwd ? 'is-invalid':''}}" name="pwd" id="pwd">
+            {% if errors.pwd %}
+            <div class="invalid-feedback">
+                {{errors.pwd|raw}}
+            </div>
+            {% endif %}
         </div>
         <div class="mb-3 form-group">
             <label for="confirm" class="form-label">Confirmation</label>
-            <input type="password" class="form-control" name="confirm" id="confirm">
+            <input type="password" class="form-control {{errors.confirm ? 'is-invalid':''}}" name="confirm"
+                id="confirm">
+            {% if errors.confirm %}
+            <div class="invalid-feedback">
+                {{errors.confirm|raw}}
+            </div>
+            {% endif %}
         </div>
         {% else %}
         <div class="form-group">
