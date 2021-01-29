@@ -38,7 +38,8 @@ class UserController extends Controller
         }
 
         if (!empty($_POST)) {
-            $this->postProcess($edit, $_POST, $user); //return erros array
+            $data = $_POST;
+            $this->postProcess($edit, $data, $user); //return erros array
         }
 
         if (!$edit) {
