@@ -72,6 +72,7 @@ class UserController extends Controller
     {
         if ($this->getUser()) {
             $this->displayError404();
+            return;
         }
 
         if (!empty($_POST)) {
