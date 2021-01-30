@@ -60,4 +60,11 @@ abstract class Controller
         $result = htmlspecialchars(trim($value));
         return $result;
     }
+
+    protected function displayError404(): string
+    {
+        http_response_code(404);
+        echo $this->twig->render('front/404.html.twig', []);
+        die;
+    }
 }

@@ -21,7 +21,6 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
         $this->userManager = $userManager;
         $this->userValidator = $userValidator;
-
         parent::__construct($twig);
     }
 
@@ -31,10 +30,8 @@ class UserController extends Controller
 
         if (!$user) {
             $user = new User();
-            $title = "Inscription";
             $edit = false;
         } else {
-            $title = "Modification";
             $edit = true;
             $changePwdLink = '/user/reset-pwd/hash/' . $user->getPwd() . '/id_user/' . $user->getId();
         }
@@ -45,7 +42,6 @@ class UserController extends Controller
         }
 
         echo $this->twig->render('/front/user/form.html.twig', [
-            "title" => $title,
             "edit" => $edit,
             "user" => $user,
             "errors" => $errors ?? [],

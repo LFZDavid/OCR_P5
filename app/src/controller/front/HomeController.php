@@ -73,7 +73,6 @@ class HomeController extends Controller
 
     protected function postProcess(array $postData, User $user = null, string $adminEmail)
     {
-
         foreach ($postData as $key => $value) {
             if (trim($value) == '') {
                 $this->fillMessage('error', 'Le champ ' . $key . ' ne doit pas être vide');
@@ -82,7 +81,6 @@ class HomeController extends Controller
                 $success = true;
             }
         }
-
         if (!$success) {
             return;
         }

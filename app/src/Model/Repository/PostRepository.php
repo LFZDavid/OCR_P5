@@ -4,7 +4,7 @@ namespace App\Model\Repository;
 
 use App\Model\Repository\Repository;
 use App\Model\Repository\CategoryRepository;
-use App\Model\Repository\CommentRepository;
+use App\Model\Entity\Post;
 use PDO;
 
 class PostRepository extends Repository
@@ -57,7 +57,9 @@ class PostRepository extends Repository
 		$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 
 		$post = $query->fetch();
-
+		if (!$post) {
+			return new Post();
+		}
 		$postCategories = $this->categoryRepository->getListByPost($post->getId());
 		$author = $this->userRepository->getUniqueByPost($id);
 		$post->setCategories($postCategories)->setAuthor($author);
