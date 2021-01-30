@@ -71,7 +71,7 @@ class UserController extends Controller
     public function getLogInForm(): void
     {
         if ($this->getUser()) {
-            header('Location: /');
+            $this->displayError404();
         }
 
         if (!empty($_POST)) {
