@@ -125,47 +125,6 @@ try {
         $homeController = new HomeController($twig, $userRepository);
         $homeController->homePage($config['admin_email'], $postRepository, $commentRepository);
     }
-
-
-    if ($config['env'] == 'dev') {
-        /**DEBUG **************************/
-        echo '<div style="background-color:black;color:green;">';
-
-        print_r($_SERVER['REQUEST_URI']);
-        echo '<br>';
-
-
-        echo 'SESSION';
-        echo '<br>';
-        foreach ($_SESSION as $key => $value) {
-            print_r($key);
-            echo '=>';
-            print_r($value);
-            echo '<br>';
-        }
-        echo '<br>';
-        echo 'POST';
-        echo '<br>';
-        foreach ($_POST as $key => $value) {
-            print_r($key);
-            echo '=>';
-            print_r($value);
-            echo '<br>';
-        }
-        echo '<br>';
-        echo 'GET';
-        echo '<br>';
-        foreach ($_GET as $key => $value) {
-            print_r($key);
-            echo '=>';
-            print_r($value);
-            echo '<br>';
-        }
-        echo '<br>';
-
-        echo '</div>';
-        /** **************************/
-    }
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
 }
