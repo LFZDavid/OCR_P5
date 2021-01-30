@@ -1,5 +1,7 @@
 # Blog en PHP
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/af39394975f64c9ca4918bec967b91ba)](https://app.codacy.com/gh/LFZDavid/OCR_P5?utm_source=github.com&utm_medium=referral&utm_content=LFZDavid/OCR_P5&utm_campaign=Badge_Grade)
+
 ## Description
   Création d'un blog professionnel de développeur.
   L'application se décompose en 2 grands groupes de pages:
