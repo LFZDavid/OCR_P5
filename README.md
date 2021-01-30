@@ -1,6 +1,7 @@
 # Blog en PHP
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/af39394975f64c9ca4918bec967b91ba)](https://app.codacy.com/gh/LFZDavid/OCR_P5?utm_source=github.com&utm_medium=referral&utm_content=LFZDavid/OCR_P5&utm_campaign=Badge_Grade)
+[![Maintainability](https://api.codeclimate.com/v1/badges/be4ed9cb75cdabe8dac1/maintainability)](https://codeclimate.com/github/LFZDavid/OCR_P5/maintainability)
 
 ## Description
   Création d'un blog professionnel de développeur.
