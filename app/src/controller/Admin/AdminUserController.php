@@ -40,7 +40,7 @@ class AdminUserController extends Controller
         if (isset($_POST['userId']) && isset($_POST['role'])) {
 
             $user = $this->userRepository->getUniqueById((int) $_POST['userId']);
-            $user->setRole(htmlspecialchars($_POST['role']));
+            $user->setRole(stripslashes($_POST['role']));
             $this->userManager->save($user);
             $this->fillMessage('success', 'l\'utilisateur n°' . $user->getId() . ' a été passé au niveau ' . $user->getRole() . ' !');
         }
