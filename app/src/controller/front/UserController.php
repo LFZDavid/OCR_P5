@@ -106,7 +106,8 @@ class UserController extends Controller
 
     public function lostPwdProcess(): void
     {
-        $userEmail = $_POST['email'];
+        $userEmail = isset($_POST['email']) ? $_POST['email'] : "";
+
         $validationReturns = $this->userValidator->validUserEmail($userEmail);
         if (isset($validationReturns['errors'])) {
             $this->fillMessage('error', $validationReturns['errors']['email']);

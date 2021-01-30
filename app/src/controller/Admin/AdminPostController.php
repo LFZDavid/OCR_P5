@@ -48,8 +48,8 @@ class AdminPostController extends Controller
 
     public function getForm(int $postId): void
     {
-        if (isset($_POST) && !empty($_POST)) {
-            $data = $_POST;
+        $data = $_POST;
+        if (!empty($data)) {
             $this->postProcess($data, $this->categoryRepository);
         }
 

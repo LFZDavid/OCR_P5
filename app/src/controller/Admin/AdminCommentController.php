@@ -34,7 +34,7 @@ class AdminCommentController extends Controller
 
     public function toggle(): void
     {
-        $comment = $this->commentRepository->getUniqueById($_POST['commentId']);
+        $comment = $this->commentRepository->getUniqueById((int) $_POST['commentId']);
 
         $toggle = $comment->getActive() ? false : true;
 
