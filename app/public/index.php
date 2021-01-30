@@ -40,7 +40,7 @@ try {
 
     if (key_exists('post', $_GET)) {
         $postController = new PostController($twig, $postRepository, $commentRepository);
-        if (($id_post = $_GET['post']) <= 0) {
+        if (($id_post = (int) $_GET['post']) <= 0) {
             $postController->index();
         } else {
             $postController->show($id_post);
@@ -48,7 +48,7 @@ try {
     } elseif (key_exists('user', $_GET)) {
         $userValidator = new UserValidator($userRepository);
         $userController = new UserController($twig, $userRepository, $userManager, $userValidator);
-        $request = $_GET['user'];
+        $request = htmlspecialchars($_GET['user']);
         if ($request == 'form') {
             $userController->getForm();
         } elseif ($request == 'login') {
@@ -74,7 +74,7 @@ try {
         $commentController = new CommentController($twig, $commentManager);
         $request = $_GET['comment'];
         if ($request == 'add') {
-            $commentController->postProcess($_POST, $_GET['postId']);
+            $commentController->postProcess($_POST, (int) $_GET['postId']);
         }
     } elseif (key_exists('admin-post', $_GET)) {
         $adminPostController = new AdminPostController($twig, $postRepository, $categoryRepository, $userRepository, $postManager, $commentManager);
@@ -83,7 +83,7 @@ try {
             $adminPostController->index();
         } elseif ($request == 'form') {
             if (key_exists('postId', $_GET)) {
-                $postId = $_GET['postId'];
+                $postId = (int) $_GET['postId'];
             } else {
                 $postId = 0;
             }
@@ -94,7 +94,7 @@ try {
             && key_exists('postId', $_GET)
             && ($_POST['_method'] == "DELETE")
         ) {
-            $adminPostController->delete($_GET['postId']);
+            $adminPostController->delete((int) $_GET['postId']);
         }
     } elseif (key_exists('admin-user', $_GET)) {
         $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
@@ -104,7 +104,7 @@ try {
         } elseif ($request == 'role') {
             $adminUserController->changeRole();
         } elseif ($request == 'delete' && key_exists('userId', $_GET)) {
-            $adminUserController->delete($_GET['userId']);
+            $adminUserController->delete((int) $_GET['userId']);
         }
     } elseif (key_exists('admin-comment', $_GET)) {
         $adminCommentController = new AdminCommentController($twig, $commentRepository, $commentManager);
