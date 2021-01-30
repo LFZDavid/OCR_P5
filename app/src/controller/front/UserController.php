@@ -157,6 +157,9 @@ class UserController extends Controller
 
     protected function sendResetPwdEmail(User $user): bool
     {
+        if (!isset($_SERVER['SERVER_NAME'])) {
+            return false;
+        }
         $to      = $user->getEmail();
         $subject = 'Réinitialisation de votre mot de passe';
         $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $_SERVER['SERVER_NAME'] . '/user/reset-pwd/hash/' . $user->getPwd() . '/userId/' . $user->getId();
