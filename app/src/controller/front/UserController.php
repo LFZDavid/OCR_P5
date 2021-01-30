@@ -33,7 +33,7 @@ class UserController extends Controller
             $edit = false;
         } else {
             $edit = true;
-            $changePwdLink = '/user/reset-pwd/hash/' . $user->getPwd() . '/id_user/' . $user->getId();
+            $changePwdLink = '/user/reset-pwd/hash/' . $user->getPwd() . '/userId/' . $user->getId();
         }
 
         if (!empty($_POST)) {
