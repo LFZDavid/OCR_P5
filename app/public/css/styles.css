@@ -4,24 +4,21 @@
     font-size: large;
 }
 
-
 #main {
   min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-	
 }
 #content {
   flex-grow: 1;
 }
 
 .footer {
-  display:flex;
+  display: flex;
   flex-direction: column;
   margin: 40px 0px 0px 0px;
-  padding-top:10px;
-
+  padding-top: 10px;
 }
 
 .social-logo-block {
@@ -45,10 +42,9 @@
   margin-bottom: 25px;
 }
 
-
 .footer-bottom {
-  margin-top:20px;
-  display:flex;
+  margin-top: 20px;
+  display: flex;
   justify-content: center;
 }
 
@@ -56,7 +52,7 @@
 .title-block {
   background: url("https://picsum.photos/900/300") no-repeat;
   background-size: cover;
-  padding:20% 0px;
+  padding: 20% 0px;
 }
 
 .title-band {
@@ -71,7 +67,7 @@
 }
 
 .post-link-btn {
-  display:flex;
+  display: flex;
   justify-content: center;
   margin-bottom: 20px;
 }
@@ -92,8 +88,8 @@
 .divider {
   height: 2px;
   width: 50%;
-  display:flex;
-  margin:15px auto;
+  display: flex;
+  margin: 15px auto;
 }
 
 /* POST COMMENTS */
@@ -111,10 +107,10 @@
 }
 
 .comment-infos {
-  background:grey;
-  color:white;
-  display:flex;
-  flex-direction:row;
+  background: grey;
+  color: white;
+  display: flex;
+  flex-direction: row;
   justify-content: space-between;
   padding: 5px 0 0 5px;
 }
@@ -124,8 +120,8 @@
 }
 
 .comment-form-block >p {
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   text-align: center;
 }
@@ -136,11 +132,11 @@
 
 /* ADMIN POST */
 .action-btns {
-  display:flex;
+  display: flex;
   justify-content: space-evenly;
 }
 .add-btn-block {
-  display:flex;
+  display: flex;
   justify-content: flex-end;
   flex-direction: row;
 }
@@ -151,30 +147,30 @@
 
 /* ADMIN USER */
 .roles-btns {
-  display:flex;
+  display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .roles-btns >form {
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: center;
 }
 .delete-user-btn {
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: center;
 }
 .admin-comm-btns {
-  display:flex;
-  flex-direction:row;
+  display: flex;
+  flex-direction: row;
   justify-content: space-evenly;
 }
 
 /* ADMIN LINK */
 .admin-link {
-  font-size:24px;
+  font-size: 24px;
 }
 
 .admin-link >div >a {
@@ -183,7 +179,7 @@
 
 /* NAV */
 .nav-link {
-  font-size:large;
+  font-size: large;
 }
 
 /*LOG*/
@@ -198,13 +194,13 @@
 /* CONTACT FORM */
 .contact_form {
   background: slategray;
-  margin-top:15px;
-  padding-top:15px;
-  padding-bottom:15px;
+  margin-top: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   border-radius: 6px;
-  color:white;
+  color: white;
 }
  /* LOST PWD */
 .backToHomeBtn {
-  margin-top:20px;
+  margin-top: 20px;
 }
