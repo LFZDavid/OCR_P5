@@ -57,6 +57,19 @@ class UserValidator extends Validator
         return $return;
     }
 
+    public function validUserEmail(string $email): array
+    {
+        $message = 'Cette adresse ne correspond pas à un utilisateur !';
+        $user = $this->userRepository->getUniqueByEmail($email);
+        if (!$user) {
+            $this->fillMessage('email', $message);
+            $return['errors'] = $this->errorMessages;
+            return $return;
+        }
+        $return['user'] = $user;
+        return $return;
+    }
+
     private function validName(string $value): void
     {
         $messages = '';
@@ -106,7 +119,7 @@ class UserValidator extends Validator
         return $user ? false : true;
     }
 
-    protected function isEmailAvailable(string $email): bool
+    private function isEmailAvailable(string $email): bool
     {
         $user = $this->userRepository->getUniqueByEmail($email);
         return $user ? false : true;

@@ -10,12 +10,25 @@
 <div div class="container">
     <div class="login-form">
         <form action="#" method="POST">
-            {% for key, input in inputs %}
             <div class="mb-3 form-group">
-                <label for="{{key}}" class="form-label">{{input.label}}</label>
-                <input type="{{input.type}}" class="form-control" name="{{key}}" id="{{key}}" value="{{input.value}}">
+                <label for="pwd" class="form-label">Mot de passe</label>
+                <input type="password" class="form-control {{errors.pwd ? 'is-invalid':''}}" name="pwd" id="pwd">
+                {% if errors.pwd %}
+                <div class="invalid-feedback">
+                    {{errors.pwd|raw}}
+                </div>
+                {% endif %}
             </div>
-            {% endfor %}
+            <div class="mb-3 form-group">
+                <label for="confirm" class="form-label">Confirmation</label>
+                <input type="password" class="form-control {{errors.confirm ? 'is-invalid':''}}" name="confirm"
+                    id="confirm">
+                {% if errors.confirm %}
+                <div class="invalid-feedback">
+                    {{errors.confirm|raw}}
+                </div>
+                {% endif %}
+            </div>
             <input type="submit" class="btn btn-success">
         </form>
         <br>

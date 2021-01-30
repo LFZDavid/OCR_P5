@@ -83,17 +83,9 @@ class UserController extends Controller
             $errors = $this->logIn($data);
         }
 
-        $lostPwdForm = [
-            'name' => 'email_user',
-            'label' => 'Email',
-            'type' => 'email',
-            'value' => ""
-        ];
-
         echo $this->twig->render('/front/user/login-form.html.twig', [
             "title" => "Connexion",
-            "errors" => $errors ?? [],
-            "lost_pwd_form" => $lostPwdForm
+            "errors" => $errors ?? []
         ]);
     }
 
@@ -101,7 +93,6 @@ class UserController extends Controller
     {
         $validationReturns = $this->userValidator->validLoginForm($postData, $force);
         if (isset($validationReturns['errors'])) {
-            var_dump($validationReturns);
             return $validationReturns['errors'];
         }
         $this->fillMessage('success', 'Vous êtes connecté !');
@@ -118,96 +109,53 @@ class UserController extends Controller
 
     public function lostPwdProcess(): void
     {
-        if (isset($_POST['userEmail'])) {
-            $userEmail = $_POST['userEmail'];
-            if ($user = $this->userRepository->getUniqueByEmail($userEmail)) {
-                $this->sendResetPwdEmail($user);
-                $this->fillMessage('success', 'Un email vient de vous être envoyé !');
-            } else {
-                $this->fillMessage('error', 'Email incorrect !');
-            }
+        $userEmail = $_POST['email'];
+        $validationReturns = $this->userValidator->validUserEmail($userEmail);
+        if (isset($validationReturns['errors'])) {
+            $this->fillMessage('error', $validationReturns['errors']['email']);
         } else {
-            $this->fillMessage('error', 'C\'est pas un email ça ?!');
+            $this->sendResetPwdEmail($validationReturns['user']);
+            $this->fillMessage('success', 'Un email vient de vous être envoyé !');
         }
         header('Location: /user/login');
     }
 
     public function getResetPwdForm(int $userId, string $hash): void
     {
-        if ($userId > 0 && $hash != "") {
-            if ($user = $this->userRepository->getUniqueById($userId)) {
-                if ($user->getPwd() == $hash) {
-                    $access = true;
-                } else {
-                    $this->fillMessage('error', 'Lien corrompu !');
-                    $access = false;
-                    header('Location: /');
-                }
-            } else {
-                $this->fillMessage('error', 'Utilisateur introuvable !');
-                $access = false;
-            }
-        } else {
-            $this->fillMessage('error', 'Un problème est survenue !');
-            $access = false;
-        }
-
-        if ($access && !empty($_POST)) {
-            $this->resetPwdpostProcess($user, $_POST);
-        } elseif ($access) {
-            $inputs = [
-                'pwd' => [
-                    'label' => 'Nouveau mot de passe',
-                    'type' => 'password',
-                    'value' => ""
-                ],
-                'confirm' => [
-                    'label' => 'Confirmation',
-                    'type' => 'password',
-                    'value' => ""
-                ]
-            ];
-            echo $this->twig->render('/front/user/reset-pwd-form.html.twig', [
-                "title" => "Réinitialisation du mot de passe",
-                "inputs" => $inputs
-            ]);
-        }
-    }
-
-    protected function resetPwdpostProcess(User $user, array $postData): void
-    {
-        $success = true;
-        if (!empty($postData['pwd'])) {
-            if (strlen($postData['pwd']) >= 5) {
-                $new_pwd = password_hash($postData['pwd'], PASSWORD_DEFAULT);
-            } else {
-                $this->fillMessage('error', 'Mot de passe trop court : 5 caractère minimum');
-                $success = false;
-            }
-            if ($postData['confirm'] !== $postData['pwd']) {
-                $this->fillMessage('error', 'La confirmation et le mot de passe ne correspondent pas !');
-                $success = false;
-            }
-        } else {
-            $this->fillMessage('error', 'Le champ Mot de passe ne peut pas être vide !');
-            $success = false;
-        }
-
-        if ($success) {
-            $user->setPwd($new_pwd);
-            $this->userManager->save($user);
-            $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
-
+        $user = $this->userRepository->getUniqueById($userId);
+        if (
+            !$user
+            || $hash == ''
+            || $user->getPwd() !== $hash
+        ) {
+            $this->fillMessage('error', ' Lien corrompus ! ');
             header('Location: /user/login');
-        } else {
-            header('Refresh:0');
         }
+
+        if (!empty($_POST)) {
+            $formData = $_POST;
+            $errors = $this->resetPwdpostProcess($user, $formData);
+        }
+
+        echo $this->twig->render('/front/user/reset-pwd-form.html.twig', [
+            "title" => "Réinitialisation du mot de passe",
+            "errors" => $errors ?? []
+        ]);
     }
 
+    protected function resetPwdpostProcess(User $user, array $data): ?array
+    {
+        $errors = $this->userValidator->validFormData($user, $data);
+        if (!empty($errors)) {
+            return $errors;
+        }
 
-
-
-
+        $new_pwd = password_hash($data['pwd'], PASSWORD_DEFAULT);
+        $user->setPwd($new_pwd);
+        $this->userManager->save($user);
+        $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
+        header('Location: /user/login');
+    }
 
     protected function sendResetPwdEmail(User $user): bool
     {
