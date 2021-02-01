@@ -23,7 +23,7 @@
 	{{post.author.name}}
 </em>
 <div class="divider bg-primary"></div>
-<p class="post-content">{{post.content}}</p>
+<p class="post-content">{{post.content|raw}}</p>
 {% include "includes/post-comments.html.twig" %}
 <br>
 <a href="/post/list">

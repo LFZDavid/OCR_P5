@@ -70,9 +70,28 @@ CREATE TABLE `blog_p5`.`category_post` (
 --
 -- Insert categories
 --
-INSERT INTO `blog_p5`.`categories`(
-    `name`
-) VALUES('News'),('Tips'),('Languages'),('Framework'),('Divers');
+
+INSERT INTO `blog_p5`.`categories` (`id`, `name`) VALUES
+(1, 'HTML/CSS'),
+(2, 'PHP/MySql'),
+(3, 'JavaScript'),
+(4, 'Symfony'),
+(5, 'Laravel'),
+(6, 'Projet perso'),
+(7, 'Projet formation'),
+(8, 'Projet pro'),
+(11, 'CMS'),
+(12, 'Wordpress'),
+(15, 'Divers');
+-- --------------------------------------------------------
+--
+-- Déchargement des données de la table `category_post`
+--
+
+INSERT INTO `category_post` (`id_post`, `id_category`) VALUES
+(1, 1),(1, 2),(2, 1),(3, 2),(4, 3),(4, 5),(4, 6),(7, 2),(7, 7),(8, 7),(8, 8),(8, 9),(9, 6),(9, 8),(9, 9),(10, 1),(10, 3),(10, 6),(11, 2),(11, 3),(11, 7),(12, 6),(12, 8),(12, 9),(13, 2),(13, 3),(13, 6),(13, 7),(13, 10),(14, 2),(14, 3),(14, 4),(14, 6),(15, 5),(16, 4),(16, 6);
 
 -- --------------------------------------------------------
+
+
 ";
