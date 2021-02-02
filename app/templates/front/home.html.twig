@@ -7,8 +7,26 @@
 {% endblock %}
 
 {% block body %}
+<section class="home-band">
+	<div class="lang-logos-contain">
+		<i class="fab fa-html5" style="color:#DE4C26;"></i>
+		<i class="fab fa-css3-alt" style="color:#3C97D0;"></i>
+		<i class="fab fa-js-square" style="color:#EFD81E;"></i>
+		<i class="fab fa-bootstrap" style="color:#5C3D87;"></i>
+		<i class="fab fa-php" style="color:#858EBB;"></i>
+		<i class="fab fa-symfony" style="color:black;"></i>
+		<i class="fab fa-wordpress-simple" style="color:#2A7397;"></i>
+		<i class="fab fa-git-alt" style="color:#E94E31;"></i>
+		<i class="fab fa-github-square" style="color:#24282E;"></i>
+	</div>
+	<div class="dwn-cv-contain">
+		<a href="/downloads/CV David Cornacchia.pdf" target="_blank" class="btn btn-outline-info">
+			Voir mon CV
+		</a>
+	</div>
+</section>
 <section class="last-posts">
-	<h3>Derniers articles</h3>
+	<h3>Derniers projets</h3>
 	<div class="divider"></div>
 	<div class="row">
 		{% for post in last_posts %}

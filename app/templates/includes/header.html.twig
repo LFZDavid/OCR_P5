@@ -1,8 +1,19 @@
 {% include "/includes/nav.html.twig" %}
 <section id="header">
-    <div class="title-block jumbotron">
-        <div class="title-band">
-            <h1 class="title">{{title}}</h1>
-        </div>
-    </div>
+	<div class="title-block jumbotron">
+		<div class="title-band">
+			{% if title == 'Accueil' %}
+				<h2 class="title">
+					Sitez-vous avec
+					<br>
+					David Cornacchia
+				</h2>
+				<h3 class="title">
+					Développeur web
+				</h3>
+			{% else %}
+				<h1 class="title">{{title}}</h1>
+			{% endif %}
+		</div>
+	</div>
 </section>
