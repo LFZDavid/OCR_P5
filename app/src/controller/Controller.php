@@ -8,7 +8,7 @@ use App\Model\Entity\User;
 abstract class Controller
 {
     protected Environment $twig;
-    protected string $required_role = "";
+    protected string $requiredRole = "";
 
     public function __construct(Environment $twig)
     {
@@ -33,8 +33,8 @@ abstract class Controller
     {
         if (
             $this->getUser() == null
-            && $this->required_role != ""
-            && $this->getUser()->getRole() != $this->required_role
+            && $this->requiredRole != ""
+            && $this->getUser()->getRole() != $this->requiredRole
         ) {
             header('Location: /');
         }
@@ -47,12 +47,23 @@ abstract class Controller
 
     protected function getCurrentUrl(): string
     {
+        $url = "http";
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
-            $url = "https";
-        } else {
-            $url = "http";
+            $url .= "s";
         }
         $url .= "://" . $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
         return $url;
+    }
+
+    protected function cleanValue(string $value): string
+    {
+        $result = htmlspecialchars(trim($value));
+        return $result;
+    }
+
+    protected function displayError404(): void
+    {
+        http_response_code(404);
+        echo $this->twig->render('front/404.html.twig', []);
     }
 }

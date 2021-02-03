@@ -26,9 +26,9 @@ class PostController extends Controller
         $post = $this->postRepository->getUniqueById($id);
 
         if (!$post || !$post->getActive()) {
-            header('location: /'); // Remplacer par redirect to 404
+            $this->displayError404();
+            return;
         }
-
         $comments = $this->commentRepository->getListByPost($post->getId(), true);
 
         echo $this->twig->render('/front/post/show.html.twig', [

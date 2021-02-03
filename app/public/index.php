@@ -17,6 +17,7 @@ use App\Model\Manager\PostManager;
 use App\Model\Manager\UserManager;
 use App\Model\Manager\CommentManager;
 use App\Model\Repository\CategoryRepository;
+use App\Model\Validator\UserValidator;
 
 $loader = new \Twig\Loader\FilesystemLoader('../templates/');
 $twig = new \Twig\Environment($loader, [
@@ -39,14 +40,15 @@ try {
 
     if (key_exists('post', $_GET)) {
         $postController = new PostController($twig, $postRepository, $commentRepository);
-        if (($id_post = $_GET['post']) <= 0) {
+        if (($id_post = (int) $_GET['post']) <= 0) {
             $postController->index();
         } else {
             $postController->show($id_post);
         }
     } elseif (key_exists('user', $_GET)) {
-        $userController = new UserController($twig, $userRepository, $userManager);
-        $request = $_GET['user'];
+        $userValidator = new UserValidator($userRepository);
+        $userController = new UserController($twig, $userRepository, $userManager, $userValidator);
+        $request = htmlspecialchars($_GET['user']);
         if ($request == 'form') {
             $userController->getForm();
         } elseif ($request == 'login') {
@@ -57,11 +59,11 @@ try {
             $userController->lostPwdProcess();
         } elseif (
             $request == 'reset-pwd'
-            && key_exists('id_user', $_GET)
+            && key_exists('userId', $_GET)
             && key_exists('hash', $_GET)
         ) {
-            if ($id_user = $_GET['id_user'] > 0) {
-                $userController->getResetPwdForm($_GET['id_user'], $_GET['hash']);
+            if ($userId = $_GET['userId'] > 0) {
+                $userController->getResetPwdForm($userId, $_GET['hash']);
             } else {
                 header('Location:/user/login');
             }
@@ -72,7 +74,7 @@ try {
         $commentController = new CommentController($twig, $commentManager);
         $request = $_GET['comment'];
         if ($request == 'add') {
-            $commentController->postProcess($_POST, $_GET['id_post']);
+            $commentController->postProcess($_POST, (int) $_GET['postId']);
         }
     } elseif (key_exists('admin-post', $_GET)) {
         $adminPostController = new AdminPostController($twig, $postRepository, $categoryRepository, $userRepository, $postManager, $commentManager);
@@ -80,19 +82,19 @@ try {
         if ($request == 'list') {
             $adminPostController->index();
         } elseif ($request == 'form') {
-            if (key_exists('id_post', $_GET)) {
-                $id_post = $_GET['id_post'];
+            if (key_exists('postId', $_GET)) {
+                $postId = (int) $_GET['postId'];
             } else {
-                $id_post = 0;
+                $postId = 0;
             }
-            $adminPostController->getForm($id_post, $categoryRepository);
+            $adminPostController->getForm($postId, $categoryRepository);
         } elseif (
             $request == 'delete'
             && key_exists('_method', $_POST)
-            && key_exists('id_post', $_GET)
+            && key_exists('postId', $_GET)
             && ($_POST['_method'] == "DELETE")
         ) {
-            $adminPostController->delete($_GET['id_post']);
+            $adminPostController->delete((int) $_GET['postId']);
         }
     } elseif (key_exists('admin-user', $_GET)) {
         $adminUserController = new AdminUserController($twig, $userRepository, $userManager);
@@ -101,8 +103,8 @@ try {
             $adminUserController->index();
         } elseif ($request == 'role') {
             $adminUserController->changeRole();
-        } elseif ($request == 'delete' && key_exists('id_user', $_GET)) {
-            $adminUserController->delete($_GET['id_user']);
+        } elseif ($request == 'delete' && key_exists('userId', $_GET)) {
+            $adminUserController->delete((int) $_GET['userId']);
         }
     } elseif (key_exists('admin-comment', $_GET)) {
         $adminCommentController = new AdminCommentController($twig, $commentRepository, $commentManager);
@@ -114,55 +116,14 @@ try {
         } elseif (
             $request == 'delete'
             && key_exists('_method', $_POST)
-            && key_exists('id_comment', $_GET)
+            && key_exists('commentId', $_GET)
             && ($_POST['_method'] == "DELETE")
         ) {
-            $adminCommentController->delete($_GET['id_comment']);
+            $adminCommentController->delete($_GET['commentId']);
         }
     } else {
         $homeController = new HomeController($twig, $userRepository);
         $homeController->homePage($config['admin_email'], $postRepository, $commentRepository);
-    }
-
-
-    if ($config['env'] == 'dev') {
-        /**DEBUG **************************/
-        echo '<div style="background-color:black;color:green;">';
-
-        print_r($_SERVER['REQUEST_URI']);
-        echo '<br>';
-
-
-        echo 'SESSION';
-        echo '<br>';
-        foreach ($_SESSION as $key => $value) {
-            print_r($key);
-            echo '=>';
-            print_r($value);
-            echo '<br>';
-        }
-        echo '<br>';
-        echo 'POST';
-        echo '<br>';
-        foreach ($_POST as $key => $value) {
-            print_r($key);
-            echo '=>';
-            print_r($value);
-            echo '<br>';
-        }
-        echo '<br>';
-        echo 'GET';
-        echo '<br>';
-        foreach ($_GET as $key => $value) {
-            print_r($key);
-            echo '=>';
-            print_r($value);
-            echo '<br>';
-        }
-        echo '<br>';
-
-        echo '</div>';
-        /** **************************/
     }
 } catch (\PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();

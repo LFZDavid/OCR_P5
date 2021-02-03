@@ -46,129 +46,69 @@ class AdminPostController extends Controller
         ]);
     }
 
-    public function getForm(int $id_post): void
+    public function getForm(int $postId): void
     {
-        if (isset($_POST)) {
-            $this->postProcess($_POST, $this->categoryRepository);
+        $data = $_POST;
+        if (!empty($data)) {
+            $this->postProcess($data, $this->categoryRepository);
         }
 
-        if ($id_post == 0) {
+        if ($postId == 0) {
             $post = new Post();
             $title = "Création";
         } else {
-            $post = $this->postRepository->getUniqueById($id_post);
+            $post = $this->postRepository->getUniqueById($postId);
             $title = "Modification";
         }
 
         $categories = $this->categoryRepository->getList();
-
-        foreach ($post->getCategories() as $post_category) {
-            $checked_categories[$post_category->getName()] = true;
+        foreach ($post->getCategories() as $postCategory) {
+            $checkedCategories[$postCategory->getName()] = true;
         }
 
-        $inputs = [
-            [
-                "label" => 'id_post',
-                "field" => 'id',
-                "type" => 'text',
-                "hidden" => true,
-                "value" => $post->getId() ?? 0,
-
-            ],
-            [
-                "label" => 'Titre',
-                "field" => 'title',
-                "type" => 'text',
-                "hidden" => false,
-                "value" => $post->getTitle() ?? "",
-                "required" => true
-            ],
-            [
-                "label" => 'Chapô',
-                "field" => 'chapo',
-                "type" => 'text',
-                "hidden" => false,
-                "value" => $post->getChapo() ?? "",
-                "required" => true
-            ],
-            [
-                "label" => 'Categories',
-                "field" => 'categories',
-                "type" => 'checkbox',
-                "hidden" => false,
-                "value" => $categories,
-                "checked_categories" => $checked_categories ?? []
-            ],
-            [
-                "label" => 'Contenu',
-                "field" => 'content',
-                "type" => 'textarea',
-                "hidden" => false,
-                "value" => $post->getContent() ?? "",
-                "required" => true
-            ],
-            [
-                "label" => 'Visible',
-                "field" => 'active',
-                "type" => 'switch',
-                "hidden" => false,
-                "value" => $post->getActive(),
-            ],
-        ];
-
         echo $this->twig->render('/admin/post/form.html.twig', [
-            "title" => $title . " d'un post",
-            "inputs" => $inputs,
-            "id_post" => $post->getId() ?? 0
+            "title" => $title,
+            "post" => $post,
+            "categories" => $categories,
+            "checked_categories" => $checkedCategories ?? []
         ]);
     }
 
     public function postProcess(array $data): void
     {
-        if ($data != []) {
-
-            $categories = key_exists('categories', $data) ? $data['categories'] : [];
-
-            $active = isset($data['active']) ? 1 : 0;
-
-            $post = $data['id'] > 0 ? $this->postRepository->getUniqueById($data['id']) : new Post();
-
-            $author = $this->getUser();
-            if (!$author) {
-                $this->fillMessage('error', 'Un problème est survenue : L\'auteur n\'est pas identifié');
-            }
-
-            $post->setTitle($data['title'])
-                ->setChapo($data['chapo'])
-                ->setContent($data['content'])
-                ->setActive($active)
-                ->setAuthor($author);
-            $persisted_id = $this->postManager->save($post);
-
-            $old_post_categories = $this->categoryRepository->getListByPost($persisted_id);
-            $new_post_categories = $categories;
-
-            foreach ($old_post_categories as $old_post_category) {
-                if (isset($new_post_categories[$old_post_category->getName()])) {
-                    # Category's already linked
-                    unset($new_post_categories[$old_post_category->getName()]);
-                } else {
-                    # Category isn't linked anymore
-                    $this->postManager->unlinkCategory($persisted_id, $old_post_category->getId());
-                }
-            }
-            foreach ($new_post_categories as $new_post_category_id) {
-                # Category has to be linked
-                $this->postManager->linkCategory($persisted_id, $new_post_category_id);
-            }
-
-            if ($persisted_id > 0) {
-                $this->fillMessage('success', "Post n° $persisted_id sauvegardé !");
-            } else {
-                $this->fillMessage('error', "Erreur : un problème est survenu lors de l'enregistrement !");
-            }
-            header('Location:/admin-post/list');
+        $categories = key_exists('categories', $data) ? $data['categories'] : [];
+        $active = isset($data['active']) ? 1 : 0;
+        $post = $data['id'] > 0 ? $this->postRepository->getUniqueById($data['id']) : new Post();
+        $author = $this->getUser();
+        if (!$author) {
+            $this->fillMessage('error', 'Un problème est survenue : L\'auteur n\'est pas identifié');
         }
+        $post->setTitle($data['title'])
+            ->setChapo($data['chapo'])
+            ->setContent($data['content'])
+            ->setActive($active)
+            ->setAuthor($author);
+        $persistedId = $this->postManager->save($post);
+
+        $oldPostCategories = $this->categoryRepository->getListByPost($persistedId);
+        $newPostCategories = $categories;
+
+        foreach ($oldPostCategories as $oldPostCategory) {
+            if (isset($newPostCategories[$oldPostCategory->getName()])) {
+                # Category's already linked
+                unset($newPostCategories[$oldPostCategory->getName()]);
+            } else {
+                # Category isn't linked anymore
+                $this->postManager->unlinkCategory($persistedId, $oldPostCategory->getId());
+            }
+        }
+        foreach ($newPostCategories as $categoryId) {
+            # Category has to be linked
+            $this->postManager->linkCategory($persistedId, $categoryId);
+        }
+
+        $this->fillMessage('success', "Post n° $persistedId sauvegardé !");
+        header('Location:/admin-post/list');
     }
 
     public function delete(int $postID): void

@@ -4,7 +4,7 @@ namespace App\Model\Repository;
 
 use App\Model\Repository\Repository;
 use App\Model\Repository\CategoryRepository;
-use App\Model\Repository\CommentRepository;
+use App\Model\Entity\Post;
 use PDO;
 
 class PostRepository extends Repository
@@ -34,10 +34,10 @@ class PostRepository extends Repository
 			$request .= ' LIMIT ' . $limit;
 		}
 
-		$q = $this->pdo->query($request);
-		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
+		$query = $this->pdo->query($request);
+		$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 
-		$list = $q->fetchAll();
+		$list = $query->fetchAll();
 		foreach ($list as $post) {
 			/**add categories */
 			$postCategories = $this->categoryRepository->getListByPost($post->getId());
@@ -51,13 +51,15 @@ class PostRepository extends Repository
 	public function getUniqueById(int $id): object
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';
-		$q = $this->pdo->prepare($request);
-		$q->bindValue(':id', $id, PDO::PARAM_INT);
-		$q->execute();
-		$q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
+		$query = $this->pdo->prepare($request);
+		$query->bindValue(':id', $id, PDO::PARAM_INT);
+		$query->execute();
+		$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
 
-		$post = $q->fetch();
-
+		$post = $query->fetch();
+		if (!$post) {
+			return new Post();
+		}
 		$postCategories = $this->categoryRepository->getListByPost($post->getId());
 		$author = $this->userRepository->getUniqueByPost($id);
 		$post->setCategories($postCategories)->setAuthor($author);

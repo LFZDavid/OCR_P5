@@ -17,11 +17,11 @@ class CategoryRepository extends Repository
         FROM `category_post`
         INNER JOIN `categories` ON categories.id = `id_category` 
         WHERE `id_post` = :id_post ';
-        $q = $this->pdo->prepare($request);
-        $q->bindValue(':id_post', $postId, PDO::PARAM_INT);
-        $q->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
-        $q->execute();
+        $query = $this->pdo->prepare($request);
+        $query->bindValue(':id_post', $postId, PDO::PARAM_INT);
+        $query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
+        $query->execute();
 
-        return $q->fetchAll();
+        return $query->fetchAll();
     }
 }
