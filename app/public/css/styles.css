@@ -8,6 +8,13 @@
   height: 100px;
 }
 
+.punch{
+  color:#34BE67;
+  font-weight: bold;
+  font-size: 2rem;
+  font-style: italic;
+}
+
 #main {
   min-height: 100vh;
   margin: 0 auto;
