@@ -4,6 +4,10 @@
     font-size: large;
 }
 
+.main-logo{
+  height: 100px;
+}
+
 #main {
   min-height: 100vh;
   margin: 0 auto;
