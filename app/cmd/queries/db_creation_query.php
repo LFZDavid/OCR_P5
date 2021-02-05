@@ -151,12 +151,12 @@ INSERT INTO `blog_p5`.`posts` (`id`, `title`, `chapo`, `content`, `id_author`, `
 --
 
 INSERT INTO `blog_p5`.`users` (`id`, `name`, `email`, `pwd`, `role`, `created_at`) VALUES
-(1, 'admin', 'admin@admin.com', '$2y$10$oiNmLZMeZwUKDAU6H0VFIedFx6uBp3d4kulH75XEAf6Zup9flINXW', 'admin', '2001-01-23 23:00:00'),
-(2, 'Tony', 'stark@gmail.com', '$2y$10$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2001-01-31 23:00:00'),
-(3, 'Steve', 'rodgers@gmail.com', '$2y$10$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2001-01-31 23:00:00'),
-(4, 'Bruce', 'banner@gmail.com', '$2y$10$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2017-09-03 22:00:00'),
-(5, 'Natasha', 'romanoff@gmail.com', '$2y$10$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2004-07-01 22:00:00'),
-(6, 'Thor', 'odinsson@gmail.com', '$2y$10$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2018-05-24 22:00:00'),
-(7, 'David', 'contact@sitez-vous.com', '$2y$10$oiNmLZMeZwUKDAU6H0VFIedFx6uBp3d4kulH75XEAf6Zup9flINXW', 'admin', '2021-02-01 16:33:29');
+(1, 'admin', 'admin@admin.com', '$2y$10\$oiNmLZMeZwUKDAU6H0VFIedFx6uBp3d4kulH75XEAf6Zup9flINXW', 'admin', '2001-01-23 23:00:00'),
+(2, 'Tony', 'stark@gmail.com', '$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2001-01-31 23:00:00'),
+(3, 'Steve', 'rodgers@gmail.com', '$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2001-01-31 23:00:00'),
+(4, 'Bruce', 'banner@gmail.com', '$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2017-09-03 22:00:00'),
+(5, 'Natasha', 'romanoff@gmail.com', '$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2004-07-01 22:00:00'),
+(6, 'Thor', 'odinsson@gmail.com', '$2y$10\$OMo8C72.I0iyyHZr.WvXhOgY/55zMqMYVf3ESVuGWFmBmWWPSw8DO', 'user', '2018-05-24 22:00:00'),
+(7, 'David', 'contact@sitez-vous.com', '$2y$10\$oiNmLZMeZwUKDAU6H0VFIedFx6uBp3d4kulH75XEAf6Zup9flINXW', 'admin', '2021-02-01 16:33:29');
 
 ";
