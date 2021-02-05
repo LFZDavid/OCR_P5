@@ -8,14 +8,15 @@ use App\Model\Entity\User;
 abstract class Controller
 {
     protected Environment $twig;
-    protected string $requiredRole = "";
+    protected string $requiredRole;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, string $requiredRole = "")
     {
         $this->twig = $twig;
         $this->twig->addGlobal('app_user', $this->getUser());
         $this->twig->addGlobal('app_messages', isset($_SESSION['messages']) ? $_SESSION['messages'] : []);
         $_SESSION['messages'] = [];
+        $this->requiredRole = $requiredRole;
         $this->redirectIfNotAllowed();
     }
 
@@ -32,12 +33,13 @@ abstract class Controller
     protected function redirectIfNotAllowed(): void
     {
         if (
-            $this->getUser() == null
-            && $this->requiredRole != ""
-            && $this->getUser()->getRole() != $this->requiredRole
+            $this->requiredRole != ""
+            && (
+                $this->getUser() == null
+                || $this->getUser()->getRole() != $this->requiredRole
+            )
         ) {
-            // todo: Add error 403
-            header('Location: /');
+            $this->displayError(403);
         }
     }
 
@@ -62,9 +64,10 @@ abstract class Controller
         return $result;
     }
 
-    protected function displayError404(): void
+    protected function displayError(int $errorCode): void
     {
-        http_response_code(404);
-        echo $this->twig->render('front/404.html.twig', []);
+        http_response_code($errorCode);
+        echo $this->twig->render('front/'.$errorCode.'.html.twig', []);
+        exit;
     }
 }

@@ -9,8 +9,6 @@ use App\Model\Repository\UserRepository;
 
 class AdminUserController extends Controller
 {
-
-    protected string $required_role = "admin";
     private UserRepository $userRepository;
     private UserManager $userManager;
 
@@ -21,11 +19,9 @@ class AdminUserController extends Controller
     ) {
         $this->userRepository = $userRepository;
         $this->userManager = $userManager;
-
-        parent::__construct($twig);
+        
+        parent::__construct($twig, 'admin');
     }
-
-
 
     public function index(): void
     {
@@ -38,7 +34,6 @@ class AdminUserController extends Controller
     public function changeRole(): void
     {
         if (isset($_POST['userId']) && isset($_POST['role'])) {
-
             $user = $this->userRepository->getUniqueById((int) $_POST['userId']);
             $user->setRole(stripslashes($_POST['role']));
             $this->userManager->save($user);

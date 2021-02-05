@@ -11,7 +11,6 @@ use App\Model\Validator\UserValidator;
 
 class UserController extends Controller
 {
-
     private UserRepository $userRepository;
     private UserManager $userManager;
     private UserValidator $userValidator;
@@ -73,7 +72,7 @@ class UserController extends Controller
     public function getLogInForm(): void
     {
         if ($this->getUser()) {
-            $this->displayError404();
+            $this->displayError(404);
             return;
         }
 

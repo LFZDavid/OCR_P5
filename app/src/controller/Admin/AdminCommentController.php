@@ -9,9 +9,6 @@ use Twig\Environment;
 
 class AdminCommentController extends Controller
 {
-
-    protected string $required_role = "admin";
-
     private CommentRepository $commentRepository;
     private CommentManager $commentManager;
 
@@ -19,8 +16,8 @@ class AdminCommentController extends Controller
     {
         $this->commentRepository = $commentRepository;
         $this->commentManager = $commentManager;
-
-        parent::__construct($twig);
+        
+        parent::__construct($twig, 'admin');
     }
 
     public function index(): void

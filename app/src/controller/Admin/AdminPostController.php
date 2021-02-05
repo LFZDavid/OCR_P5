@@ -13,7 +13,6 @@ use App\Model\Repository\UserRepository;
 
 class AdminPostController extends Controller
 {
-    protected string $required_role = "admin";
     private CategoryRepository $categoryRepository;
     private PostRepository $postRepository;
     private PostManager $postManager;
@@ -32,8 +31,8 @@ class AdminPostController extends Controller
         $this->userRepository = $userRepository;
         $this->postManager = $postManager;
         $this->commentManager = $commentManager;
-
-        parent::__construct($twig);
+        
+        parent::__construct($twig, 'admin');
     }
 
     public function index(): void

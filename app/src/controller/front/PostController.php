@@ -26,7 +26,7 @@ class PostController extends Controller
         $post = $this->postRepository->getUniqueById($id);
 
         if (!$post || !$post->getActive()) {
-            $this->displayError404();
+            $this->displayError(404);
             return;
         }
         $comments = $this->commentRepository->getListByPost($post->getId(), true);
