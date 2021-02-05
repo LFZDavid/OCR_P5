@@ -40,7 +40,7 @@ class PostController extends Controller
 
     public function index(): void
     {
-        $posts = $this->postRepository->getListOfActives();
+        $posts = $this->postRepository->getList(null, true);
         echo $this->twig->render('/front/post/index.html.twig', [
             "posts" => $posts,
             "title" => "Les projets"

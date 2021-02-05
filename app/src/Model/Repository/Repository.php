@@ -23,15 +23,6 @@ abstract class Repository
 		return $query->fetchAll();
 	}
 
-	public function getListOfActives(): array
-	{
-		$request = 'SELECT * FROM ' . $this->table . ' WHERE active = 1';
-		$query = $this->pdo->query($request);
-		$query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
-
-		return $query->fetchAll();
-	}
-
 	public function getUniqueById(int $id): object
 	{
 		$request = 'SELECT * FROM ' . $this->table . ' WHERE id =:id';

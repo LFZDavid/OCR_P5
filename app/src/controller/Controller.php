@@ -36,6 +36,7 @@ abstract class Controller
             && $this->requiredRole != ""
             && $this->getUser()->getRole() != $this->requiredRole
         ) {
+            // todo: Add error 403
             header('Location: /');
         }
     }
