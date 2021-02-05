@@ -37,7 +37,7 @@ try {
     $postManager = new PostManager($pdo);
     $userManager = new UserManager($pdo);
     $commentManager = new CommentManager($pdo);
-
+    
     if (key_exists('post', $_GET)) {
         $postController = new PostController($twig, $postRepository, $commentRepository);
         if (($id_post = (int) $_GET['post']) <= 0) {

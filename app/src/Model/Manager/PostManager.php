@@ -8,7 +8,6 @@ use PDO;
 
 class PostManager extends Manager
 {
-
     protected string $table = 'posts';
     protected string $classManaged = '\App\Model\Entity\Post';
 

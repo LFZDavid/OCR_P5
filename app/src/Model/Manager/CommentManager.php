@@ -8,7 +8,6 @@ use PDO;
 
 class CommentManager extends Manager
 {
-
     protected string $table = 'comments';
     protected string $classManaged = '\App\Model\Entity\Comment';
 

@@ -20,7 +20,6 @@ class UserValidator extends Validator
     {
         $this->user = $user ?? new User();
         foreach ($formData as $inputName => $inputValue) {
-
             if ($inputName == 'name') {
                 $this->validName($inputValue);
             }

@@ -6,7 +6,6 @@ use \App\Model\Entity\Entity;
 
 class User extends Entity
 {
-
     protected string $name = "";
     protected string $email = "";
     protected string $pwd = "";

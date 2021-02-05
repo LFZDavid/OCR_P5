@@ -7,7 +7,6 @@ use PDO;
 
 class CategoryRepository extends Repository
 {
-
     protected string $table = 'categories';
     protected string $classManaged = '\App\Model\Entity\Category';
 

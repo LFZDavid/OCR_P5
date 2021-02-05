@@ -9,6 +9,6 @@ $config = [
     "db_user" => "root",
     "db_pwd" => "",
     "env" => "dev", // dev / prod
-    "admin_email" => "contact@sitez-vous.com"
+    "admin_email" => "contact@sitez-vous.com" //for contact-form
 
 ];

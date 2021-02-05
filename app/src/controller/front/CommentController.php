@@ -9,7 +9,6 @@ use App\Model\Manager\CommentManager;
 
 class CommentController extends Controller
 {
-
     private CommentManager $commentManager;
 
     public function __construct(Environment $twig, CommentManager $commentManager)
