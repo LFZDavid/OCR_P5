@@ -26,25 +26,22 @@
     * Liste de tous les commentaires _(validation de commentaires)_
   --- 
 ## Installation
-  ### Fichiers du site
-  1. Faire un git clone du repository puis éditer le fichier config.php en renseignant les données corespondant à votre base de données
-  2. Renseigner le fichier
+  ### __Fichiers du site__
+  1. Récupérer les fichiers en téléchargeant le .zip du repository ou avec la commande `git clone ` 
+  2. _(facultatif)_ Editer le fichier config.php en renseignant les données corespondant à votre base de données
     
-  ### Composer
-    Après installation des fichiers, lancer la commande : composer init
-  ### Version PHP
-    >= 7.3
-  ### Base de données
-   * Option 1 (phpmyadmin) :
-      * Dans le menu "importer", selectionner le fichier "blog_p5.sql" (app/database/blog_p5.sql)
-  
+  ### __Composer__
+  Après installation des fichiers, initialiser Composer avec la commande : `composer init`
+  ### __Version PHP__
+  \>= 7.3
+  ### __Base de données__
+   * Option 1 :
+      * Dans le menu "importer", selectionner le fichier `app/database/blog_p5.sql`
   * Option 2 :
-      1. Créer une base de donnée vierge 
-      * Attention: le nom de la base de données doit correspondre à celui indiqué dans le fichier config.php
-      * Selectionner l'encodage "utf-8"
-      1. Executer la commande : php app/cmd/install_db.php
-  * Insérer des données de démonstration
-    * lancer la commande : php app/cmd/insert_datas.php
+      1. Créer une base de donnée vierge nommé `"blog_p5"` (_ou le nom choisit dans le fichier `config.php`_ )
+      2. Selectionner l'encodage `utf-8`
+      3. Executer la commande : `php app/cmd/install_db.php` pour installer les données.
+  
   
  
   
