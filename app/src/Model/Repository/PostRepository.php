@@ -27,9 +27,10 @@ class PostRepository extends Repository
 		parent::__construct($pdo);
 	}
 
-	public function getList(?string $limit = null): array
+	public function getList(?string $limit = null, ?bool $onlyActive = true): array
 	{
-		$request = 'SELECT * FROM ' . $this->table . ' WHERE active = 1 ORDER BY `id` DESC';
+		$where = $onlyActive ? " WHERE active = 1 " : " ";
+		$request = 'SELECT * FROM ' . $this->table . $where . 'ORDER BY `id` DESC';
 		if ($limit != null) {
 			$request .= ' LIMIT ' . $limit;
 		}
