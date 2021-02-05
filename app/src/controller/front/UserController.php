@@ -107,7 +107,7 @@ class UserController extends Controller
 
     public function lostPwdProcess(): void
     {
-        $userEmail = isset($_POST['email']) ? stripslashes($_POST['email']) : "";
+        $userEmail = isset($_POST['email']) ? stripslashes($_POST['email']) : $this->getUser()->getEmail();
 
         $validationReturns = $this->userValidator->validUserEmail($userEmail);
         if (isset($validationReturns['errors'])) {
@@ -116,7 +116,9 @@ class UserController extends Controller
             $this->sendResetPwdEmail($validationReturns['user']);
             $this->fillMessage('success', 'Un email vient de vous être envoyé !');
         }
-        header('Location: /user/login');
+
+        $destination = $this->getUser()?'form':'login';
+        header('Location: /user/'. $destination);
     }
 
     public function getResetPwdForm(int $userId, string $hash): void
