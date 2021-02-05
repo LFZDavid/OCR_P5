@@ -4,6 +4,17 @@
     font-size: large;
 }
 
+.main-logo{
+  height: 100px;
+}
+
+.punch{
+  color:#34BE67;
+  font-weight: bold;
+  font-size: 2rem;
+  font-style: italic;
+}
+
 #main {
   min-height: 100vh;
   margin: 0 auto;
@@ -203,4 +214,30 @@
  /* LOST PWD */
 .backToHomeBtn {
   margin-top: 20px;
+}
+
+/* Home */
+
+.title-band{
+  padding: 20px 0px;
+}
+
+.home-band{
+  margin : 20px 0px;
+}
+
+.dwn-cv-contain,
+.lang-logos-contain {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.lang-logos-contain{
+  justify-content: space-between;
+  margin: 20px 0px;
+}
+
+.lang-logos-contain >.fab{
+  font-size: 50px;
 }

@@ -38,7 +38,7 @@ class AdminPostController extends Controller
 
     public function index(): void
     {
-        $posts = $this->postRepository->getList();
+        $posts = $this->postRepository->getList(null, false);
 
         echo $this->twig->render('/admin/post/index.html.twig', [
             "title" => "Administration des posts",

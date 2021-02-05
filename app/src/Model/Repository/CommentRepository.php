@@ -25,7 +25,7 @@ class CommentRepository extends Repository
         FROM ' . $this->table . '
         INNER JOIN users ON users.id = comments.id_author
         INNER JOIN posts ON posts.id = comments.id_post' . $where .
-            ' ORDER BY comments.id
+            ' ORDER BY comments.created_at
         DESC';
 
         if ($limit != null) {
@@ -40,7 +40,7 @@ class CommentRepository extends Repository
     {
         $where = ' WHERE `id_post` = ' . $postId . ' ';
         $where .= $onlyActive ? 'AND comments.active = 1' : '';
-        $request = 'SELECT comments.id, content, id_author id_post, active, comments.created_at, users.name as author_name FROM ' . $this->table . ' INNER JOIN users ON users.id = id_author ' . $where;
+        $request = 'SELECT comments.id, content, id_author id_post, active, comments.created_at, users.name as author_name FROM ' . $this->table . ' INNER JOIN users ON users.id = id_author ' . $where . ' ORDER BY comments.created_at DESC';
         $query = $this->pdo->query($request);
         $query->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, $this->classManaged);
         return $query->fetchAll();
