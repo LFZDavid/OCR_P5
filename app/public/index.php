@@ -27,6 +27,8 @@ $twig = new \Twig\Environment($loader, [
 
 $config['env'] == 'dev' ? $twig->addExtension(new \Twig\Extension\DebugExtension()) : "";
 
+var_dump($_SESSION);
+
 try {
     $pdo = new \PDO("mysql:host=" . $config['db_host'] . ";dbname=" . $config['db_name'] . ";charset=utf8", $config['db_user'], $config['db_pwd']);
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);

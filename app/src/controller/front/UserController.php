@@ -56,12 +56,14 @@ class UserController extends Controller
             return $errors;
         }
         $user->setName($this->cleanValue($data['name']))
-            ->setEmail($this->cleanValue($data['email']));
+            ->setEmail($this->cleanValue($data['email']))
+            ->setRole('user');
         if (!$edit) {
             $hashedPwd = password_hash($data['pwd'], PASSWORD_DEFAULT);
             $user->setPwd($hashedPwd);
         }
-        $this->userManager->save($user);
+        $persistedId = $this->userManager->save($user);
+        $user->setId($persistedId);
         $_SESSION['app.user'] = $user;
 
         $this->fillMessage('success', 'Utilisateur enregistré !');
