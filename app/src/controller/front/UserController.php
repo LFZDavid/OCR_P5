@@ -63,7 +63,7 @@ class UserController extends Controller
             $user->setPwd($hashedPwd);
         }
         $persistedId = $this->userManager->save($user);
-        $user->setId($persistedId);
+        $user = $this->userRepository->getUniqueById($persistedId);
         $_SESSION['app.user'] = $user;
 
         $this->fillMessage('success', 'Utilisateur enregistré !');
@@ -164,7 +164,7 @@ class UserController extends Controller
         }
         $to      = $user->getEmail();
         $subject = 'Réinitialisation de votre mot de passe';
-        $message = 'Bonjour,' . "\r\n" . 'Cliquez sur le lien ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $_SERVER['SERVER_NAME'] . '/user/reset-pwd/hash/' . $user->getPwd() . '/userId/' . $user->getId();
+        $message = 'Bonjour,' . "\r\n" . 'Rendez-vous à l\'url ci-dessous pour réinitilaiser votre mot de passe' . "\r\n" . $_SERVER['SERVER_NAME'] . '/user/reset-pwd/hash/' . $user->getPwd() . '/userId/' . $user->getId();
         $headers = 'From: no-reply@sitez-vous.com' . "\r\n" .
             'Reply-To: contact@sitez-vous.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
