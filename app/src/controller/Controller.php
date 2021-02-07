@@ -15,9 +15,11 @@ abstract class Controller
         $this->twig = $twig;
         $this->twig->addGlobal('app_user', $this->getUser());
         $this->twig->addGlobal('app_messages', isset($_SESSION['messages']) ? $_SESSION['messages'] : []);
+        $this->twig->addGlobal('last_url', isset($_SESSION['last_url']) ? $_SESSION['last_url'] : '/');
         $_SESSION['messages'] = [];
         $this->requiredRole = $requiredRole;
         $this->redirectIfNotAllowed();
+        $this->saveLastUrl();
     }
 
     protected function fillMessage(string $type, string $content): void
@@ -41,6 +43,12 @@ abstract class Controller
         ) {
             $this->displayError(403);
         }
+    }
+
+    protected function saveLastUrl():void
+    {
+        $_SESSION['last_url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $_SESSION['last_url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }
 
     protected function getUser(): ?User

@@ -96,7 +96,8 @@ class UserController extends Controller
         $this->fillMessage('success', 'Vous êtes connecté !');
         $_SESSION['app.user'] = $validationReturns['user'];
 
-        header('Location: /');
+        $redirectLocation = isset($postData['last_url'])?$postData['last_url']:'/';
+        header('Location: '.$redirectLocation);
     }
 
     public function logOut(): void
