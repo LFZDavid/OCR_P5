@@ -101,7 +101,9 @@ class UserController extends Controller
 
         if (
             isset($postData['last_url'])
-            && $postData['last_url'] !== 'ocr_p5.dev/user/login') {
+            && $postData['last_url'] !== 'ocr_p5.dev/user/login'
+            && $postData['last_url'] !== 'ocr_p5.dev/'
+            ) {
             $redirectLocation = $postData['last_url'];
         }
         
