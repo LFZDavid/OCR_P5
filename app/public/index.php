@@ -62,7 +62,7 @@ try {
             && key_exists('userId', $_GET)
             && key_exists('hash', $_GET)
         ) {
-            if ($userId = $_GET['userId'] > 0) {
+            if (($userId = $_GET['userId']) > 0) {
                 $userController->getResetPwdForm($userId, $_GET['hash']);
             } else {
                 header('Location:/user/login');
