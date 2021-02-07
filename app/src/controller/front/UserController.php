@@ -97,7 +97,14 @@ class UserController extends Controller
         $this->fillMessage('success', 'Vous êtes connecté !');
         $_SESSION['app.user'] = $validationReturns['user'];
 
-        $redirectLocation = isset($postData['last_url'])?$postData['last_url']:'/';
+        $redirectLocation = '/';
+
+        if (
+            isset($postData['last_url'])
+            && $postData['last_url'] !== 'ocr_p5.dev/user/login') {
+            $redirectLocation = $postData['last_url'];
+        }
+        
         header('Location: '.$redirectLocation);
     }
 
