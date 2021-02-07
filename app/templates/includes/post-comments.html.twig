@@ -21,7 +21,9 @@
 		{% if app_user is null %}
 		<p>
 			Vous devez être connecté pour poster un commentaire.
-			<a href="/user/login">Se connecter/S'inscrire</a>
+		<div class="signInUpLink">
+			<a href="/user/login">Se connecter </a> / <a href="/user/form"> s'inscrire</a>
+		</div>
 		</p>
 		{% else %}
 		<form action="/comment/add/postId/{{post.id}}" method="post">

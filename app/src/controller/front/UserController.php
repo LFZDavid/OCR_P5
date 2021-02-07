@@ -66,7 +66,8 @@ class UserController extends Controller
         $_SESSION['app.user'] = $user;
 
         $this->fillMessage('success', 'Utilisateur enregistré !');
-        header('Location: /');
+        $redirectLocation = isset($data['last_url'])?$data['last_url']:'/';
+        header('Location: '.$redirectLocation);
     }
 
     public function getLogInForm(): void
