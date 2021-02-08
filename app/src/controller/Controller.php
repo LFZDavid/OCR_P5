@@ -19,7 +19,6 @@ abstract class Controller
         $_SESSION['messages'] = [];
         $this->requiredRole = $requiredRole;
         $this->redirectIfNotAllowed();
-        $this->saveLastUrl();
     }
 
     protected function fillMessage(string $type, string $content): void
@@ -47,7 +46,6 @@ abstract class Controller
 
     protected function saveLastUrl():void
     {
-        $_SESSION['last_url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $_SESSION['last_url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
     }
 

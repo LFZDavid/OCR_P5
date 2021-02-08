@@ -17,8 +17,8 @@ class PostController extends Controller
     {
         $this->postRepository = $postRepository;
         $this->commentRepository = $commentRepository;
-
         parent::__construct($twig);
+        $this->saveLastUrl();
     }
 
     public function show(int $id): void

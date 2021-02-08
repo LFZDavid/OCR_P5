@@ -66,7 +66,7 @@ class UserController extends Controller
         $_SESSION['app.user'] = $user;
 
         $this->fillMessage('success', 'Utilisateur enregistré !');
-        $redirectLocation = isset($data['last_url'])?$data['last_url']:'/';
+        $redirectLocation = (isset($data['last_url'])) ? $data['last_url'] : '/';
         header('Location: '.$redirectLocation);
     }
 
@@ -128,7 +128,7 @@ class UserController extends Controller
             $this->fillMessage('success', 'Un email vient de vous être envoyé !');
         }
 
-        $destination = $this->getUser()?'form':'login';
+        $destination = $this->getUser() ? 'form' : 'login';
         header('Location: /user/'. $destination);
     }
 
@@ -166,7 +166,9 @@ class UserController extends Controller
         $user->setPwd($new_pwd);
         $this->userManager->save($user);
         $this->fillMessage('success', 'Nouveau mot de passe enregistré !');
-        header('Location: /user/login');
+        
+        $destination = $this->getUser() ? 'form' : 'login';
+        header('Location: /user/'. $destination);
     }
 
     protected function sendResetPwdEmail(User $user): bool
